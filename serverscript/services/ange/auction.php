@@ -16,7 +16,7 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_d("### [START]");
+MtUtil::_d("### ['START']");
 MtUtil::_d(print_r($_REQUEST,true));
 
 MtUtil::_d(json_encode(file_get_contents("php://input"),true));
@@ -26,8 +26,8 @@ MtUtil::_d(json_encode(file_get_contents("php://input"),true));
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
 $_d = new MtJson(null);
@@ -102,7 +102,7 @@ switch ($_method) {
                         FROM
                             ANGE_PRODUCT
                         WHERE 1=1
-                          AND NO = '".$_search[NO]."'
+                          AND NO = '".$_search['NO']."'
                           AND ORDER_YN = 'Y'
                     ) AS DATA,
                     (SELECT @RNUM := 0) R,
@@ -111,7 +111,7 @@ switch ($_method) {
                         FROM
                             ANGE_PRODUCT
                         WHERE 1=1
-                          AND  NO  = '".$_search[PRODUCT_NO]."'
+                          AND  NO  = '".$_search['PRODUCT_NO']."'
                           AND ORDER_YN = 'Y'
                     ) CNT
                     ";
@@ -148,7 +148,7 @@ switch ($_method) {
                             NICK_NM,
                             REG_DT
                         ) VALUES (
-                            ".$_model[NO].",
+                            ".$_model['NO'].",
                             100,
                             '".$_SESSION['uid']."',
                             '".$_SESSION['nick']."',

@@ -84,10 +84,10 @@ switch ($_method) {
                 }else{
                     $t_type="blind";
                 }
-                $t_event = $v_event[date('m-d',strtotime($lday))];
-                if ($t_event!=''){
-                    $t_type="event";
-                }
+//                $t_event = $v_event[date('m-d',strtotime($lday))];
+//                if ($t_event!=''){
+//                    $t_type="event";
+//                }
 
                 //$t_stream .= "<td class=\"day\" title=\"{$t_event}\" style=\"{$t_style}\">".date('d',strtotime("{$lday}")).'</td>';
                 $t_key = substr( "0".(string)$lcnt,-2 );
@@ -174,7 +174,7 @@ switch ($_method) {
             }
 
             // 아이 생일
-            $sql = "select BABY_SEX_GB,BABY_NM,BABY_BIRTH,DATE_ADD(DATE_FORMAT(BABY_BIRTH, '%Y%m%d'), INTERVAL 100 DAY) AS 100TH_DAY,DATE_ADD(DATE_FORMAT(BABY_BIRTH, '%Y%m%d'), INTERVAL 1 YEAR) AS BIRTH_FIRST from ANGE_USER_BABY where USER_ID='{$_SESSION['user_info']['USER_ID']}' ";
+            $sql = "select BABY_SEX_GB,BABY_NM,BABY_BIRTH,DATE_ADD(DATE_FORMAT(BABY_BIRTH, '%Y%m%d'), INTERVAL 100 DAY) AS 100TH_DAY,DATE_ADD(DATE_FORMAT(BABY_BIRTH, '%Y%m%d'), INTERVAL 1 YEAR) AS BIRTH_FIRST from ANGE_USER_BABY where USER_ID='{$_SESSION['user_info']['USER_ID']}' and BABY_BIRTH <> '' and BABY_BIRTH is not null ";
             $result = $_d->sql_query($sql,true);
 
             while($row=$_d->sql_fetch_array($result)){

@@ -8,8 +8,21 @@
 
         <div class="col-xs-12 people_view_replys" ng-repeat="replyItem in replyList">
             <dl class="dl-horizontal" >
-                <dt ng-show="comm_no != 8">{{replyItem.NICK_NM}}</dt>
+                <dt ng-show="comm_no != 8" ng-click="click_toggleReplyConfig(replyItem.NO)" style="cursor:pointer;">{{replyItem.NICK_NM}}</dt>
                 <dt ng-show="comm_no == 8">*{{replyItem.NICK_NM | limitTo : 1}}*</dt>
+
+                <div id="reply_menu_{{replyItem.NO}}" style="display: none; border:1px solid #ccc; border-bottom:2px solid #ccc; padding:3px 10px 8px 10px; position:absolute; top:4px; font-size:0.86em; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; background-color:#fff;">
+
+                    <div data-ng-click="click_toggleReplyConfig()" class="ange_customBtn_0" style="border-bottom:1px solid #ddd; width:100%; font-size:1.21em; padding:4px 0; height:26px;">
+                        <i class="glyphicon glyphicon-remove-circle" class="text-right" style="float:right;"></i>
+                    </div>
+
+                    <img ng-if="!replyItem.profileImg" class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}">
+                    <img ng-if="replyItem.profileImg" class="profile_pic" ng-style="{'background-image' : 'url('+replyItem.profileImg+')'}"> {{replyItem.NICK_NM}}
+
+                    <a class="util2" ng-click="click_sendMessage(replyItem)">메시지</a>
+                </div>
+
                 <dd><div class="people_view_replys_date">{{replyItem.REG_DT}}</div></dd>
                 <dd style="margin:0px; margin-top:8px;">
                     <!--{{replyItem.BLIND_FL == 'N' ? replyItem.COMMENT : '관리자에 의해 블라인드 된 의견입니다'}}&lt;!&ndash;{{replyItem.COMMENT}}&ndash;&gt;-->

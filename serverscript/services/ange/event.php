@@ -16,7 +16,7 @@
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
     MtUtil::_d(print_r($_REQUEST,true));
 
     MtUtil::_d(json_encode(file_get_contents("php://input"),true));
@@ -26,8 +26,8 @@
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson('ad');
@@ -89,12 +89,12 @@
                 $limit = "";
                 $sort_order = "ORDER BY REG_DT DESC";
 
-                if(isset($_search[ada_idx]) && $_search[ada_idx] != ""){
-                    $search_where .= "AND ada_idx = '".$_search[ada_idx]."' ";
+                if(isset($_search['ada_idx']) && $_search['ada_idx'] != ""){
+                    $search_where .= "AND ada_idx = '".$_search['ada_idx']."' ";
                 }
 
-                if (isset($_search[PAGE_NO]) && $_search[PAGE_NO] != "") {
-                    $limit .= "LIMIT ".(($_search[PAGE_NO]-1) * $_search[PAGE_SIZE]).", ".$_search[PAGE_SIZE];
+                if (isset($_search['PAGE_NO']) && $_search['PAGE_NO'] != "") {
+                    $limit .= "LIMIT ".(($_search['PAGE_NO']-1) * $_search['PAGE_SIZE']).", ".$_search['PAGE_SIZE'];
                 }
 
                 //TODO: 조회
@@ -130,68 +130,68 @@
                 $sort_order = "";
                 $limit = "";
 
-                if (isset($_search[ADA_TYPE_IN]) && $_search[ADA_TYPE_IN] != "") {
-                    $search_where .= "AND a.ada_type IN (".$_search[ADA_TYPE_IN].") ";
+                if (isset($_search['ADA_TYPE_IN']) && $_search['ADA_TYPE_IN'] != "") {
+                    $search_where .= "AND a.ada_type IN (".$_search['ADA_TYPE_IN'].") ";
                 }
 
-                if (isset($_search[ADP_CODE_NOT_IN]) && $_search[ADP_CODE_NOT_IN] != "") {
-                    $search_where .= "AND p.adp_code NOT IN (".$_search[ADP_CODE_NOT_IN].") ";
+                if (isset($_search['ADP_CODE_NOT_IN']) && $_search['ADP_CODE_NOT_IN'] != "") {
+                    $search_where .= "AND p.adp_code NOT IN (".$_search['ADP_CODE_NOT_IN'].") ";
                 }
 
-                if(isset($_search[NOT_SAMPLE]) && $_search[NOT_SAMPLE] == "Y"){
+                if(isset($_search['NOT_SAMPLE']) && $_search['NOT_SAMPLE'] == "Y"){
                     $search_where .= "AND a.adp_idx NOT IN (45, 46) ";
                 }
 
-                if(isset($_search[NOT_POST]) && $_search[NOT_POST] == "Y"){
+                if(isset($_search['NOT_POST']) && $_search['NOT_POST'] == "Y"){
                     $search_where .= "AND a.adp_idx != 49 ";
                 }
 
-                if(isset($_search[NOT_POST]) && $_search[NOT_POST] == "Y"){
+                if(isset($_search['NOT_POST']) && $_search['NOT_POST'] == "Y"){
                     $search_where .= "AND a.adp_idx != 49 ";
                 }
 
-                if(isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] == "N"){
+                if(isset($_search['PERFORM_FL']) && $_search['PERFORM_FL'] == "N"){
                     $search_where .= "AND a.adp_idx != 53 ";
                 }
 
-                if(isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] == "Y"){
+                if(isset($_search['PERFORM_FL']) && $_search['PERFORM_FL'] == "Y"){
                     $search_where .= "AND a.adp_idx = 53 ";
                 }
 
-                if (isset($_search[EVENT_GB]) && $_search[EVENT_GB] != "") {
-                    $search_where .= "AND a.ada_type = '".$_search[EVENT_GB]."' ";
+                if (isset($_search['EVENT_GB']) && $_search['EVENT_GB'] != "") {
+                    $search_where .= "AND a.ada_type = '".$_search['EVENT_GB']."' ";
                 }
 
-                if (isset($_search[PRODUCT_CODE]) && $_search[PRODUCT_CODE] != "") {
-                    $search_where .= "AND a.adp_idx = '".$_search[PRODUCT_CODE]."' ";
+                if (isset($_search['PRODUCT_CODE']) && $_search['PRODUCT_CODE'] != "") {
+                    $search_where .= "AND a.adp_idx = '".$_search['PRODUCT_CODE']."' ";
                 }
 
-                if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
+                if (isset($_search['PROCESS']) && $_search['PROCESS'] != "") {
                     $search_where .= "AND DATE_FORMAT(a.ada_date_close, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')  AND  DATE_FORMAT(NOW(), '%Y-%m-%d') >= DATE_FORMAT(a.ada_date_open, '%Y-%m-%d')";
                 }
 
-                if (isset($_search[PAST]) && $_search[PAST] != "") {
+                if (isset($_search['PAST']) && $_search['PAST'] != "") {
                     $search_where .= "AND DATE_FORMAT(a.ada_date_close, '%Y-%m-%d')  < DATE_FORMAT(NOW(), '%Y-%m-%d')";
                 }
 
-                if (isset($_search[REVIEW_EVENT_GB]) && $_search[REVIEW_EVENT_GB] != "") {
+                if (isset($_search['REVIEW_EVENT_GB']) && $_search['REVIEW_EVENT_GB'] != "") {
                     $search_where .= "AND a.ada_type IN ('exp','event') ";
                 }
 
-                if(isset($_search[ADA_STATE]) && $_search[ADA_STATE] != ""){
-                    if($_search[ADA_STATE] == 1){
-                        $search_where .= "AND a.ada_state = '".$_search[ADA_STATE]."' ";
+                if(isset($_search['ADA_STATE']) && $_search['ADA_STATE'] != ""){
+                    if($_search['ADA_STATE'] == 1){
+                        $search_where .= "AND a.ada_state = '".$_search['ADA_STATE']."' ";
                     }else{
-                        $search_where .= "AND a.ada_state = '".$_search[ADA_STATE]."' ";
+                        $search_where .= "AND a.ada_state = '".$_search['ADA_STATE']."' ";
                     }
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
                 if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
                 // , ada_notice
@@ -239,36 +239,36 @@
                 $sort_order = "";
                 $limit = "";
 
-                if(isset($_search[NOT_SAMPLE]) && $_search[NOT_SAMPLE] == "Y"){
+                if(isset($_search['NOT_SAMPLE']) && $_search['NOT_SAMPLE'] == "Y"){
                     $search_where .= "AND b.adp_idx NOT IN (45, 46) ";
                 }
 
-                if(isset($_search[NOT_SAMPLE]) && $_search[NOT_SAMPLE] == "N"){
+                if(isset($_search['NOT_SAMPLE']) && $_search['NOT_SAMPLE'] == "N"){
                     $search_where .= "AND b.adp_idx IN (45, 46) ";
                 }
 
-                if(isset($_search[NOT_POST]) && $_search[NOT_POST] == "Y"){
+                if(isset($_search['NOT_POST']) && $_search['NOT_POST'] == "Y"){
                     $search_where .= "AND b.adp_idx != 49 ";
                 }
 
-                if(isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] == "N"){
+                if(isset($_search['PERFORM_FL']) && $_search['PERFORM_FL'] == "N"){
                     $search_where .= "AND b.adp_idx != 53 ";
                 }
 
-                if(isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] == "Y"){
+                if(isset($_search['PERFORM_FL']) && $_search['PERFORM_FL'] == "Y"){
                     $search_where .= "AND b.adp_idx = 53 ";
                 }
 
-                if (isset($_search[PRODUCT_CODE]) && $_search[PRODUCT_CODE] != "") {
-                    $search_where .= "AND b.adp_idx = '".$_search[PRODUCT_CODE]."' ";
+                if (isset($_search['PRODUCT_CODE']) && $_search['PRODUCT_CODE'] != "") {
+                    $search_where .= "AND b.adp_idx = '".$_search['PRODUCT_CODE']."' ";
                 }
 
-                if (isset($_search[EXIST]) && $_search[EXIST] != "") {
+                if (isset($_search['EXIST']) && $_search['EXIST'] != "") {
                     $search_where .= "AND NOT EXISTS (SELECT * FROM ANGE_REVIEW WHERE TARGET_NO = a.ada_idx AND REG_UID = '".$_SESSION['uid']."')";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
                 // , ada_notice

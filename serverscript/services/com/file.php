@@ -66,10 +66,10 @@
                 $msg = $_d->mysql_error;
             }
 
-            if (file_exists('../../..'.$file_data[PATH].$file_data[FILE_ID])) {
-                unlink('../../..'.$file_data[PATH].$file_data[FILE_ID]);
-                unlink('../../..'.$file_data[PATH].'thumbnail/'.$file_data[FILE_ID]);
-                unlink('../../..'.$file_data[PATH].'medium/'.$file_data[FILE_ID]);
+            if (file_exists('../../..'.$file_data['PATH'].$file_data['FILE_ID'])) {
+                unlink('../../..'.$file_data['PATH'].$file_data['FILE_ID']);
+                unlink('../../..'.$file_data['PATH'].'thumbnail/'.$file_data['FILE_ID']);
+                unlink('../../..'.$file_data['PATH'].'medium/'.$file_data['FILE_ID']);
             }
 
             if ($err > 0) {

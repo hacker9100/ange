@@ -15,20 +15,6 @@ define([
 
         angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
-        $scope.verbs = [
-                            {
-                                "title": "WM-Qualifikation: DFB-Frauen mit Tor-Festival gegen die Slowakei",
-                                "text": "Bundestrainerin Silvia Neid kann allmählich mit den Planungen für die WM im kommenden Jahr beginnen. Die Fußball-Nationalmannschaft der Frauen gewann auch ihr achtes Qualifikationsspiel souverän und kann kaum noch von Rang eins verdrängt werden.",
-                                "creationDate": "Thu, 08 May 2014 19:10:00 +0200",
-                                "changeDate": "Sun, 12 May 2014 09:30:00 +0200"
-                            },
-                            {
-                                "title": "2,5 Milliarden Euro: Real Madrid ist wertvollster Fußballclub der Welt",
-                                "text": "Als einziger deutscher Club hat es der FC Bayern in die Top Ten der wertvollsten Fußball-Vereine der Welt geschafft. Die Münchner liegen im \"Forbes\"-Ranking auf Rang vier hinter Real Madrid, dem FC Barcelona und Manchester United.",
-                                "creationDate": "Thu, 08 May 2014 18:28:00 +0200",
-                                "changeDate": "Sat, 11 May 2014 12:40:00 +0200"
-                            }
-                        ];
         $scope.duration = 3000;
 
         $scope.isProfile = false;

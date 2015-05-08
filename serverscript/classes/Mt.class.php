@@ -30,8 +30,8 @@ define("__AD_ANGE_PWD__" , "ange#123");
 define("__AD_ANGE_DBF__" , "ange");
 
 // MAIL 서버(SMTP)
-define("__SMTP_HOST__" , "mail.ange.co.kr");
-define("__SMTP_PORT__" , 25);
+define("__SMTP_HOST__" , "smtp.works.naver.com");
+define("__SMTP_PORT__" , 465);
 define("__SMTP_USR__" , "angeweb@ange.co.kr");
 define("__SMTP_PWD__" , "mailange33302");
 define("__SMTP_USR_NM__" , "앙쥬");

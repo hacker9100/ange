@@ -16,7 +16,7 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 
     $_d = new MtJson(null);
@@ -55,24 +55,24 @@
                 $search_where = "";
                 $sort_order = "";
 
-                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                    $search_where .= "AND C.SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
+                if (isset($_search['SYSTEM_GB']) && $_search['SYSTEM_GB'] != "") {
+                    $search_where .= "AND C.SYSTEM_GB  = '".$_search['SYSTEM_GB']."' ";
                 }
-                if (isset($_search[CATEGORY_GB]) && $_search[CATEGORY_GB] != "") {
-                    $search_where .= "AND C.CATEGORY_GB  = '".$_search[CATEGORY_GB]."' ";
+                if (isset($_search['CATEGORY_GB']) && $_search['CATEGORY_GB'] != "") {
+                    $search_where .= "AND C.CATEGORY_GB  = '".$_search['CATEGORY_GB']."' ";
                 }
-                if (isset($_search[CATEGORY_ST]) && $_search[CATEGORY_ST] != "") {
-                    $search_where .= "AND C.CATEGORY_ST  = '".$_search[CATEGORY_ST]."' ";
+                if (isset($_search['CATEGORY_ST']) && $_search['CATEGORY_ST'] != "") {
+                    $search_where .= "AND C.CATEGORY_ST  = '".$_search['CATEGORY_ST']."' ";
                 }
-                if (isset($_search[PARENT_NO]) && $_search[PARENT_NO] != "") {
-                    $search_where .= "AND C.PARENT_NO = ".$_search[PARENT_NO]." ";
+                if (isset($_search['PARENT_NO']) && $_search['PARENT_NO'] != "") {
+                    $search_where .= "AND C.PARENT_NO = ".$_search['PARENT_NO']." ";
                 }
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND C.CATEGORY_NM LIKE '%".$_search[KEYWORD]."%' ";
+                if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                    $search_where .= "AND C.CATEGORY_NM LIKE '%".$_search['KEYWORD']."%' ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
                 $sql = "SELECT
@@ -115,7 +115,7 @@
 
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
             $sql = "INSERT INTO CMS_CATEGORY
                     (
@@ -127,13 +127,13 @@
                         NOTE,
                         SYSTEM_GB
                     ) VALUES (
-                        ".( (isset($_model[PARENT_NO]) && $_model[PARENT_NO] != "") ? $_model[PARENT_NO] : (isset($_model[PARENT]) && $_model[PARENT] != "") ? $_model[PARENT][NO] : 0 )."
-                        , '".$_model[CATEGORY_NM]."'
-                        , '".$_model[CATEGORY_GB]."'
+                        ".( (isset($_model['PARENT_NO']) && $_model['PARENT_NO'] != "") ? $_model['PARENT_NO'] : (isset($_model['PARENT']) && $_model['PARENT'] != "") ? $_model['PARENT']['NO'] : 0 )."
+                        , '".$_model['CATEGORY_NM']."'
+                        , '".$_model['CATEGORY_GB']."'
                         , '0'
                         , SYSDATE()
-                        , '".$_model[NOTE]."'
-                        , '".$_model[SYSTEM_GB]."'
+                        , '".$_model['NOTE']."'
+                        , '".$_model['SYSTEM_GB']."'
                     )";
 
             $_d->sql_query($sql);
@@ -154,15 +154,15 @@
 
             $FORM = json_decode(file_get_contents("php://input"),true);
 
-            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
             $sql = "UPDATE CMS_CATEGORY
                     SET
-                        PARENT_NO = ".( isset($_model[PARENT_NO]) && $_model[PARENT_NO] != "" ? $_model[PARENT_NO] : (isset($_model[PARENT]) && $_model[PARENT] != "") ? $_model[PARENT][NO] : 0 )."
-                        ,CATEGORY_NM = '".$_model[CATEGORY_NM]."'
-                        ,CATEGORY_GB = '".$_model[CATEGORY_GB]."'
-                        ,CATEGORY_ST = '".$_model[CATEGORY_ST]."'
-                        ,NOTE = '".$_model[NOTE]."'
+                        PARENT_NO = ".( isset($_model['PARENT_NO']) && $_model['PARENT_NO'] != "" ? $_model['PARENT_NO'] : (isset($_model['PARENT']) && $_model['PARENT'] != "") ? $_model['PARENT']['NO'] : 0 )."
+                        ,CATEGORY_NM = '".$_model['CATEGORY_NM']."'
+                        ,CATEGORY_GB = '".$_model['CATEGORY_GB']."'
+                        ,CATEGORY_ST = '".$_model['CATEGORY_ST']."'
+                        ,NOTE = '".$_model['NOTE']."'
                     WHERE
                         NO = ".$_key."
                     ";

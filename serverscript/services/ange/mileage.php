@@ -16,14 +16,14 @@
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
     MtUtil::_d(print_r($_REQUEST,true));
     /*
         if (isset($_REQUEST['_category'])) {
             $category = explode("/", $_REQUEST['_category']);
 
-            Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-            Util::_c("FUNC[processApi] category.cnt : ".count($category));
+            Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+            Util::_c("FUNC['processApi'] category.cnt : ".count($category));
         }
     */
     $_d = new MtJson(null);
@@ -76,8 +76,8 @@
                     $search_table .= "FROM ANGE_USER_MILEAGE AUM";
                 }
 
-                if (isset($_search[MONTH]) && $_search[MONTH] != "") {
-                    $search_where .= "AND DATE_FORMAT(AUM.EARN_DT, '%m') = '".$_search[MONTH]."'";
+                if (isset($_search['MONTH']) && $_search['MONTH'] != "") {
+                    $search_where .= "AND DATE_FORMAT(AUM.EARN_DT, '%m') = '".$_search['MONTH']."'";
                 }
 
                 $limit = "";
@@ -166,14 +166,14 @@
 
                 $where = "";
 
-                if (isset($_model[USER_ID]) && $_model[USER_ID] != "") {
-                    $user_id = $_model[USER_ID];
+                if (isset($_model['USER_ID']) && $_model['USER_ID'] != "") {
+                    $user_id = $_model['USER_ID'];
                 } else {
                     $user_id = $_SESSION['uid'];
                 }
 
-                if (isset($_model[MILEAGE_GB]) && $_model[MILEAGE_GB] != "") {
-                    $where .= "AND MILEAGE_GB  = '".$_model[MILEAGE_GB]."' ";
+                if (isset($_model['MILEAGE_GB']) && $_model['MILEAGE_GB'] != "") {
+                    $where .= "AND MILEAGE_GB  = '".$_model['MILEAGE_GB']."' ";
                 }
 
                 $sql = "SELECT
@@ -278,46 +278,46 @@
 
                 $_d->sql_beginTransaction();
 
-                if ($_model[CHECKED] == "C") {
-                    if (isset($_model[USER_ID_LIST])) {
+                if ($_model['CHECKED'] == "C") {
+                    if (isset($_model['USER_ID_LIST'])) {
                         $in_str = "";
-                        $in_size = sizeof($_model[USER_ID_LIST]);
+                        $in_size = sizeof($_model['USER_ID_LIST']);
                         for ($i=0; $i< $in_size; $i++) {
-                            $in_str .= "'".trim($_model[USER_ID_LIST][$i])."'";
+                            $in_str .= "'".trim($_model['USER_ID_LIST'][$i])."'";
                             if ($in_size - 1 != $i) $in_str .= ",";
                         }
 
                         $search_where = "AND USER_ID IN (".$in_str.") ";
                     }
                 } else {
-                    if ((isset($_model[CONDITION]) && $_model[CONDITION] != "") && (isset($_model[KEYWORD]) && $_model[KEYWORD] != "")) {
-                        if ($_model[CONDITION][value] == "USER_NM" || $_model[CONDITION][value] == "USER_ID" || $_model[CONDITION][value] == "NICK_NM") {
-                            $arr_keywords = explode(",", $_model[KEYWORD]);
+                    if ((isset($_model['CONDITION']) && $_model['CONDITION'] != "") && (isset($_model['KEYWORD']) && $_model['KEYWORD'] != "")) {
+                        if ($_model['CONDITION']['value'] == "USER_NM" || $_model['CONDITION']['value'] == "USER_ID" || $_model['CONDITION']['value'] == "NICK_NM") {
+                            $arr_keywords = explode(",", $_model['KEYWORD']);
                             $in_condition = "";
                             for ($i=0; $i< sizeof($arr_keywords); $i++) {
                                 $in_condition .= "'".trim($arr_keywords[$i])."'";
                                 if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
                             }
 
-                            $search_where .= "AND ".$_model[CONDITION][value]." IN (".$in_condition.") ";
-                        } else if ($_model[CONDITION][value] == "PHONE") {
-                            $search_where .= "AND ( PHONE_1 LIKE '%".$_model[KEYWORD]."%' OR PHONE_2 LIKE '%".$_model[KEYWORD]."%' ) ";
+                            $search_where .= "AND ".$_model['CONDITION']['value']." IN (".$in_condition.") ";
+                        } else if ($_model['CONDITION']['value'] == "PHONE") {
+                            $search_where .= "AND ( PHONE_1 LIKE '%".$_model['KEYWORD']."%' OR PHONE_2 LIKE '%".$_model['KEYWORD']."%' ) ";
                         } else {
-                            $search_where .= "AND ".$_model[CONDITION][value]." LIKE '%".$_model[KEYWORD]."%' ";
+                            $search_where .= "AND ".$_model['CONDITION']['value']." LIKE '%".$_model['KEYWORD']."%' ";
                         }
                     }
-                    if (isset($_model[TYPE]) && $_model[TYPE] != "") {
+                    if (isset($_model['TYPE']) && $_model['TYPE'] != "") {
 
                         $in_type = "";
-                        for ($i=0; $i< count($_model[TYPE]); $i++) {
-                            $in_type .= "'".$_model[TYPE][$i]."'";
-                            if (count($_model[TYPE]) - 1 != $i) $in_type .= ",";
+                        for ($i=0; $i< count($_model['TYPE']); $i++) {
+                            $in_type .= "'".$_model['TYPE'][$i]."'";
+                            if (count($_model['TYPE']) - 1 != $i) $in_type .= ",";
                         }
 
                         $search_where .= "AND USER_GB IN (".$in_type.") ";
                     }
-                    if (isset($_model[STATUS]) && $_model[STATUS] != "" && $_model[STATUS][value] != "A") {
-                        $search_where .= "AND USER_ST  = '".$_model[STATUS][value]."' ";
+                    if (isset($_model['STATUS']) && $_model['STATUS'] != "" && $_model['STATUS']['value'] != "A") {
+                        $search_where .= "AND USER_ST  = '".$_model['STATUS']['value']."' ";
                     }
                 }
 
@@ -341,13 +341,13 @@
                                 POINT,
                                 REASON
                             ) VALUES (
-                                '".$row[USER_ID]."'
+                                '".$row['USER_ID']."'
                                 , SYSDATE()
                                 , '999'
-                                , '".$_model[EARN_GB]."'
-                                , '".$_model[PLACE_GB]."'
-                                , '".$_model[POINT]."'
-                                , '".$_model[REASON]."'
+                                , '".$_model['EARN_GB']."'
+                                , '".$_model['PLACE_GB']."'
+                                , '".$_model['POINT']."'
+                                , '".$_model['REASON']."'
                             )";
 
                     $_d->sql_query($sql);
@@ -360,10 +360,10 @@
                     $sql = "UPDATE
                                 COM_USER
                             SET
-                                SUM_POINT = SUM_POINT + ".$_model[POINT]."
-                                ,REMAIN_POINT = REMAIN_POINT + ".$_model[POINT]."
+                                SUM_POINT = SUM_POINT + ".$_model['POINT']."
+                                ,REMAIN_POINT = REMAIN_POINT + ".$_model['POINT']."
                             WHERE
-                                USER_ID = '".$row[USER_ID]."'";
+                                USER_ID = '".$row['USER_ID']."'";
 
                     $_d->sql_query($sql);
 
@@ -386,16 +386,16 @@
 
         case "PUT":
 
-            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
             if($type == 'item'){
                 $sql = "UPDATE ANGE_MILEAGE SET
-                                POINT = ".$_model[TARGET_GB]."
-                                , REASON = '".$_model[REASON]."'
-                                , COMM_GB = '".$_model[COMM_GB]."'
-                                , LIMIT_CNT = ".$_model[LIMIT_CNT]."
-                                , LIMIT_DAY = '".$_model[LIMIT_DAY]."'
-                                , POINT_ST = ".$_model[POINT_ST]."
+                                POINT = ".$_model['TARGET_GB']."
+                                , REASON = '".$_model['REASON']."'
+                                , COMM_GB = '".$_model['COMM_GB']."'
+                                , LIMIT_CNT = ".$_model['LIMIT_CNT']."
+                                , LIMIT_DAY = '".$_model['LIMIT_DAY']."'
+                                , POINT_ST = ".$_model['POINT_ST']."
                          WHERE NO = '".$_key."'
                             ";
 

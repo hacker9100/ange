@@ -676,7 +676,7 @@
 
                                 <!--<outere width="100%" ng-src="{{payUrl}}"></iframe>-->
 
-                                <iframe width="100%" name="{{frameName}}" ng-src="{{frameUrl}}"></iframe>
+                                <iframe ng-show="role == 'ANGE_ADMIN'" width="100%" name="{{frameName}}" ng-src="{{frameUrl}}"></iframe>
 
                                 <div style="text-align: right;">
                                     <button class="cart_btn line-black" ng-click="prev_step()" style="display: inline-block;">이전페이지</button>

@@ -16,7 +16,7 @@
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
     MtUtil::_d(print_r($_REQUEST,true));
 
     $_d = new MtJson(null);
@@ -52,23 +52,23 @@
                 $search_where = "";
 
 
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND S.SECTION_NM LIKE '%".$_search[KEYWORD]."%' ";
+                if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                    $search_where .= "AND S.SECTION_NM LIKE '%".$_search['KEYWORD']."%' ";
                 }
 
-                if (isset($_search[SEARCH_SEASON_NM][SEASON_NM]) && $_search[SEARCH_SEASON_NM][SEASON_NM] != "") {
-                    $search_where .= "AND S.SEASON_NM  = '".$_search[SEARCH_SEASON_NM][SEASON_NM]."' ";
+                if (isset($_search['SEARCH_SEASON_NM']['SEASON_NM']) && $_search['SEARCH_SEASON_NM']['SEASON_NM'] != "") {
+                    $search_where .= "AND S.SEASON_NM  = '".$_search['SEARCH_SEASON_NM']['SEASON_NM']."' ";
                 }
 
-                if (isset($_search[SEASON_NM]) && $_search[SEASON_NM] != "") {
-                    $search_where .= "AND S.SEASON_NM  = '".$_search[SEASON_NM]."' ";
+                if (isset($_search['SEASON_NM']) && $_search['SEASON_NM'] != "") {
+                    $search_where .= "AND S.SEASON_NM  = '".$_search['SEASON_NM']."' ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
-                if (isset($_search[ROLE]) && $_search[ROLE] != "") {
+                if (isset($_search['ROLE']) && $_search['ROLE'] != "") {
                     $sql = "SELECT SEASON_NM, SECTION_NM, NO
                              FROM
                                     CMS_SECTION
@@ -147,10 +147,10 @@
                             SORT_IDX,
                             NOTE
                         ) VALUES (
-                             '".$_model[SECTION_NM]."'
-                            , '".$_model[SEASON_NM]."'
-                            , '".$_model[SORT_IDX]."'
-                            , '".$_model[NOTE]."'
+                             '".$_model['SECTION_NM']."'
+                            , '".$_model['SEASON_NM']."'
+                            , '".$_model['SORT_IDX']."'
+                            , '".$_model['NOTE']."'
                         )";
 
             $_d->sql_query($sql);
@@ -169,12 +169,12 @@
 
     //            $FORM = json_decode(file_get_contents("php://input"),true);
 
-            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
-/*            if($_model[OLD_SEASON_NM] != "" || $_model[OLD_SEASON_NM] != $_model[SEASON_NM]){
+/*            if($_model['OLD_SEASON_NM'] != "" || $_model['OLD_SEASON_NM'] != $_model['SEASON_NM']){
                 $sql = "UPDATE CMS_SECTION SET
-                            SEASON_NM = '".$_model[SEASON_NM]."'
-                     WHERE SEASON_NM = '".$_model[OLD_SEASON_NM]."'
+                            SEASON_NM = '".$_model['SEASON_NM']."'
+                     WHERE SEASON_NM = '".$_model['OLD_SEASON_NM']."'
                         ";
             }else{
                 if (!isset($_key) || $_key == '') {
@@ -182,9 +182,9 @@
                 }
                 $sql = "UPDATE CMS_SECTION
                                 SET
-                                    SECTION_NM = '".$_model[SECTION_NM]."'
-                                    ,SORT_IDX = '".$_model[SORT_IDX]."'
-                                    ,NOTE = '".$_model[NOTE]."'
+                                    SECTION_NM = '".$_model['SECTION_NM']."'
+                                    ,SORT_IDX = '".$_model['SORT_IDX']."'
+                                    ,NOTE = '".$_model['NOTE']."'
                                 WHERE
                                     NO = ".$_key."
                             ";
@@ -193,19 +193,19 @@
             if(isset($_key) || $_key != ''){
                 $sql = "UPDATE CMS_SECTION
                                 SET
-                                    SECTION_NM = '".$_model[SECTION_NM]."'
-                                    ,SORT_IDX = '".$_model[SORT_IDX]."'
-                                    ,NOTE = '".$_model[NOTE]."'
+                                    SECTION_NM = '".$_model['SECTION_NM']."'
+                                    ,SORT_IDX = '".$_model['SORT_IDX']."'
+                                    ,NOTE = '".$_model['NOTE']."'
                                 WHERE
                                     NO = ".$_key."
              ";
             }else{
                 $sql = "UPDATE CMS_SECTION SET
-                            SEASON_NM = '".$_model[SEASON_NM]."'
-                     WHERE SEASON_NM = '".$_model[SELECT_SEASON_NM][SEASON_NM]."'
+                            SEASON_NM = '".$_model['SEASON_NM']."'
+                     WHERE SEASON_NM = '".$_model['SELECT_SEASON_NM']['SEASON_NM']."'
                         ";
             }
-            // ,SEASON_NM = '".$_model[SEASON_NM]."'
+            // ,SEASON_NM = '".$_model['SEASON_NM']."'
 
 
             $_d->sql_query($sql);

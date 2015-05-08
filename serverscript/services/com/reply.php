@@ -16,14 +16,14 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -54,40 +54,46 @@
                 $limit = "";
                 $sort_order = "ORDER BY REG_DT DESC";
 
-                if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                    $search_common .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
+                if (isset($_search['TARGET_NO']) && $_search['TARGET_NO'] != "") {
+                    $search_common .= "AND TARGET_NO = ".$_search['TARGET_NO']." ";
                 }
 
-                if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
-                    $search_common .= "AND TARGET_GB = '".$_search[TARGET_GB]."' ";
+                if (isset($_search['TARGET_GB']) && $_search['TARGET_GB'] != "") {
+                    $search_common .= "AND TARGET_GB = '".$_search['TARGET_GB']."' ";
                 }
 
-                if (isset($_search[REPLY_GB]) && $_search[REPLY_GB] != "") {
-                    $search_common .= "AND REPLY_GB = '".$_search[REPLY_GB]."' ";
+                if (isset($_search['REPLY_GB']) && $_search['REPLY_GB'] != "") {
+                    $search_common .= "AND REPLY_GB = '".$_search['REPLY_GB']."' ";
                 }
 
-                if (isset($_search[TODAY_DATE]) && $_search[TODAY_DATE] != "") {
-                    $search_common .= "AND DATE_FORMAT(REG_DT, '%Y-%m-%d') = CONCAT('".$_search[YEAR]."','-' ,'".$_search[MONTH]."', '-', '".$_search[DAY]."')";
+                if (isset($_search['TODAY_DATE']) && $_search['TODAY_DATE'] != "") {
+                    $search_common .= "AND DATE_FORMAT(REG_DT, '%Y-%m-%d') = CONCAT('".$_search['YEAR']."','-' ,'".$_search['MONTH']."', '-', '".$_search['DAY']."')";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order = "ORDER BY ".$_search[SORT]." ".$_search[ORDER];
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order = "ORDER BY ".$_search['SORT']." ".$_search['ORDER'];
                 }
 
-                if (isset($_search[PAGE_NO]) && $_search[PAGE_NO] != "") {
-                    $limit .= "LIMIT ".(($_search[PAGE_NO] - 1) * $_search[PAGE_SIZE]).", ".$_search[PAGE_SIZE];
+                if (isset($_search['PAGE_NO']) && $_search['PAGE_NO'] != "") {
+                    $limit .= "LIMIT ".(($_search['PAGE_NO'] - 1) * $_search['PAGE_SIZE']).", ".$_search['PAGE_SIZE'];
                 }
 
                 $sql = "SELECT
-                            NO, PARENT_NO, COMMENT, (SELECT COUNT(NO) FROM COM_REPLY WHERE PARENT_NO = R.NO ".$search_common.") AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
-                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL, REG_UID, (SELECT COUNT(NO) FROM COM_REPLY WHERE 1=1 ".$search_common.") AS TOTAL_COUNT
-                        FROM
-                            COM_REPLY R
-                        WHERE 1=1
-                            AND PARENT_NO = 0
-                            ".$search_common."
-                        ".$sort_order."
-                        ".$limit."
+                            DATA.*, F.PATH, F.FILE_ID
+                        FROM (
+                            SELECT
+                                NO, PARENT_NO, COMMENT, (SELECT COUNT(NO) FROM COM_REPLY WHERE PARENT_NO = R.NO ".$search_common.") AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
+                                ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL, REG_UID, (SELECT COUNT(NO) FROM COM_REPLY WHERE 1=1 ".$search_common.") AS TOTAL_COUNT
+                            FROM
+                                COM_REPLY R
+                            WHERE 1=1
+                                AND PARENT_NO = 0
+                                ".$search_common."
+                            ".$sort_order."
+                            ".$limit."
+                        ) AS DATA
+                        INNER JOIN COM_USER U ON DATA.REG_UID = U.USER_ID
+                        LEFT OUTER JOIN COM_FILE F ON U.NO = F.TARGET_NO AND F.TARGET_GB = 'USER' AND F.FILE_GB = 'THUMB'
                         ";
 
                 $__trn = '';
@@ -100,7 +106,7 @@
                                 DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i') AS REG_DT,
                                 BLIND_FL, REG_UID
                             FROM COM_REPLY
-                            WHERE PARENT_NO = ".$row[NO]."
+                            WHERE PARENT_NO = ".$row['NO']."
                             ".$search_common."
                             ".$sort_order."";
 
@@ -127,8 +133,8 @@
 
                 $search_common = "";
 
-                if (isset($_search[TODAY_DATE]) && $_search[TODAY_DATE] != "") {
-                    $search_common .= "AND CONCAT(YEAR,'-',MONTH,'-',DAY) = CONCAT('".$_search[YEAR]."','-' ,'".$_search[MONTH]."', '-', '".$_search[DAY]."')";
+                if (isset($_search['TODAY_DATE']) && $_search['TODAY_DATE'] != "") {
+                    $search_common .= "AND CONCAT(YEAR,'-',MONTH,'-',DAY) = CONCAT('".$_search['YEAR']."','-' ,'".$_search['MONTH']."', '-', '".$_search['DAY']."')";
                 }
 
                 $sql = "SELECT NO, SUBJECT, BODY
@@ -171,32 +177,32 @@
 
                 $search_common = "";
 
-                if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                    $search_common .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
+                if (isset($_search['TARGET_NO']) && $_search['TARGET_NO'] != "") {
+                    $search_common .= "AND TARGET_NO = ".$_search['TARGET_NO']." ";
                 }
 
-                if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
-                    $search_common .= "AND TARGET_GB = '".$_search[TARGET_GB]."' ";
+                if (isset($_search['TARGET_GB']) && $_search['TARGET_GB'] != "") {
+                    $search_common .= "AND TARGET_GB = '".$_search['TARGET_GB']."' ";
                 }
 
-                if (isset($_search[REPLY_GB]) && $_search[REPLY_GB] != "") {
-                    $search_common .= "AND REPLY_GB = '".$_search[REPLY_GB]."' ";
+                if (isset($_search['REPLY_GB']) && $_search['REPLY_GB'] != "") {
+                    $search_common .= "AND REPLY_GB = '".$_search['REPLY_GB']."' ";
                 }
 
-                if (isset($_search[TODAY_DATE]) && $_search[TODAY_DATE] != "") {
-                    $search_common .= "AND DATE_FORMAT(REG_DT, '%Y-%m-%d') = CONCAT('".$_search[YEAR]."','-' ,'".$_search[MONTH]."', '-', '".$_search[DAY]."')";
+                if (isset($_search['TODAY_DATE']) && $_search['TODAY_DATE'] != "") {
+                    $search_common .= "AND DATE_FORMAT(REG_DT, '%Y-%m-%d') = CONCAT('".$_search['YEAR']."','-' ,'".$_search['MONTH']."', '-', '".$_search['DAY']."')";
                 }
 
-                if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
-                    $search_common .= "AND REG_UID = '".$_search[REG_UID]."' ";
+                if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
+                    $search_common .= "AND REG_UID = '".$_search['REG_UID']."' ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order = "ORDER BY ".$_search[SORT]." ".$_search[ORDER];
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order = "ORDER BY ".$_search['SORT']." ".$_search['ORDER'];
                 }
 
-                if (isset($_search[PAGE_NO]) && $_search[PAGE_NO] != "") {
-                    $limit .= "LIMIT ".(($_search[PAGE_NO] - 1) * $_search[PAGE_SIZE]).", ".$_search[PAGE_SIZE];
+                if (isset($_search['PAGE_NO']) && $_search['PAGE_NO'] != "") {
+                    $limit .= "LIMIT ".(($_search['PAGE_NO'] - 1) * $_search['PAGE_SIZE']).", ".$_search['PAGE_SIZE'];
                 }
 
                 $sql = "SELECT
@@ -226,13 +232,13 @@
 
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
             if (!isset($_SESSION['uid'])) {
                 $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
             }
 
-           if ( trim($_model[COMMENT]) == "" ) {
+           if ( trim($_model['COMMENT']) == "" ) {
                 $_d->failEnd("내용을 입력하세요");
             }
 
@@ -259,18 +265,18 @@
                         BLIND_FL
                     ) VALUES (
                         (SELECT MAX(NO)+1 FROM COM_REPLY a),
-                        ".$_model[PARENT_NO].",
-                        '".$_model[REPLY_NO]."',
-                        '".$_model[REPLY_GB]."',
-                        '".$_model[LEVEL]."',
-                        '".addslashes($_model[COMMENT])."',
+                        ".$_model['PARENT_NO'].",
+                        '".$_model['REPLY_NO']."',
+                        '".$_model['REPLY_GB']."',
+                        '".$_model['LEVEL']."',
+                        '".addslashes($_model['COMMENT'])."',
                         '".$_SESSION['uid']."',
                         '".$_SESSION['nick']."',
                         '".$_SESSION['name']."',
                         NOW(),
                         '0',
-                        '".$_model[TARGET_NO]."',
-                        '".$_model[TARGET_GB]."',
+                        '".$_model['TARGET_NO']."',
+                        '".$_model['TARGET_GB']."',
                         'N'
                     )";
 
@@ -364,7 +370,7 @@
 
                 $sql = "UPDATE COM_REPLY
                         SET
-                            COMMENT = '".addslashes($_model[COMMENT])."',
+                            COMMENT = '".addslashes($_model['COMMENT'])."',
                             REG_UID = '".$_SESSION['uid']."',
                             NICK_NM = '".$_SESSION['nick']."',
                             REG_NM = '".$_SESSION['name']."'

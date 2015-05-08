@@ -16,14 +16,14 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -54,28 +54,28 @@
                 $limit = "";
                 $sort_order = "ORDER BY R.REG_DT DESC";
 
-                if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                    $search_common .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
+                if (isset($_search['TARGET_NO']) && $_search['TARGET_NO'] != "") {
+                    $search_common .= "AND TARGET_NO = ".$_search['TARGET_NO']." ";
                 }
 
-                if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
-                    $search_common .= "AND TARGET_GB = '".$_search[TARGET_GB]."' ";
+                if (isset($_search['TARGET_GB']) && $_search['TARGET_GB'] != "") {
+                    $search_common .= "AND TARGET_GB = '".$_search['TARGET_GB']."' ";
                 }
 
-                if (isset($_search[REPLY_GB]) && $_search[REPLY_GB] != "") {
-                    $search_common .= "AND REPLY_GB = '".$_search[REPLY_GB]."' ";
+                if (isset($_search['REPLY_GB']) && $_search['REPLY_GB'] != "") {
+                    $search_common .= "AND REPLY_GB = '".$_search['REPLY_GB']."' ";
                 }
 
-                if (isset($_search[TODAY_DATE]) && $_search[TODAY_DATE] != "") {
-                    $search_common .= "AND DATE_FORMAT(REG_DT, '%Y-%m-%d') = '".$_search[TODAY_DATE]."' ";
+                if (isset($_search['TODAY_DATE']) && $_search['TODAY_DATE'] != "") {
+                    $search_common .= "AND DATE_FORMAT(REG_DT, '%Y-%m-%d') = '".$_search['TODAY_DATE']."' ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order = "ORDER BY R.".$_search[SORT]." ".$_search[ORDER];
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order = "ORDER BY R.".$_search['SORT']." ".$_search['ORDER'];
                 }
 
-                if (isset($_search[PAGE_NO]) && $_search[PAGE_NO] != "") {
-                    $limit .= "LIMIT ".(($_search[PAGE_NO] - 1) * $_search[PAGE_SIZE]).", ".$_search[PAGE_SIZE];
+                if (isset($_search['PAGE_NO']) && $_search['PAGE_NO'] != "") {
+                    $limit .= "LIMIT ".(($_search['PAGE_NO'] - 1) * $_search['PAGE_SIZE']).", ".$_search['PAGE_SIZE'];
                 }
 
                 //TODO: 조회
@@ -111,7 +111,7 @@
                                 WHERE   @NO IS NOT NULL
                             ) REPLY_CTE, COM_REPLY_EVENT R
                             WHERE REPLY_CTE.NO = R.NO
-                            AND R.PARENT_NO = ".$row[NO]."
+                            AND R.PARENT_NO = ".$row['NO']."
                             ".$sort_order."";
 
                     $file_data = $_d->getData($sql);
@@ -148,8 +148,8 @@
 
                 $sql = "SELECT COUNT(*) AS COUNT
                         FROM COM_REPLY_EVENT
-                        WHERE REG_UID = '".$_search[REG_UID]."'
-                          AND TARGET_NO = '".$_search[TARGET_NO]."'";
+                        WHERE REG_UID = '".$_search['REG_UID']."'
+                          AND TARGET_NO = '".$_search['TARGET_NO']."'";
 
 
                 $data = $_d->sql_query($sql);
@@ -165,9 +165,9 @@
 
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
-           if ( trim($_model[COMMENT]) == "" ) {
+           if ( trim($_model['COMMENT']) == "" ) {
                 $_d->failEnd("내용을 입력하세요");
             }
 
@@ -192,18 +192,18 @@
                         TARGET_GB,
                         BLIND_FL
                     ) VALUES (
-                        ".$_model[PARENT_NO].",
-                        '".$_model[REPLY_NO]."',
-                        '".$_model[REPLY_GB]."',
-                        '".$_model[LEVEL]."',
-                        '".str_replace("'", "\\'",$_model[COMMENT])."',
-                        '".$_model[REG_UID]."',
-                        '".$_model[NICK_NM]."',
-                        '".$_model[USER_NM]."',
+                        ".$_model['PARENT_NO'].",
+                        '".$_model['REPLY_NO']."',
+                        '".$_model['REPLY_GB']."',
+                        '".$_model['LEVEL']."',
+                        '".str_replace("'", "\\'",$_model['COMMENT'])."',
+                        '".$_model['REG_UID']."',
+                        '".$_model['NICK_NM']."',
+                        '".$_model['USER_NM']."',
                         SYSDATE(),
                         '0',
-                        '".$_model[TARGET_NO]."',
-                        '".$_model[TARGET_GB]."',
+                        '".$_model['TARGET_NO']."',
+                        '".$_model['TARGET_GB']."',
                         'N'
                     )";
 
@@ -293,10 +293,10 @@
 
                 $sql = "UPDATE COM_REPLY_EVENT
                         SET
-                            COMMENT = '".$_model[COMMENT]."',
-                            REG_UID = '".$_model[REG_UID]."',
-                            NICK_NM = '".$_model[NICK_NM]."',
-                            REG_NM = '".$_model[USER_NM]."'
+                            COMMENT = '".$_model['COMMENT']."',
+                            REG_UID = '".$_model['REG_UID']."',
+                            NICK_NM = '".$_model['NICK_NM']."',
+                            REG_NM = '".$_model['USER_NM']."'
                         WHERE
                             NO = ".$_key."
                         ";

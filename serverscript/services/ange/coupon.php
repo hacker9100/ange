@@ -16,14 +16,14 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_d("### [START]");
+MtUtil::_d("### ['START']");
 MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
 $_d = new MtJson(null);
@@ -69,18 +69,18 @@ switch ($_method) {
         } else if($_type == 'list'){
 
             // 검색조건 추가
-            /*               if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
+            /*               if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
                                $search_where .= "AND AMS.USER_ID = '".$_SESSION['uid']."'";
                            }*/
 
             $limit = "";
 
             if (isset($_page)) {
-                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
             }
 
 //            // 검색조건 추가
-//            if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
+//            if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
 //                $search_where .= "AND AUM.USER_ID = '".$_SESSION['uid']."'";
 //            }
 
@@ -131,18 +131,18 @@ switch ($_method) {
 //            }
             $search_where = "";
 
-            if (isset($_search[YEAR]) && $_search[YEAR] != "") {
-                $search_where .= "AND DATE_FORMAT(NOW(), '%Y') = '".$_search[YEAR]."'";
+            if (isset($_search['YEAR']) && $_search['YEAR'] != "") {
+                $search_where .= "AND DATE_FORMAT(NOW(), '%Y') = '".$_search['YEAR']."'";
             }
 
-            if (isset($_search[MONTH]) && $_search[MONTH] != "") {
-                $search_where .= "AND DATE_FORMAT(NOW(), '%Y%m') = '".$_search[MONTH]."'";
+            if (isset($_search['MONTH']) && $_search['MONTH'] != "") {
+                $search_where .= "AND DATE_FORMAT(NOW(), '%Y%m') = '".$_search['MONTH']."'";
             }
 
             $sql = "SELECT COUNT(*) AS COUPON_CNT
                  FROM ANGE_COUPON
                  WHERE 1 = 1
-                   AND COUPON_CD = '".$_search[COUPON_CD]."'
+                   AND COUPON_CD = '".$_search['COUPON_CD']."'
                    AND USER_ID = '".$_SESSION['uid']."'
                    ".$search_where."";
 
@@ -167,19 +167,19 @@ switch ($_method) {
                             USER_ID,
                             REG_DT
                         ) VALUES (
-                             '".$_model[COUPON_NM]."'
-                            , '".$_model[COUPON_GB]."'
-                            , '".$_model[COUPON_CD]."'
+                             '".$_model['COUPON_NM']."'
+                            , '".$_model['COUPON_GB']."'
+                            , '".$_model['COUPON_CD']."'
                             , 'Y'
                             , '".$_SESSION['uid']."'
                             , SYSDATE()
                         )";
 
-        /*".$_model[SORT_IDX]."*/
+        /*".$_model['SORT_IDX']."*/
 
         $_d->sql_query($sql);
 
-        if(isset($_model[MILEAGE]) && $_model[MILEAGE] != ""){
+        if(isset($_model['MILEAGE']) && $_model['MILEAGE'] != ""){
             $sql = "INSERT INTO ANGE_USER_MILEAGE
                                 (
                                     USER_ID,
@@ -195,7 +195,7 @@ switch ($_method) {
                                     , '0'
                                     , '0'
                                     , '쿠폰등록'
-                                    ,  '".$_model[MILEAGE]."'
+                                    ,  '".$_model['MILEAGE']."'
                                     , '쿠폰등록'
                                 )";
 
@@ -203,8 +203,8 @@ switch ($_method) {
 
             $sql = "UPDATE COM_USER
                                 SET
-                                    SUM_POINT = SUM_POINT + ".$_model[MILEAGE].",
-                                    REMAIN_POINT = REMAIN_POINT + ".$_model[MILEAGE]."
+                                    SUM_POINT = SUM_POINT + ".$_model['MILEAGE'].",
+                                    REMAIN_POINT = REMAIN_POINT + ".$_model['MILEAGE']."
                                 WHERE
                                     USER_ID = '".$_SESSION['uid']."'
                                 ";
@@ -225,13 +225,13 @@ switch ($_method) {
 
     case "PUT":
 
-        MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+        MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
         $sql = "UPDATE ANGE_COUPON  SET
-                        COUPON_NM = '".$_model[COUPON_NM]."'
-                        , COUPON_GB = '".$_model[COUPON_GB]."'
-                        , COUPON_CD = '".$_model[COUPON_CD]."'
-                        , USE_FL = '".$_model[USE_FL]."'
+                        COUPON_NM = '".$_model['COUPON_NM']."'
+                        , COUPON_GB = '".$_model['COUPON_GB']."'
+                        , COUPON_CD = '".$_model['COUPON_CD']."'
+                        , USE_FL = '".$_model['USE_FL']."'
                  WHERE NO = '".$_key."'
                     ";
 

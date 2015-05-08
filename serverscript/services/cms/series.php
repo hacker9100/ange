@@ -16,7 +16,7 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 
     $_d = new MtJson(null);
@@ -52,12 +52,12 @@
                 $search_where = "";
                 $sort_order = "";
 
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND SERIES_NM LIKE '%".$_search[KEYWORD]."%' ";
+                if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                    $search_where .= "AND SERIES_NM LIKE '%".$_search['KEYWORD']."%' ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
                 $sql = "SELECT
@@ -131,11 +131,11 @@
                         REG_DT,
                         NOTE
                     ) VALUES (
-                        '".$_model[SERIES_NM]."'
-                        , '".$_model[SERIES_GB]."'
+                        '".$_model['SERIES_NM']."'
+                        , '".$_model['SERIES_GB']."'
                         , '0'
                         , SYSDATE()
-                        , '".$_model[NOTE]."'
+                        , '".$_model['NOTE']."'
                     )";
 
             $_d->sql_query($sql);
@@ -156,14 +156,14 @@
 
 //            $FORM = json_decode(file_get_contents("php://input"),true);
 
-            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
             $sql = "UPDATE CMS_SERIES
                     SET
-                        SERIES_NM = '".$_model[SERIES_NM]."'
-                        ,SERIES_GB = '".$_model[SERIES_GB]."'
-                        ,SERIES_ST = '".$_model[SERIES_ST]."'
-                        ,NOTE = '".$_model[NOTE]."'
+                        SERIES_NM = '".$_model['SERIES_NM']."'
+                        ,SERIES_GB = '".$_model['SERIES_GB']."'
+                        ,SERIES_ST = '".$_model['SERIES_ST']."'
+                        ,NOTE = '".$_model['NOTE']."'
                     WHERE
                         NO = ".$_key."
                     ";

@@ -16,7 +16,7 @@
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
     MtUtil::_d(print_r($_REQUEST,true));
 
     MtUtil::_d(json_encode(file_get_contents("php://input"),true));
@@ -26,8 +26,8 @@
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -45,8 +45,8 @@
             if ($_type == 'item') {
                 $search_where = "";
 
-                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
-                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
+                if (isset($_search['COMM_GB']) && $_search['COMM_GB'] != "") {
+                    $search_where .= "AND COMM_GB = '".$_search['COMM_GB']."' ";
                 }
 
                 $err = 0;
@@ -101,13 +101,13 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if (isset($_search[BOARD])) {
+                if (isset($_search['BOARD'])) {
                     $sql = "SELECT
                               NO, PARENT_NO, HEAD, SUBJECT, BODY, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG
                             FROM
                               COM_BOARD
                             WHERE
-                              COMM_NO = ".$data[COMM_NO]."
+                              COMM_NO = ".$data['COMM_NO']."
                             ";
 
                     $__trn = '';
@@ -120,7 +120,7 @@
                                     COM_FILE F
                                 WHERE
                                     F.TARGET_GB = 'CMS_BOARD'
-                                    AND F.TARGET_NO = ".$row[NO]."
+                                    AND F.TARGET_NO = ".$row['NO']."
                                 ";
 
                         $row['FILES'] = $_d->getData($sql);
@@ -159,20 +159,20 @@
                 $sort_order = "";
                 $limit = "";
 
-                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
-                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
+                if (isset($_search['COMM_GB']) && $_search['COMM_GB'] != "") {
+                    $search_where .= "AND COMM_GB = '".$_search['COMM_GB']."' ";
                 }
 
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                    $search_where .= "AND ".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%' ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
                 if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
                 $sql = "SELECT
@@ -217,7 +217,7 @@
             $err = 0;
             $msg = "";
 
-            if( trim($_model[COMM_NM]) == "" ){
+            if( trim($_model['COMM_NM']) == "" ){
                 $_d->failEnd("제목을 작성 하세요");
             }
 
@@ -232,12 +232,12 @@
                         COMM_ST,
                         COMM_CLASS
                     ) VALUES (
-                        '".$_model[COMM_NM]."',
-                        '".$_model[COMM_GB]."',
+                        '".$_model['COMM_NM']."',
+                        '".$_model['COMM_GB']."',
                         '".$_SESSION['name']."',
                         SYSDATE(),
-                        '".$_model[COMM_ST]."',
-                        '".$_model[COMM_CLASS]."',
+                        '".$_model['COMM_ST']."',
+                        '".$_model['COMM_CLASS']."',
                     )";
 
             $_d->sql_query($sql);
@@ -263,7 +263,7 @@
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            if( trim($_model[COMM_NM]) == "" ){
+            if( trim($_model['COMM_NM']) == "" ){
                 $_d->failEnd("제목을 작성 하세요");
             }
 
@@ -290,21 +290,21 @@
             $insert_path = null;
 
             try {
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                     }
 
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                    for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                         $file = $files[$i];
 
-                        if (file_exists($upload_path.$file[name])) {
+                        if (file_exists($upload_path.$file['name'])) {
                             $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                            rename($upload_path.$file['name'], $source_path.$uid);
+                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
 
-                            MtUtil::_d("------------>>>>> imgUrl : ".$file[name]);
+                            MtUtil::_d("------------>>>>> imgUrl : ".$file['name']);
                             MtUtil::_d("------------>>>>> imgUrl : ".'http://localhost'.$source_path.$uid);
                         } else {
                             $insert_path[$i] = array(path => '', uid => '', kind => '');
@@ -323,13 +323,13 @@
 
             $sql = "UPDATE ANGE_COMM
                     SET
-                        COMM_NM = '".$_model[COMM_NM]."',
-                        COMM_GB = '".$_model[COMM_GB]."',
-                        COMM_ST = '".$_model[COMM_ST]."',
-                        COMM_CLASS = '".$_model[COMM_CLASS]."',
-                        COMM_MG_ID = '".$_model[COMM_MG_ID]."',
-                        COMM_MG_NM = '".$_model[COMM_MG_NM]."',
-                        NOTE = '".$_model[NOTE]."'
+                        COMM_NM = '".$_model['COMM_NM']."',
+                        COMM_GB = '".$_model['COMM_GB']."',
+                        COMM_ST = '".$_model['COMM_ST']."',
+                        COMM_CLASS = '".$_model['COMM_CLASS']."',
+                        COMM_MG_ID = '".$_model['COMM_MG_ID']."',
+                        COMM_MG_NM = '".$_model['COMM_MG_NM']."',
+                        NOTE = '".$_model['NOTE']."'
                     WHERE
                         NO = '".$_key."'
                     ";
@@ -356,35 +356,35 @@
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                 $is_delete = true;
 
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
                     for ($i = 0 ; $i < count($files); $i++) {
-                        if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
+                        if ($row['FILE_NM'] == $files[$i]['name'] && $row['FILE_SIZE'] == $files[$i]['size']) {
                             $is_delete = false;
                         }
                     }
                 }
 
                 if ($is_delete) {
-                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row['NO'];
 
                     $_d->sql_query($sql);
 
-                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                    if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                        unlink('../../..'.$row['PATH'].$row['FILE_ID']);
                     }
                 }
             }
 
-            if (count($_model[FILES]) > 0) {
-                $files = $_model[FILES];
+            if (count($_model['FILES']) > 0) {
+                $files = $_model['FILES'];
 
                 for ($i = 0 ; $i < count($files); $i++) {
                     $file = $files[$i];
                     MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                    if ($insert_path[$i][uid] != "") {
+                    if ($insert_path[$i]['uid'] != "") {
                         $sql = "INSERT INTO COM_FILE
                                 (
                                     FILE_NM
@@ -400,15 +400,15 @@
                                     ,TARGET_NO
                                     ,TARGET_GB
                                 ) VALUES (
-                                    '".$file[name]."'
-                                    , '".$insert_path[$i][uid]."'
-                                    , '".$insert_path[$i][path]."'
-                                    , '".$file[type]."'
-                                    , '".$file[size]."'
+                                    '".$file['name']."'
+                                    , '".$insert_path[$i]['uid']."'
+                                    , '".$insert_path[$i]['path']."'
+                                    , '".$file['type']."'
+                                    , '".$file['size']."'
                                     , '0'
                                     , SYSDATE()
                                     , 'C'
-                                    , '".strtoupper($file[kind])."'
+                                    , '".strtoupper($file['kind'])."'
                                     , '".$i."'
                                     , '".$target_no."'
                                     , '".$target_gb."'

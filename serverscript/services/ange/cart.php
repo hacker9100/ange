@@ -16,7 +16,7 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_d("### [START]");
+MtUtil::_d("### ['START']");
 MtUtil::_d(print_r($_REQUEST,true));
 
 MtUtil::_d(json_encode(file_get_contents("php://input"),true));
@@ -26,8 +26,8 @@ MtUtil::_d(json_encode(file_get_contents("php://input"),true));
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
 $_d = new MtJson(null);
@@ -45,8 +45,8 @@ switch ($_method) {
         if ($_type == 'item') {
             $search_where = "";
 
-//                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
-//                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
+//                if (isset($_search['COMM_GB']) && $_search['COMM_GB'] != "") {
+//                    $search_where .= "AND COMM_GB = '".$_search['COMM_GB']."' ";
 //                }
 
             $err = 0;
@@ -99,19 +99,19 @@ switch ($_method) {
             $limit = "";
 
 
-            if ($_search[PRODUCT_GB] == "mileage") {
+            if ($_search['PRODUCT_GB'] == "mileage") {
                 $search_where .= "AND AP.PRODUCT_GB IN ('MILEAGE', 'AUCTION')";
-            }else if ($_search[PRODUCT_GB] == "cummerce") {
+            }else if ($_search['PRODUCT_GB'] == "cummerce") {
                 $search_where .= "AND AP.PRODUCT_GB IN ('CUMMERCE', 'NAMING')";
             }
 
-            /*AND BODY LIKE '%".$_search[KEYWORD]."%'";*/
-//                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-//                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+            /*AND BODY LIKE '%".$_search['KEYWORD']."%'";*/
+//                if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+//                    $search_where .= "AND ".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%' ";
 //                }
 
             if (isset($_page)) {
-                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
             }
 
             $sql = "SELECT
@@ -143,7 +143,7 @@ switch ($_method) {
 
             $data = null;
 
-            if (isset($_search[FILE])) {
+            if (isset($_search['FILE'])) {
                 $__trn = '';
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
@@ -192,7 +192,7 @@ switch ($_method) {
         $err = 0;
         $msg = "";
 
-        /*if( trim($_model[PRODUCT_NM]) == "" ){
+        /*if( trim($_model['PRODUCT_NM']) == "" ){
             $_d->failEnd("상품명을 작성 하세요");
         }*/
 
@@ -201,52 +201,52 @@ switch ($_method) {
         $source_path = '../../..'.$file_path;
         $insert_path = array();
 
-            $body_str = $_model[BODY];
+            $body_str = $_model['BODY'];
 
             try {
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                         @mkdir($source_path.'thumbnail/');
                         @mkdir($source_path.'medium/');
                     }
 
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                    for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                         $file = $files[$i];
 
-                        if (file_exists($upload_path.$file[name])) {
+                        if (file_exists($upload_path.$file['name'])) {
                             $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                            rename($upload_path.$file['name'], $source_path.$uid);
+                            rename($upload_path.'thumbnail/'.$file['name'], $source_path.'thumbnail/'.$uid);
 
-                            if ($file[version] == 6 ) {
-                                $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                            if ($file['version'] == 6 ) {
+                                $body_str = str_replace($file['url'], BASE_URL.$file_path.$uid, $body_str);
                             } else {
-                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                rename($upload_path.'medium/'.$file['name'], $source_path.'medium/'.$uid);
+                                $body_str = str_replace($file['mediumUrl'], BASE_URL.$file_path.'medium/'.$uid, $body_str);
                             }
 
-                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
 
-                            MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                            MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i]['path']);
 
 
                         }
                     }
                 }
 
-                $_model[BODY] = $body_str;
+                $_model['BODY'] = $body_str;
             } catch(Exception $e) {
                 $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
                 break;
             }
 
             $_d->sql_beginTransaction();
-            if (isset($_model[CART]) && $_model[CART] != "") {
-                foreach ($_model[CART] as $e) {
+            if (isset($_model['CART']) && $_model['CART'] != "") {
+                foreach ($_model['CART'] as $e) {
 
-                    if( trim($e[PRODUCT_CNT]) == "" || $e[PRODUCT_CNT] == 0){
+                    if( trim($e['PRODUCT_CNT']) == "" || $e['PRODUCT_CNT'] == 0){
                         $_d->failEnd("수량을 선택 하세요");
                     }
 
@@ -258,8 +258,8 @@ switch ($_method) {
                                 REG_DT
                             ) VALUES (
                                '".$_SESSION['uid']."',
-                                ".$e[PRODUCT_NO].",
-                                ".$e[PRODUCT_CNT].",
+                                ".$e['PRODUCT_NO'].",
+                                ".$e['PRODUCT_CNT'].",
                                 SYSDATE()
                             )";
 
@@ -268,18 +268,18 @@ switch ($_method) {
                     // 상품 재고 수정 SUM_IN_CNT(재고량) SUM_OUT_CNT(주문량)
 //                    $sql = "UPDATE ANGE_PRODUCT
 //                            SET
-//                                SUM_OUT_CNT = SUM_OUT_CNT + ".$e[PRODUCT_CNT]."
+//                                SUM_OUT_CNT = SUM_OUT_CNT + ".$e['PRODUCT_CNT']."
 //                            WHERE
-//                                NO = $e[PRODUCT_NO]
+//                                NO = $e['PRODUCT_NO']
 //                            ";
 //                    $_d->sql_query($sql);
 //
-//                    if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
+//                    if(isset($e['PARENT_NO']) && $e['PARENT_NO'] != 0){
 //
 //                        $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
 //                                   SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
 //                               FROM ANGE_PRODUCT
-//                               WHERE PARENT_NO = ".$e[PARENT_NO]."
+//                               WHERE PARENT_NO = ".$e['PARENT_NO']."
 //                                ";
 //
 //                        $result = $_d->sql_query($sql,true);
@@ -288,7 +288,7 @@ switch ($_method) {
 //                            $sql = "UPDATE ANGE_PRODUCT
 //                            SET SUM_IN_CNT = ".$row['SUM_IN_CNT'].",
 //                                SUM_OUT_CNT = ".$row['SUM_OUT_CNT']."
-//                            WHERE NO = ".$e[PARENT_NO]."
+//                            WHERE NO = ".$e['PARENT_NO']."
 //                        ";
 //                            $_d->sql_query($sql);
 //                        }
@@ -324,38 +324,38 @@ switch ($_method) {
             $source_path = '../../..'.$file_path;
             $insert_path = array();
 
-            $body_str = $_model[BODY];
+            $body_str = $_model['BODY'];
 
             try {
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                         @mkdir($source_path.'thumbnail/');
                         @mkdir($source_path.'medium/');
                     }
 
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                    for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                         $file = $files[$i];
 
-                        if (file_exists($upload_path.$file[name])) {
+                        if (file_exists($upload_path.$file['name'])) {
                             $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                            rename($upload_path.$file['name'], $source_path.$uid);
+                            rename($upload_path.'thumbnail/'.$file['name'], $source_path.'thumbnail/'.$uid);
+                            rename($upload_path.'medium/'.$file['name'], $source_path.'medium/'.$uid);
                             $insert_path[$i] = array(path => $file_path, uid => $uid);
 
-                            MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
+                            MtUtil::_d("------------>>>>> mediumUrl : ".$file['mediumUrl']);
                             MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
 
-                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                            $body_str = str_replace($file['mediumUrl'], BASE_URL.$file_path.'medium/'.$uid, $body_str);
                         } else {
                             $insert_path[$i] = array(path => '', uid => '');
                         }
                     }
                 }
 
-                $_model[BODY] = $body_str;
+                $_model['BODY'] = $body_str;
             } catch(Exception $e) {
                 $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
                 break;
@@ -367,13 +367,13 @@ switch ($_method) {
             $_d->sql_beginTransaction();
 
 
-            if( trim($_model[PRODUCT_NM]) == '' ){
+            if( trim($_model['PRODUCT_NM']) == '' ){
                 $_d->failEnd("제목을 작성 하세요");
             }
 
             $sql = "UPDATE ANGE_CART
                     SET
-                        PRODUCT_CNT = ".$_model[PRODUCT_CNT]."
+                        PRODUCT_CNT = ".$_model['PRODUCT_CNT']."
                     WHERE
                         PRODUCT_NO = ".$_key."
                 ";

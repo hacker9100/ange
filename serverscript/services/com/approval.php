@@ -16,14 +16,14 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -58,9 +58,9 @@
 
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
-            if ( trim($_model[TASK_NO]) == "" ) {
+            if ( trim($_model['TASK_NO']) == "" ) {
                 $_d->failEnd("태스크 순번이 없습니다");
             }
 
@@ -78,12 +78,12 @@
                         ,APPROVAL_DT
                         ,NOTE
                     ) VALUES (
-                        ".$_model[TASK_NO]."
-                        ,'".$_model[APPROVAL_ST]."'
-                        ,'".$_model[APPROVAL_ID]."'
-                        ,'".$_model[APPROVAL_NM]."'
+                        ".$_model['TASK_NO']."
+                        ,'".$_model['APPROVAL_ST']."'
+                        ,'".$_model['APPROVAL_ID']."'
+                        ,'".$_model['APPROVAL_NM']."'
                         ,SYSDATE()
-                        ,'".$_model[NOTE]."'
+                        ,'".$_model['NOTE']."'
                     )";
 
             $_d->sql_query($sql);
@@ -94,22 +94,22 @@
                 $msg = $_d->mysql_error;
             }
 
-            if (!empty($_model[APPROVAL_ST])) {
+            if (!empty($_model['APPROVAL_ST'])) {
 
-                if ($_model[APPROVAL_ST] == '11')
+                if ($_model['APPROVAL_ST'] == '11')
                     $parse = '12';
-                else if ($_model[APPROVAL_ST] == '12')
+                else if ($_model['APPROVAL_ST'] == '12')
                     $parse = '13';
-                else if ($_model[APPROVAL_ST] == '21')
+                else if ($_model['APPROVAL_ST'] == '21')
                     $parse = '22';
-                else if ($_model[APPROVAL_ST] == '22')
+                else if ($_model['APPROVAL_ST'] == '22')
                     $parse = '30';
 
                 $sql = "UPDATE CMS_TASK
                         SET
                             PHASE = '".$parse."'
                         WHERE
-                            NO = ".$_model[TASK_NO]."
+                            NO = ".$_model['TASK_NO']."
                         ";
 
                 $_d->sql_query($sql);
@@ -119,21 +119,21 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if ($_model[APPROVAL_ST] == '22') {
+                if ($_model['APPROVAL_ST'] == '22') {
                     $project_no;
                     $sql = "SELECT
                                 PHASE, PROJECT_NO
                             FROM
                                 CMS_TASK
                             WHERE
-                                PROJECT_NO = (SELECT PROJECT_NO FROM CMS_TASK WHERE NO = ".$_model[TASK_NO].")
+                                PROJECT_NO = (SELECT PROJECT_NO FROM CMS_TASK WHERE NO = ".$_model['TASK_NO'].")
                     ";
 
                     $result = $_d->sql_query($sql,true);
                     $is_all = true;
                     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                        $project_no = $row[PROJECT_NO];
-                        if ($row[PHASE] != '30') {
+                        $project_no = $row['PROJECT_NO'];
+                        if ($row['PHASE'] != '30') {
                             $is_all = false;
                         }
                     }
@@ -173,13 +173,13 @@
                         ,ACTION_PLACE
                         ,ETC
                     ) VALUES (
-                        '".$_model[TASK_NO]."'
+                        '".$_model['TASK_NO']."'
                         ,'APPROVAL'
                         ,SYSDATE()
                         ,'".$_SESSION['uid']."'
-                        ,'".$_model[TASK_NO]."'
+                        ,'".$_model['TASK_NO']."'
                         ,'TASK'
-                        ,'".($_model[APPROVAL_ST] == '11' ? 'GIVE_BACK' : 'APPROVAL')."'
+                        ,'".($_model['APPROVAL_ST'] == '11' ? 'GIVE_BACK' : 'APPROVAL')."'
                         ,'".$ip."'
                         ,'/content'
                         ,''

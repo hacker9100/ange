@@ -18,9 +18,13 @@ define([
         // 초기화
         $scope.init = function(session) {
 
+            var now = new Date();
+            var nowYear = now.getFullYear();
+            var nowMonth = now.getMonth() + 1;
+
             // $scope.search.year 가 null 일때 당해 입력
             // $scope.search.month 가 null 일때 당월 입력
-            $scope.search = {"year":"2015","month":"4"};
+            $scope.search = {"year":nowYear,"month":nowMonth};
 
             $scope.community = "캘린더";
             $scope.monthtable = "<b>Hi</b>";

@@ -145,12 +145,6 @@ MtUtil::_d("### [END]");
     <link rel="stylesheet" type="text/css" href="/css/ange/ange_ng-scrollbar.css" />
     <!--<link rel="stylesheet" type="text/css" href="css/dialog/dialogs.min.css" />-->
 
-    <!-- chart -->
-    <!--<link rel="stylesheet" type="text/css" href="/lib/chartjs/angular-chart.css" />-->
-
-    <!-- social -->
-    <link rel="stylesheet" type="text/css" href="/lib/angular-socialshare/angular-socialshare.css" />
-
     <!-- file-upload -->
     <!-- blueimp Gallery styles -->
     <link rel="stylesheet" href="css/file-upload/blueimp-gallery.css">

@@ -5,10 +5,40 @@
  */
 
 define([
-    // Component Test
-//    '../../../partials/admin/portlet-list',
-
-    '../../../partials/ange/story/test',
+//    // 공통
+//    '../../../partials/ange/com/com',
+//
+//    // 메인
+//    '../../../partials/ange/main',
+//
+//    // 앙쥬스토리
+//    '../../../partials/ange/story/story',
+//
+//    // 앙쥬피플
+//    '../../../partials/ange/people/people',
+//
+//    // 앙쥬맘스
+//    '../../../partials/ange/moms/moms',
+//
+//    // 마이앙쥬
+//    '../../../partials/ange/myange/myange',
+//
+//    // 앙쥬스토어
+//    '../../../partials/ange/store/store',
+//
+//    '../../../partials/ange/store/storeauction-intro',
+//
+//    // 앙쥬클럽
+//    '../../../partials/ange/club/club',
+//
+//    // 고객센터
+//    '../../../partials/ange/infodesk/infodesk',
+//
+//    // 회사소개
+//    '../../../partials/ange/company/company',
+//
+//    // 검색
+//    '../../../partials/ange/search/searchlist'
 
     // 공통
     '../../../partials/ange/com/ange-common',
@@ -17,7 +47,6 @@ define([
     '../../../partials/ange/com/ui-lnb',
     '../../../partials/ange/com/ui-utility',
     '../../../partials/ange/com/subside-ad',
-
     '../../../partials/ange/com/module-reply',
     '../../../partials/ange/com/board-report',
 
@@ -119,14 +148,10 @@ define([
     '../../../partials/ange/club/clubclinic-view',
     '../../../partials/ange/club/clubclinic-edit',
 
-    '../../../partials/ange/join/jointerms',
-    '../../../partials/ange/join/joinuserinfo',
-    '../../../partials/ange/join/joincertification',
-    '../../../partials/ange/join/joinresult',
-
     // 회사소개
     '../../../partials/ange/company/companyintro',
     '../../../partials/ange/company/companyaffiliates',
 
+    // 검색
     '../../../partials/ange/search/searchlist'
 ], function () {});

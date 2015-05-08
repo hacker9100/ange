@@ -82,8 +82,8 @@ define([
 //        alert(localStorage.getItem('userToken'))
 
         /********** ANGE 공통 함수 **********/
-        // 시스템 별로 분리 해야할지??
-        // 파일 사이즈 변환
+            // 시스템 별로 분리 해야할지??
+            // 파일 사이즈 변환
         $scope.formatFileSize = function (bytes) {
 //            if (typeof bytes !== 'number') {
 //                return '';
@@ -1149,5 +1149,1185 @@ define([
         $scope.click_showCalendar = function () {
             $location.url('/myange/calendar');
         };
+    }]);
+
+    controllers.controller('board-report', ['$rootScope', '$scope', '$window', '$sce', '$controller', '$location', '$modalInstance', '$q', 'dialogs', 'CONSTANT', 'UPLOAD', 'data', '$modal', function($rootScope, $scope, $window, $sce, $controller, $location, $modalInstance, $q, dialogs, CONSTANT, UPLOAD, data, $modal) {
+
+        $scope.init = function (){
+
+            console.log(data.TARGET_GB);
+            console.log(data.DETAIL_GB);
+
+            $scope.item.CHANNEL_NO = $scope.menu.CHANNEL_NO;
+            $scope.item.MENU_NO = $scope.menu.NO;
+            $scope.item.TARGET_NO = data.NO;
+            $scope.item.TARGET_GB = data.TARGET_GB;
+            $scope.item.TARGET_NOTE = data.SUBJECT;
+            $scope.item.DETAIL_GB = data.DETAIL_GB;
+            $scope.item.TARGET_UID = data.REG_UID;
+            $scope.item.TARGET_NICK = data.NICK_NM;
+            $scope.item.REG_UID = $scope.uid;
+            $scope.item.REG_NICK = $rootScope.nick;
+
+        }
+
+
+        $scope.click_saveReport = function (){
+
+            $scope.insertItem('ange/notify', 'item', $scope.item, false)
+                .then(function(){
+
+                    dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
+                    $modalInstance.close();
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        $scope.click_cancel = function () {
+            $modalInstance.close();
+        };
+
+
+        $scope.init();
+    }]);
+
+    controllers.controller('module-reply', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT) {
+
+        /********** 초기화 **********/
+        $scope.replyList = [];
+        $scope.reply = {};
+        $scope.replySearch = {};
+
+        $scope.showCommentDetails = false;
+        $scope.showReCommentDetails = false;
+
+        if ($scope.menu != undefined) {
+            $scope.comm_no = $scope.menu.COMM_NO;
+        }
+
+        if($rootScope.uid == undefined){
+            $scope.nouserid = true;
+        }else if($rootScope.uid == null || $rootScope.uid == ''){
+            $scope.nouserid = true;
+        }else{
+            $scope.nouserid = false;
+        }
+
+        // 페이징
+        $scope.replySearch.PAGE_NO = 1;
+        $scope.replySearch.PAGE_SIZE = 10;
+        $scope.replySearch.TOTAL_COUNT = 0;
+
+        $scope.pageChanged = function(){
+
+            console.log('Page changed to: ' + $scope.search.PAGE_NO);
+            $scope.replyList = [];
+            $scope.getReplyList();
+        }
+
+        /********** 이벤트 **********/
+        var temp_num = '';
+
+        $scope.click_toggleReplyConfig = function (r_num) {
+            //alert('photo_menu_' + p_num);
+            if (r_num == temp_num) {
+                temp_num = '';
+            }
+
+            if(r_num){
+                document.getElementById('reply_menu_' + r_num).style.display = "block";
+            }
+
+            if(temp_num) {
+                document.getElementById('reply_menu_' + temp_num).style.display = "none";
+            }
+            temp_num = r_num;
+        };
+
+        // 댓글 리스트
+        $scope.getReplyList = function () {
+
+            $scope.replySearch.TARGET_NO = $scope.TARGET_NO;
+            $scope.replySearch.TARGET_GB = $scope.TARGET_GB;
+
+            $scope.getItem('com/reply', 'item', {}, $scope.replySearch, true)
+                .then(function(data){
+
+                    if(data.COMMENT == null){
+                        $scope.replySearch.TOTAL_COUNT = 0;
+                    }else{
+                        $scope.replySearch.TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                    }
+
+                    var reply = data.COMMENT;
+                    $scope.replyItem = {};
+
+                    for(var i in reply) {
+
+                        if (reply[i].FILE_ID != null) {
+                            reply[i].profileImg = CONSTANT.BASE_URL + reply[i].PATH + reply[i].FILE_ID;
+                        }
+
+                        $("textarea#comment").val(reply[i].COMMENT);
+                        $scope.replyList.push(reply[i]);
+                    }
+                })
+                ['catch'](function(error){$scope.replyList = "";});
+        };
+
+        // 의견 등록
+        $scope.click_saveComment = function () {
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
+
+            $scope.replyItem.PARENT_NO = 0;
+            $scope.replyItem.LEVEL = 1;
+            $scope.replyItem.REPLY_NO = 1;
+            $scope.replyItem.TARGET_NO = $scope.TARGET_NO;
+            $scope.replyItem.TARGET_GB = $scope.TARGET_GB;
+            console.log($scope.replyItem.COMMENT);
+
+            //$scope.replyItem.COMMENT = $scope.replyItem.COMMENT.replace("\r\n","");
+
+            $scope.insertItem('com/reply', 'item', $scope.replyItem, false)
+                .then(function(){
+
+                    $scope.replySearch.TARGET_NO = $scope.replyItem.NO;
+                    $scope.replyList = [];
+                    $scope.getReplyList();
+
+                    $scope.replyItem.COMMENT = "";
+
+                    if ($scope.TARGET_GB == 'CONTENT') {
+                        $scope.addMileage('REPLY', 'CONTENT');
+                    } else if ($scope.TARGET_GB == 'BOARD') {
+                        $scope.addMileage('REPLY', $scope.menu.COMM_NO);
+                    } else if ($scope.TARGET_GB == 'REVIEW') {
+                        $scope.addMileage('REPLY', $scope.TARGET_GB);
+                    }
+                })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        // 답글 등록
+        $scope.click_saveReComment = function (item) {
+
+            if($rootScope.uid == null || $rootScope.uid == ''){
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }else if($rootScope.uid == undefined){
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
+
+            $scope.reply.PARENT_NO = item.NO;
+            $scope.reply.LEVEL = parseInt(item.LEVEL)+1;
+            $scope.reply.REPLY_NO = parseInt(item.REPLY_NO)+1;
+            $scope.reply.TARGET_GB = $scope.TARGET_GB;
+            $scope.reply.TARGET_NO = $scope.TARGET_NO;
+
+            $scope.REPLY_COMMENT = $scope.replyList;
+
+            $scope.insertItem('com/reply', 'item', $scope.reply, false)
+                .then(function(){
+                    $scope.replySearch.TARGET_NO = $scope.TARGET_NO;
+                    $scope.replyList = [];
+                    $scope.getReplyList();
+                    $scope.reply.COMMENT = "";
+                })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        // 블라인드 처리
+        $scope.click_blind = function (key){
+
+            /*for(var i=0; i< replyList.length; i++){
+             $scope.item.NO = replyList[i].NO;
+             }*/
+
+            console.log(key);
+
+            $scope.updateItem('com/reply', 'blind', key, {}, false)
+                .then(function(){
+
+                    dialogs.notify('알림', '블라인드 처리가 되었습니다.', {size: 'md'});
+
+                    $scope.replyList = [];
+                    $scope.getReplyList();
+                    $scope.reply.COMMENT = "";
+                })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        // 블라인드 처리 해제
+        $scope.click_blind_clear = function (key){
+
+            console.log(key);
+            $scope.updateItem('com/reply', 'blind_clear', key, {}, false)
+                .then(function(){
+
+                    dialogs.notify('알림', '블라인드 처리가 해제 되었습니다.', {size: 'md'});
+
+                    $scope.replyList = [];
+                    $scope.getReplyList();
+                    $scope.reply.COMMENT = "";
+                })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        // 댓글 수정
+        $scope.click_updateReply = function (key, comment) {
+
+            if($rootScope.uid == null || $rootScope.uid == ''){
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }else if($rootScope.uid == undefined){
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
+
+            console.log(key);
+
+            $scope.replyItem = {};
+            $scope.replyItem.COMMENT = comment;
+
+            $scope.updateItem('com/reply', 'item', key, $scope.replyItem, false)
+                .then(function(){
+
+                    $scope.replyItem.COMMENT = "";
+
+                    dialogs.notify('알림', '댓글이 수정 되었습니다.', {size: 'md'});
+
+                    $scope.replyList = [];
+                    $scope.getReplyList();
+                    $scope.reply.COMMENT = "";
+                })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        // 댓글 삭제
+        $scope.click_deleteReply = function (item) {
+
+            var dialog = dialogs.confirm('알림', '삭제 하시겠습니까.', {size: 'md'});
+
+            dialog.result.then(function(btn){
+                $scope.deleteItem('com/reply', 'item', item.NO, true)
+                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+                        $scope.replyList = [];
+                        $scope.getReplyList();
+                        $scope.reply.COMMENT = "";
+                    })
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }, function(btn) {
+                return;
+            });
+        }
+
+
+        $scope.fnByteCal = function () {
+
+            var tempText = $("#comment");
+            var tempChar = "";                                        // TextArea의 문자를 한글자씩 담는다
+            var tempChar2 = "";                                        // 절삭된 문자들을 담기 위한 변수
+            var countChar = 0;                                        // 한글자씩 담긴 문자를 카운트 한다
+            var tempHangul = 0;                                        // 한글을 카운트 한다
+            var maxSize = 500;                                        // 최대값
+
+            // 글자수 바이트 체크를 위한 반복
+            for(var i = 0 ; i < tempText.val().length; i++) {
+                tempChar = tempText.val().charAt(i);
+
+                // 한글일 경우 2 추가, 영문일 경우 1 추가
+                if(escape(tempChar).length > 4) {
+                    countChar += 2;
+                    tempHangul++;
+                } else {
+                    countChar++;
+                }
+            }
+
+            // 카운트된 문자수가 MAX 값을 초과하게 되면 절삭 수치까지만 출력을 한다.(한글 입력 체크)
+            // 내용에 한글이 입력되어 있는 경우 한글에 해당하는 카운트 만큼을 전체 카운트에서 뺀 숫자가 maxSize보다 크면 수행
+            if((countChar-tempHangul) > maxSize) {
+                alert("최대 글자수를 초과하였습니다.");
+
+                tempChar2 = tempText.val().substr(0, maxSize-1);
+                tempText.val(tempChar2);
+            }
+        }
+
+
+        // 신고버튼
+        $scope.click_boardReport = function (item) {
+
+            $scope.openCounselModal(item, 'lg');
+
+        };
+
+        // 신고버튼 팝업
+        $scope.openCounselModal = function (item, size){
+
+            var dlg = dialogs.create('reply_report.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.item = {};
+
+                    console.log($scope.menu.CHANNEL_NO);
+                    console.log($scope.menu.NO);
+
+                    $scope.item.CHANNEL_NO = $scope.menu.CHANNEL_NO;
+                    $scope.item.MENU_NO = $scope.menu.NO;
+                    $scope.item.TARGET_NO = item.NO;
+                    $scope.item.TARGET_GB = 'REPLY';
+                    $scope.item.DETAIL_GB = 'REPLY';
+                    $scope.item.TARGET_NOTE = item.COMMENT;
+                    $scope.item.TARGET_UID = item.REG_UID;
+                    $scope.item.TARGET_NICK = item.NICK_NM;
+                    $scope.item.REG_UID = $scope.uid;
+                    $scope.item.REG_NICK = $rootScope.nick;
+
+                    $scope.click_saveReport = function (){
+
+                        $scope.insertItem('ange/notify', 'item', $scope.item, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
+                                $modalInstance.close();
+                            })
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.close();
+                    };
+
+
+                }], item, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+                $scope.getReplyList();
+            },function(){
+
+            });
+        };
+
+        // 대댓글 신고버튼
+        $scope.click_re_boardReport = function (item, reitem) {
+
+            console.log(item);
+            console.log(reitem);
+
+            $scope.reportitem = {};
+
+            $scope.reportitem.TARGET_GB = 'REPLY';
+            $scope.reportitem.DETAIL_GB = 'REPLY';
+            $scope.reportitem.TARGET_NO = reitem.NO;
+            $scope.reportitem.TARGET_NOTE = reitem.COMMENT;
+            $scope.reportitem.ETC_NO = reitem.PARENT_NO;
+            $scope.reportitem.ETC_GB = 'REPLY';
+            $scope.reportitem.ETC_NOTE = item.COMMENT;
+            $scope.reportitem.TARGET_UID = reitem.REG_UID;
+            $scope.reportitem.TARGET_NICK = reitem.NICK_NM;
+
+            $scope.openReCounselModal($scope.reportitem, 'lg');
+
+        };
+
+        // 대댓글 신고버튼 팝업
+        $scope.openReCounselModal = function (item, size){
+
+            var dlg = dialogs.create('reply_report.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.item = {};
+
+                    $scope.item = item;
+                    $scope.item.CHANNEL_NO = $scope.menu.CHANNEL_NO;
+                    $scope.item.MENU_NO = $scope.menu.NO;
+                    $scope.item.REG_UID = $scope.uid;
+                    $scope.item.REG_NICK = $rootScope.nick;
+
+                    $scope.click_saveReport = function (){
+
+                        $scope.insertItem('ange/notify', 'item', $scope.item, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
+                                $modalInstance.close();
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.close();
+                    };
+
+
+                }], item, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+                $scope.getReplyList();
+            },function(){
+
+            });
+        };
+
+        // 메시지 버튼 클릭
+        $scope.click_sendMessage = function (item) {
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
+
+            $scope.openViewMessageRegModal(null, item, 'lg');
+        };
+
+        /********** 화면 초기화 **********/
+        $scope.init();
+        $scope.getReplyList();
+
+//        $scope.getSession()
+//            .then($scope.sessionCheck)
+//            ['catch']($scope.reportProblems);
+
+
+    }]);
+
+    controllers.controller('subside-ad', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $controller, $location, dialogs, CONSTANT) {
+
+        var spMenu = $location.path().split('/');
+
+        // 초기화
+        $scope.init = function() {
+            var sd_01 = 0;
+            var sd_02 = 0;
+
+            if ($scope.channel.CHANNEL_NO == 2) {
+                sd_01 = CONSTANT.AD_CODE_BN17;
+                sd_02 = CONSTANT.AD_CODE_BN16;
+            } else if ($scope.channel.CHANNEL_NO == 3) {
+                sd_01 = CONSTANT.AD_CODE_BN21;
+                sd_02 = CONSTANT.AD_CODE_BN20;
+            } else if ($scope.channel.CHANNEL_NO == 4) {
+                sd_01 = CONSTANT.AD_CODE_BN17;
+                sd_02 = CONSTANT.AD_CODE_BN16;
+            } else if ($scope.channel.CHANNEL_NO == 5) {
+                sd_01 = CONSTANT.AD_CODE_BN24;
+                sd_02 = CONSTANT.AD_CODE_BN23
+            } else if ($scope.channel.CHANNEL_NO == 8) {
+                sd_01 = CONSTANT.AD_CODE_BN56;
+                sd_02 = CONSTANT.AD_CODE_BN30;
+            }
+
+            // ange-portlet-link-image
+            $scope.option_r1 = {title: '이벤트 배너', api:'ad/banner', size: 1, gb: sd_01, link: true, open: true, image: '/imgs/ange/temp/temp_maineventbanner.png'};
+
+            // ange-portlet-link-image2
+            $scope.option_r2 = {title: '이벤트 배너', api:'ad/banner', size: 3, gb: sd_02, link: true, open: true, image: '/imgs/ange/temp/temp_maineventbanner.png'};
+        }
+
+        /********** 이벤트 **********/
+
+        $scope.init();
+
+    }]);
+
+    controllers.controller('ui-ads', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $controller, $location, dialogs, CONSTANT) {
+
+        angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+        $scope.option_r1 = {title: '롤링', api:'ad/banner', size: 2, id: 'ads1', type: 'ange', gb: 1, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+
+        $scope.option_r2 = {title: '롤링', api:'ad/banner', size: 5, id: 'ads2', type: 'ange', gb: 2, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+
+        $scope.option_r3 = {title: '롤링', api:'ad/banner', size: 2, id: 'ads3', type: 'ange', gb: 3, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+
+        $scope.option_r4 = {title: '롤링', api:'ad/banner', size: 2, id: 'ads4', type: 'banner', gb: CONSTANT.AD_CODE_BN02, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+
+        /********** 이벤트 **********/
+        $scope.click_mainLogo = function() {
+            $location.url("/main");
+        };
+
+        $scope.click_intro = function() {
+            $location.url("/company/intro")
+        };
+
+        $scope.click_affiliates = function() {
+            $location.url("/company/affiliates")
+        };
+
+    }]);
+
+    controllers.controller('ui-gnb', ['$scope', '$rootScope', '$location', 'dialogs', '$stateParams', function ($scope, $rootScope, $location, dialogs, $stateParams) {
+
+        $scope.search = {};
+
+        $scope.channeltitle = $stateParams.channel; //채널 타이틀(GNB 하이라이트용)
+
+        var spMenu = $location.path().split('/');
+
+        var channel_nm = $stateParams.channel;
+
+        /********** 이벤트 **********/
+        $scope.init = function () {
+            var getParam = function(key){
+                var _parammap = {};
+                document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+                    function decode(s) {
+                        return decodeURIComponent(s.split("+").join(" "));
+                    }
+
+                    _parammap[decode(arguments[1])] = decode(arguments[2]);
+                });
+
+                return _parammap[key];
+            };
+
+            $scope.search.SEARCH_KEYWORD = getParam("search_key");
+        };
+
+//        <a href="/story/content/list" ng-class="channeltitle == 'story' ? 'gnb_chnnel chnnel1 nowmenu' : 'gnb_chnnel chnnel1'">ANGE Story</a>
+//        <a href="/people/home" ng-class="channeltitle == 'people' ? 'gnb_chnnel chnnel2 nowmenu' : 'gnb_chnnel chnnel2'">ANGE People</a>
+//            <a href="/moms/home" ng-class="channeltitle == 'moms' ? 'gnb_chnnel chnnel3 nowmenu' : 'gnb_chnnel chnnel3'">ANGE Mom's</a>
+//        <a ng-click="click_myange();" ng-class="channeltitle == 'myange' ? 'gnb_chnnel chnnel4 nowmenu' : 'gnb_chnnel chnnel4'">My ANGE</a>
+//
+//        <div class="gnb_right">
+//            <a href="/store/mileagemall/list" ng-class="channeltitle == 'store' ? 'gnb_store ch_store nowmenu' : 'gnb_store ch_store'">ANGE Store</a>
+//            <!--<a href="/store/home" class="gnb_store ch_store">ANGE Store</a>--
+
+        $scope.click_channel = function(menu) {
+
+            switch(menu){
+                case 'story':
+                    $location.url('/story/content/list');
+                    break;
+                case 'people':
+                    $location.url('/people/home');
+                    break;
+                case 'moms':
+                    $location.url('/moms/home');
+                    break;
+                case 'myange':
+                    $scope.click_myange();
+                    break;
+                case 'store':
+                    $location.url('/store/mileagemall/list');
+                    break;
+                case 'infodesk':
+                    $location.url('/infodesk/qna/list');
+                    break;
+                default:
+                    dialogs.notify('알림', '잘못된 접근입니다.', {size: 'md'});
+                    $location.url('/');
+                    break;
+            }
+//            if(menu != $scope.channeltitle) {
+//                switch(menu){
+//                    case 'story':
+//                        $location.url('/story/content/list');
+//                        break;
+//                    case 'people':
+//                        $location.url('/people/home');
+//                        break;
+//                    case 'moms':
+//                        $location.url('/moms/home');
+//                        break;
+//                    case 'myange':
+//                        $scope.click_myange();
+//                        break;
+//                    case 'store':
+//                        $location.url('/store/mileagemall/list');
+//                        break;
+//                    case 'infodesk':
+//                        $location.url('/infodesk/qna/list');
+//                        break;
+//                    default:
+//                        dialogs.notify('알림', '잘못된 접근입니다.', {size: 'md'});
+//                        $location.url('/');
+//                        break;
+//                }
+//            } else {
+//                console.log ("[" + $scope.channeltitle + "] 현재 메뉴입니다.")
+//            }
+        };
+
+        $scope.click_login = function () {
+            $scope.openModal(null, 'md');
+        };
+
+        $scope.click_myange = function (){
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
+
+            $location.url('/myange/home');
+//            $location.url('/myange/mileage');
+        }
+
+        $scope.click_showSearch = function (){
+            if($scope.search.SEARCH_KEYWORD == undefined){
+                $scope.search.SEARCH_KEYWORD = '';
+            }
+
+            $location.url('/search/list?search_key='+$scope.search.SEARCH_KEYWORD);
+        }
+
+        $scope.click_showSearch_mobile = function (){
+            $location.url('/search/list');
+        }
+
+        $scope.click_searchContent = function(path, no){
+            $window,open();
+        }
+
+        $scope.init();
+    }]);
+
+
+    // 사용할 서비스를 주입
+    controllers.controller('ui-lnb-mobile', ['$scope', '$rootScope', '$location', 'dialogs', '$stateParams', function ($scope, $rootScope, $location, dialogs, $stateParams) {
+
+        var spMenu = $location.path().split('/');
+
+        var channel_nm = $stateParams.channel;
+
+        /********** 이벤트 **********/
+        $scope.click_channel = function() {
+            switch(menu){
+                case 'story':
+                    $location.url('/story/content/list');
+                    break;
+                case 'people':
+                    $location.url('/people/home');
+                    break;
+                case 'moms':
+                    $location.url('/moms/home');
+                    break;
+                case 'myange':
+                    $scope.click_myange();
+                    break;
+                case 'store':
+                    $location.url('/store/mileagemall/list');
+                    break;
+                case 'infodesk':
+                    $location.url('/infodesk/qna/list');
+                    break;
+                default:
+                    dialogs.notify('알림', '잘못된 접근입니다.', {size: 'md'});
+                    $location.url('/');
+                    break;
+            }
+        };
+
+        $scope.click_login = function () {
+            $scope.openModal(null, 'md');
+        };
+
+        $scope.click_myange = function (){
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
+
+            $location.url('/myange/home');
+        }
+
+    }]);
+
+    controllers.controller('ui-lnb', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', '$filter', 'dialogs', function ($scope, $rootScope, $stateParams, $controller, $location, $filter, dialogs) {
+
+        /********** 페이지 타이틀 **********/
+//        angular.forEach($rootScope.ange_menu, function(menu) {
+//
+//            if (menu.MENU_URL.indexOf(spMenu[1]+"/") > -1) {
+//                $scope.$parent.$parent.pageTitle = menu.MENU_NM;
+//                $scope.$parent.$parent.pageDescription = menu.MENU_DESC;
+//                $scope.$parent.$parent.tailDescription = menu.TAIL_DESC;
+//
+//                return;
+//            }
+//        });
+
+        /********** 초기화 **********/
+            // 카테고리 데이터
+        $scope.category = [];
+
+        // 초기화
+        $scope.init = function() {
+            $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'CMS'}, false).then(function(data){
+
+                $scope.category = data;
+
+                var category_a = [];
+                var category_b = [];
+
+                for (var i in data) {
+                    var item = data[i];
+
+                    if (item.CATEGORY_GB == '1' && item.CATEGORY_ST == '0') {
+                        category_a.push(item);
+                    } else if (item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0' && item.PARENT_NO == '0') {
+                        category_b.push(item);
+                    }
+                }
+
+                $scope.category_a = category_a;
+                $scope.category_b = category_b;
+            })
+                ['catch'](function(error){$scope.projects = []; console.log(error)});
+        };
+
+        /********** 좌측 메뉴 **********/
+//        var menu = $filter('filter')($rootScope.ange_menu, function (data) {
+//            return (data.MENU_URL.indexOf(menu[1]) > -1)
+//        })[0];
+
+        var channelNo = "2";
+
+        var channel = $filter('filter')($rootScope.ange_channel, function (data) {
+            return data.CHANNEL_NO === channelNo;
+        })[0];
+
+        $scope.item = channel;
+
+        /********** 화면 초기화 **********/
+        $scope.init();
+
+//        $scope.selectMenu = function(menu) {
+//            if ($scope.permissionCheck(menu.MENU_URL, false)) {
+//                $location.url(menu.MENU_URL);
+//            }
+//        };
+//
+//        $scope.nowMenu = spMenu[1];
+        //alert(spMenu[1]);
+
+    }]);
+
+    controllers.controller('ui-utility', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', '$window', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $controller, $location, $window, dialogs, CONSTANT) {
+
+        angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+        $scope.duration = 3000;
+
+        $scope.isProfile = false;
+
+        /********** 이벤트 **********/
+        $scope.click_login = function () {
+            $scope.openModal(null, 'md');
+        };
+
+        $scope.click_joinMember = function () {
+            $location.url('infodesk/signon');
+        };
+
+        $scope.click_forgotInfo = function () {
+            $location.url('infodesk/forgot/request');
+        };
+
+        $scope.click_goClub = function () {
+//            $scope.comming_soon();
+//            return;
+
+            console.log('$rootScope.user_gb = '+$rootScope.user_gb);
+            console.log('$rootScope.role = '+$rootScope.role);
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
+
+//            if($rootScope.user_gb != 'CLUB' || $rootScope.role != 'ANGE_ADMIN'){
+//                dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
+//                return;
+//            }
+
+            if($rootScope.user_gb == 'CLUB'){
+                $location.url('/club/home');
+            }else if($rootScope.role == 'ANGE_ADMIN'){
+                $location.url('/club/home');
+            }else if($rootScope.user_gb == 'CLINIC'){
+                $location.url('/club/home');
+            }else{
+                dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
+                return;
+            }
+
+//            if($rootScope.role != 'ANGE_ADMIN' ){ //|| $rootScope.user_gb != 'CLUB'
+//                dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
+//                return;
+//            }
+
+
+        };
+
+        $scope.click_settingAccount = function () {
+            $location.url('myange/account');
+        };
+
+        $scope.click_showSlide = function () {
+            $scope.isProfile = true;
+        };
+
+        $scope.click_closeSlide = function () {
+            $scope.isProfile = false;
+        };
+
+        $scope.click_settingBaby = function () {
+            $location.url('myange/baby');
+        };
+
+        $scope.click_myangeMileage = function () {
+            $location.url('myange/mileage');
+        };
+
+        $scope.click_myangeScrap = function () {
+            $location.url('myange/scrap');
+        };
+
+        $scope.click_storeCart = function () {
+            $location.url('store/cart/list');
+        };
+
+        $scope.click_myangeWriting = function () {
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
+
+            $location.url('myange/writing');
+        };
+
+        $scope.click_myangeMessage = function () {
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
+
+            $location.url('myange/message');
+        };
+
+        $scope.click_infodesk = function () {
+            $location.url('infodesk/qna/list');
+//            $location.url('infodesk/home');
+        };
+
+        $scope.click_myangeAlbum = function () {
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
+
+            $location.url('myange/album/list');
+        };
+
+        // 조회 버튼 클릭
+        $scope.click_showViewMyAlbum = function (item) {
+            $scope.openViewMyAlbumModal(item, 'lg');
+        };
+
+        $scope.openViewMyAlbumModal = function (item, size) {
+            var dlg = dialogs.create('partials/ange/myange/myangealbum-view-popup.html',
+                ['$scope', '$rootScope', '$modalInstance', '$controller', 'data', function($scope, $rootScope, $modalInstance, $controller, data) {
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope, $rootScope : $rootScope}));
+
+                    $scope.isHome = true;
+                    $scope.item = data;
+
+                    // 닫기
+                    $scope.click_close = function(){
+                        $modalInstance.close();
+                    }
+                }], item, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        };
+
+        // 로그인 모달창
+        $scope.openModal = function (content, size) {
+            var dlg = dialogs.create('login_modal.html',
+                ['$scope', '$modalInstance', '$controller', '$timeout', 'data', 'CONSTANT', function($scope, $modalInstance, $controller, $timeout, data, CONSTANT) {
+
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.item = {};
+                    $scope.save_id = false;
+                    $scope.content = data;
+
+                    if (localStorage.getItem('save_id')) {
+                        $scope.save_id = true;
+                        $scope.item.id = localStorage.getItem('user_id');
+
+                        $timeout(function() { $('#password').focus();}, 1000);
+                    } else {
+                        $timeout(function() { $('#id').focus();}, 1000);
+                    }
+
+                    // 상단 배너 이미지 조회
+                    $scope.getLoginBanner = function () {
+                        $scope.search = {};
+                        $scope.search.ADP_IDX = CONSTANT.AD_CODE_BN31;
+                        $scope.search.ADA_STATE = 1;
+                        $scope.search.ADA_TYPE = 'banner';
+                        $scope.search.MENU = $scope.path[1];
+                        $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
+
+                        $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, $scope.search, false)
+                            .then(function(data){
+                                $scope.loginBanner = data[0];
+                                $scope.loginBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
+                            })
+                            ['catch'](function(error){});
+                    };
+
+                    $scope.getLoginBanner();
+
+                    $scope.click_ok = function () {
+                        if ($scope.item.id == null || $scope.item.id == '') {
+                            dialogs.notify('알림', '아이디를 입력하세요', {size: 'md'});
+                            return;
+                        }
+
+                        if ($scope.save_id) {
+                            localStorage.setItem('user_id', $scope.item.id);
+                        } else {
+                            localStorage.removeItem('user_id');
+                        }
+
+                        $scope.item.SYSTEM_GB = 'ANGE';
+
+                        $scope.login($scope.item.id, $scope.item)
+                            .then(function(data){
+                                $rootScope.login = true;
+                                $rootScope.authenticated = true;
+                                $rootScope.user_info = data;
+                                $rootScope.uid = data.USER_ID;
+                                $rootScope.mileage = data.REMAIN_POINT;
+                                $rootScope.message = data.MESSAGE_CNT;
+                                $rootScope.name = data.USER_NM;
+                                $rootScope.role = data.ROLE_ID;
+                                $rootScope.system = data.SYSTEM_GB;
+                                $rootScope.menu_role = data.MENU_ROLE;
+                                $rootScope.email = data.EMAIL;
+                                $rootScope.nick = data.NICK_NM;
+
+                                if (data.FILE) {
+                                    $rootScope.profileImg = CONSTANT.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
+                                } else {
+                                    $rootScope.profileImg = null;
+                                }
+
+                                if (data != undefined && data.ALBUM) {
+                                    var albumData = data.ALBUM;
+                                    for(var i in albumData) {
+                                        if (albumData[i].FILE_ID != null) {
+                                            albumData[i].ALBUM_FILE = CONSTANT.BASE_URL + albumData[i].PATH + 'thumbnail/' + albumData[i].FILE_ID;
+                                        }
+                                    }
+
+                                    $rootScope.albumList = albumData;
+                                } else {
+                                    $rootScope.albumList = null;
+                                }
+
+                                $rootScope.scheduleList = data.SCHEDULE;
+
+                                $scope.addMileage('LOGIN', null);
+
+                                var check = /^(?=.+[@])$/;
+
+                                if (check.test(data.USER_ID) || data.NICK_NM == '') {
+                                    $location.path('myange/account');
+                                }
+
+                                if (data.USER_ST == 'W' && data.CERT_GB == 'MIG') {
+                                    $location.path('myange/account');
+                                }
+
+                                $modalInstance.close('login');
+                            })['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                    };
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.close();
+                    };
+
+                    $scope.click_forgotInfo = function () {
+                        $location.url('infodesk/forgot/request');
+                        $modalInstance.close();
+                    };
+
+                    $scope.click_joinMember = function () {
+                        $location.url('infodesk/signon');
+                        $modalInstance.close();
+                    };
+
+                    $scope.check_saveId = function ($event) {
+                        var checkbox = $event.target;
+                        if (checkbox.checked) {
+                            localStorage.setItem('save_id', $scope.save_id);
+                        } else {
+                            localStorage.removeItem('save_id');
+                        }
+                    };
+                }], content, {size:size,keyboard: true,backdrop: true}, $scope);
+            dlg.result.then(function(action){
+                if (action == 'login') {
+                    $scope.getCanlendarList();
+//                    $rootScope.scheduleList = [{"name":"이예슬", "event":"돌", "dday":"88"}, {"name":"므에에롱", "event":"생일", "dday":"30"}, {"name":"막둥이", "event":"백일", "dday":"10"}]
+                }
+            },function(){
+                if(angular.equals($scope.name,''))
+                    $scope.name = 'You did not enter in your name!';
+            });
+        };
+
+        $scope.logoutMe = function() {
+            if ($rootScope.uid != undefined) {
+                $scope.logout($rootScope.uid).then( function(data) {
+                    dialogs.notify('알림', "로그아웃 되었습니다.", {size: 'md'});
+
+                    if ($scope.channel.CHANNEL_NO == 4 ) {
+                        $location.path("/main");
+                    }
+
+                    if ($stateParams.menu == 'supporter') {
+                        $location.path("/people/home");
+                    }
+//                    $location.url('main');
+                });
+            }
+
+            $scope.isProfile = false;
+        };
+
+        // 상단 배너 이미지 조회
+        $scope.getTopBanner = function () {
+            $scope.search = {};
+            $scope.search.ADP_IDX = CONSTANT.AD_CODE_BN01;
+            $scope.search.ADA_STATE = 1;
+            $scope.search.ADA_TYPE = 'banner';
+            $scope.search.MENU = $scope.path[1];
+            $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
+
+            $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, $scope.search, false)
+                .then(function(data){
+                    $scope.topBanner = data[0];
+                    $scope.topBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
+                })
+                ['catch'](function(error){});
+        };
+
+        $scope.getTopBanner();
+
+        // 하단 배너 이미지 조회
+        $scope.getTopBanner = function () {
+            $scope.search = {};
+            $scope.search.ADP_IDX = CONSTANT.AD_CODE_BN03;
+            $scope.search.ADA_STATE = 1;
+            $scope.search.ADA_TYPE = 'banner';
+            $scope.search.MENU = $scope.path[1];
+            $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
+
+            $scope.getList('ad/banner', 'list', {NO:0, SIZE:2}, $scope.search, false)
+                .then(function(data){
+                    $scope.bottomBanner1 = data[0];
+                    $scope.bottomBanner1.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
+
+                    $scope.bottomBanner2 = data[1];
+                    $scope.bottomBanner2.img = CONSTANT.AD_FILE_URL + data[1].ada_preview;
+                })
+                ['catch'](function(error){});
+        };
+
+        $scope.getTopBanner();
+
+        /*        // 세션 체크
+         $scope.sessionCheck = function(session) {
+         if (session.USER_ID == undefined) {
+         //                $location.path("/signin");
+         //                throw( new String('세션이 만료되었습니다.') );
+         //            throw( new Error("세션이 만료되었습니다.") );
+         } else if (session.USER_ID == '') {
+         //                $location.path("/signin");
+         //                throw( new String('로그인 후 사용가능합니다.') );
+         } else {
+         $rootScope.session = session;
+
+
+
+         $rootScope.authenticated = true;
+         $rootScope.uid = session.USER_ID;
+
+         //console.log($rootScope.uid);
+
+         $rootScope.name = session.USER_NM;
+         $rootScope.role = session.ROLE_ID;
+         $rootScope.menu_role = session.MENU_ROLE;
+         $rootScope.email = session.EMAIL;
+         }
+
+         //console.log($rootScope.uid);
+
+         return;
+
+         };*/
+
+        $scope.click_mainLogo = function() {
+
+        };
+
+        $scope.activeMsg = 0;
+
+        $scope.setVisible = function(index) {
+            if (index == $scope.activeMsg) {
+                return("1") ;
+            } else {
+                return("0") ;
+            }
+        }
+
+        $scope.refresh = function() {
+            $scope.$apply(function() {
+                $scope.activeMsg++ ;
+
+                if ($rootScope.scheduleList != undefined && $scope.activeMsg >= $rootScope.scheduleList.length) {
+                    $scope.activeMsg = 0 ;
+                }
+            })
+        }
+
+        setInterval($scope.refresh,3000) ;
+
+//        $scope.getSession()
+//            .then($scope.sessionCheck)
+//            ['catch']($scope.reportProblems);
+
+
     }]);
 });

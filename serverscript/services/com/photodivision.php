@@ -16,14 +16,14 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_d("### [START]");
+MtUtil::_d("### ['START']");
 MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
 $_d = new MtJson(null);
@@ -83,7 +83,7 @@ switch ($_method) {
                         INNER JOIN COM_BOARD CB
                         ON CS.TARGET_NO = CB.NO
                         WHERE 1=1
-                         AND CS.REG_UID = '".$_search[REG_UID]."'
+                         AND CS.REG_UID = '".$_search['REG_UID']."'
                     ) AS DATA,
                     (SELECT @RNUM := 0) R,
                     (
@@ -93,7 +93,7 @@ switch ($_method) {
                          INNER JOIN COM_BOARD CB
                          ON CS.TARGET_NO = CB.NO
                          WHERE 1=1
-                         AND CS.REG_UID = '".$_search[REG_UID]."'
+                         AND CS.REG_UID = '".$_search['REG_UID']."'
                     ) CNT
                 ";
 
@@ -117,15 +117,15 @@ switch ($_method) {
                             REG_NM,
                             REG_DT
                         ) VALUES (
-                             ".$_model[TARGET_NO]."
-                            , '".$_model[TARGET_GB]."'
-                            , '".$_model[REG_UID]."'
-                            , '".$_model[NICK_NM]."'
-                            , '".$_model[REG_NM]."'
+                             ".$_model['TARGET_NO']."
+                            , '".$_model['TARGET_GB']."'
+                            , '".$_model['REG_UID']."'
+                            , '".$_model['NICK_NM']."'
+                            , '".$_model['REG_NM']."'
                             , SYSDATE()
                         )";
 
-        /*".$_model[SORT_IDX]."*/
+        /*".$_model['SORT_IDX']."*/
 
         $_d->sql_query($sql);
         $no = $_d->mysql_insert_id;
@@ -140,15 +140,15 @@ switch ($_method) {
 
     case "PUT":
 
-        MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+        MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
 
         $sql = "UPDATE COM_SCRAP SET
-                            TARGET_GB = '".$_model[TARGET_GB]."'
-                            , TARGET_NO = '".$_model[TARGET_NO]."'
+                            TARGET_GB = '".$_model['TARGET_GB']."'
+                            , TARGET_NO = '".$_model['TARGET_NO']."'
                      WHERE NO = '".$_key."'
                         ";
-        // ,SEASON_NM = '".$_model[SEASON_NM]."'
+        // ,SEASON_NM = '".$_model['SEASON_NM']."'
 
 
         $_d->sql_query($sql);

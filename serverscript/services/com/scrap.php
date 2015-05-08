@@ -16,14 +16,14 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_d("### [START]");
+MtUtil::_d("### ['START']");
 MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
 $_d = new MtJson(null);
@@ -86,12 +86,12 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $search_where = "";
 
                 // 검색조건 추가
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND CB.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                    $search_where .= "AND CB.".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%'";
                 }
 
                 if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
                 $sql = " SELECT TOTAL_COUNT, (@RNUM := @RNUM -1)+1  AS RNUM, CONTENT_NO, CONTENT_SUBJECT, NO,
@@ -132,7 +132,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 $sql = "SELECT COUNT(*) AS SCRAP_CNT
                         FROM COM_SCRAP
-                        WHERE TARGET_NO = ".$_search[TARGET_NO]."
+                        WHERE TARGET_NO = ".$_search['TARGET_NO']."
                           AND REG_UID = '".$_SESSION['uid']."'";
 
                 $data = $_d->sql_query($sql);
@@ -159,15 +159,15 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                             REG_NM,
                             REG_DT
                         ) VALUES (
-                             ".$_model[TARGET_NO]."
-                            , '".$_model[TARGET_GB]."'
+                             ".$_model['TARGET_NO']."
+                            , '".$_model['TARGET_GB']."'
                             , '".$_SESSION['uid']."'
                             , '".$_SESSION['nick']."'
                             , '".$_SESSION['name']."'
                             , SYSDATE()
                         )";
 
-            /*".$_model[SORT_IDX]."*/
+            /*".$_model['SORT_IDX']."*/
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
@@ -186,15 +186,15 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
             }
 
-            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
 
                 $sql = "UPDATE COM_SCRAP SET
-                            TARGET_GB = '".$_model[TARGET_GB]."'
-                            , TARGET_NO = '".$_model[TARGET_NO]."'
+                            TARGET_GB = '".$_model['TARGET_GB']."'
+                            , TARGET_NO = '".$_model['TARGET_NO']."'
                      WHERE NO = '".$_key."'
                         ";
-            // ,SEASON_NM = '".$_model[SEASON_NM]."'
+            // ,SEASON_NM = '".$_model['SEASON_NM']."'
 
 
             $_d->sql_query($sql);

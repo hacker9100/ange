@@ -9,7 +9,7 @@
 
 define([
     // Component Test
-    '../../../partials/cms/dashboard-calendara',
+//    '../../../partials/cms/dashboard-calendara',
     '../../../partials/cms/portlet-list',
 
     // CMS 공통
@@ -24,7 +24,7 @@ define([
     // CMS 대시보드
     '../../../partials/cms/dashboard-main',
     '../../../partials/cms/account-main',
-    '../../../partials/cms/scheduler',
+//    '../../../partials/cms/scheduler',
     // CMS 콘텐츠
     '../../../partials/cms/project-list',
     '../../../partials/cms/project-edit',

@@ -16,14 +16,14 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_d("### [START]");
+MtUtil::_d("### ['START']");
 MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
 $_d = new MtJson(null);
@@ -72,7 +72,7 @@ switch ($_method) {
         } else if($_type == 'list') {
 
             // 검색조건 추가
-            /*               if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
+            /*               if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
                                $search_where .= "AND AMS.USER_ID = '".$_SESSION['uid']."'";
                            }*/
             if (!isset($_SESSION['uid'])) {
@@ -82,7 +82,7 @@ switch ($_method) {
             $limit = "";
 
             if (isset($_page)) {
-                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
             }
 
             $sql = " SELECT STATUS, TO_CNT, FROM_CNT, NO, TO_ID, (SELECT NICK_NM FROM COM_USER WHERE USER_ID = TO_ID) AS TO_NM, FROM_ID, (SELECT NICK_NM FROM COM_USER WHERE USER_ID = FROM_ID) AS FROM_NM, BODY, CHECK_FL,
@@ -138,19 +138,19 @@ switch ($_method) {
             $search_where = "";
 
             // 검색조건 추가(닉네임)
-            if (isset($_search[NICK_NM]) && $_search[NICK_NM] != "") {
-                $search_where .= "AND CU.NICK_NM LIKE '%".$_search[NICK_NM]."%'";
+            if (isset($_search['NICK_NM']) && $_search['NICK_NM'] != "") {
+                $search_where .= "AND CU.NICK_NM LIKE '%".$_search['NICK_NM']."%'";
             }
 
             // 팝업에서 닉네임 검색
-//            if (isset($_search[TO_NICK_NM]) && $_search[TO_NICK_NM] != "") {
-//                $search_where .= "AND CU.NICK_NM LIKE '%".$_search[TO_NICK_NM]."%'";
+//            if (isset($_search['TO_NICK_NM']) && $_search['TO_NICK_NM'] != "") {
+//                $search_where .= "AND CU.NICK_NM LIKE '%".$_search['TO_NICK_NM']."%'";
 //            }
 
             $limit = "";
 
             if (isset($_page)) {
-                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
             }
 
             $sql = " SELECT USER_ID, NICK_NM, TOTAL_COUNT
@@ -231,16 +231,16 @@ switch ($_method) {
                             REG_DT,
                             CHECK_FL
                         ) VALUES (
-                             '".$_model[TO_ID]."'
-                            , '".$_model[TO_NM]."'
+                             '".$_model['TO_ID']."'
+                            , '".$_model['TO_NM']."'
                             , '".$_SESSION['uid']."'
                             , '".$_SESSION['name']."'
-                            , '".$_model[BODY]."'
+                            , '".$_model['BODY']."'
                             , NOW()
                             , 'N'
                         )";
 
-            /*".$_model[SORT_IDX]."*/
+            /*".$_model['SORT_IDX']."*/
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
@@ -258,46 +258,46 @@ switch ($_method) {
 
             $_d->sql_beginTransaction();
 
-            if ($_model[CHECKED] == "C") {
-                if (isset($_model[USER_ID_LIST])) {
+            if ($_model['CHECKED'] == "C") {
+                if (isset($_model['USER_ID_LIST'])) {
                     $in_str = "";
-                    $in_size = sizeof($_model[USER_ID_LIST]);
+                    $in_size = sizeof($_model['USER_ID_LIST']);
                     for ($i=0; $i< $in_size; $i++) {
-                        $in_str .= "'".trim($_model[USER_ID_LIST][$i])."'";
+                        $in_str .= "'".trim($_model['USER_ID_LIST'][$i])."'";
                         if ($in_size - 1 != $i) $in_str .= ",";
                     }
 
                     $search_where = "AND USER_ID IN (".$in_str.") ";
                 }
             } else {
-                if ((isset($_model[CONDITION]) && $_model[CONDITION] != "") && (isset($_model[KEYWORD]) && $_model[KEYWORD] != "")) {
-                    if ($_model[CONDITION][value] == "USER_NM" || $_model[CONDITION][value] == "USER_ID" || $_model[CONDITION][value] == "NICK_NM") {
-                        $arr_keywords = explode(",", $_model[KEYWORD]);
+                if ((isset($_model['CONDITION']) && $_model['CONDITION'] != "") && (isset($_model['KEYWORD']) && $_model['KEYWORD'] != "")) {
+                    if ($_model['CONDITION']['value'] == "USER_NM" || $_model['CONDITION']['value'] == "USER_ID" || $_model['CONDITION']['value'] == "NICK_NM") {
+                        $arr_keywords = explode(",", $_model['KEYWORD']);
                         $in_condition = "";
                         for ($i=0; $i< sizeof($arr_keywords); $i++) {
                             $in_condition .= "'".trim($arr_keywords[$i])."'";
                             if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
                         }
 
-                        $search_where .= "AND ".$_model[CONDITION][value]." IN (".$in_condition.") ";
-                    } else if ($_model[CONDITION][value] == "PHONE") {
-                        $search_where .= "AND ( PHONE_1 LIKE '%".$_model[KEYWORD]."%' OR PHONE_2 LIKE '%".$_model[KEYWORD]."%' ) ";
+                        $search_where .= "AND ".$_model['CONDITION']['value']." IN (".$in_condition.") ";
+                    } else if ($_model['CONDITION']['value'] == "PHONE") {
+                        $search_where .= "AND ( PHONE_1 LIKE '%".$_model['KEYWORD']."%' OR PHONE_2 LIKE '%".$_model['KEYWORD']."%' ) ";
                     } else {
-                        $search_where .= "AND ".$_model[CONDITION][value]." LIKE '%".$_model[KEYWORD]."%' ";
+                        $search_where .= "AND ".$_model['CONDITION']['value']." LIKE '%".$_model['KEYWORD']."%' ";
                     }
                 }
-                if (isset($_model[TYPE]) && $_model[TYPE] != "") {
+                if (isset($_model['TYPE']) && $_model['TYPE'] != "") {
 
                     $in_type = "";
-                    for ($i=0; $i< count($_model[TYPE]); $i++) {
-                        $in_type .= "'".$_model[TYPE][$i]."'";
-                        if (count($_model[TYPE]) - 1 != $i) $in_type .= ",";
+                    for ($i=0; $i< count($_model['TYPE']); $i++) {
+                        $in_type .= "'".$_model['TYPE'][$i]."'";
+                        if (count($_model['TYPE']) - 1 != $i) $in_type .= ",";
                     }
 
                     $search_where .= "AND USER_GB IN (".$in_type.") ";
                 }
-                if (isset($_model[STATUS]) && $_model[STATUS] != "" && $_model[STATUS][value] != "A") {
-                    $search_where .= "AND USER_ST  = '".$_model[STATUS][value]."' ";
+                if (isset($_model['STATUS']) && $_model['STATUS'] != "" && $_model['STATUS']['value'] != "A") {
+                    $search_where .= "AND USER_ST  = '".$_model['STATUS']['value']."' ";
                 }
             }
 
@@ -321,11 +321,11 @@ switch ($_method) {
                             REG_DT,
                             CHECK_FL
                         ) VALUES (
-                             '".$row[USER_ID]."'
-                            , '".$row[NICK_NM]."'
+                             '".$row['USER_ID']."'
+                            , '".$row['NICK_NM']."'
                             , '".$_SESSION['uid']."'
                             , '".$_SESSION['name']."'
-                            , '".$_model[BODY]."'
+                            , '".$_model['BODY']."'
                             , SYSDATE()
                             , 'N'
                         )";
@@ -352,7 +352,7 @@ switch ($_method) {
 
     case "PUT":
 
-        MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+        MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
         if($_type == 'check'){
 
@@ -394,8 +394,8 @@ switch ($_method) {
             }
 
             $sql = "UPDATE ANGE_MESSAGE SET
-                            TO_ID = '".$_model[TO_ID]."'
-                            , TO_NM = '".$_model[TO_NM]."'
+                            TO_ID = '".$_model['TO_ID']."'
+                            , TO_NM = '".$_model['TO_NM']."'
                      WHERE NO = '".$_key."'
                         ";
 

@@ -16,7 +16,7 @@
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
     MtUtil::_d(print_r($_REQUEST,true));
 
     MtUtil::_d(json_encode(file_get_contents("php://input"),true));
@@ -26,8 +26,8 @@
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -53,7 +53,7 @@
     switch ($_method) {
         case "GET":
             if ($_type == 'item') {
-//                MtUtil::_d("FUNC[processApi] 1 : "+$id);
+//                MtUtil::_d("FUNC['processApi'] 1 : "+$id);
 
                 $err = 0;
                 $msg = "";
@@ -158,17 +158,17 @@
                 $sort_order = ", REG_DT DESC";
                 $limit = "";
 
-                if (isset($_search[COMM_NO_IN]) && $_search[COMM_NO_IN] != "") {
-                    $search_where .= "AND COMM_NO IN (".$_search[COMM_NO_IN].") ";
+                if (isset($_search['COMM_NO_IN']) && $_search['COMM_NO_IN'] != "") {
+                    $search_where .= "AND COMM_NO IN (".$_search['COMM_NO_IN'].") ";
                 }
 
-                if (isset($_search[COMM_NO]) && $_search[COMM_NO] != "") {
-                    $search_where .= "AND COMM_NO = '".$_search[COMM_NO]."' ";
+                if (isset($_search['COMM_NO']) && $_search['COMM_NO'] != "") {
+                    $search_where .= "AND COMM_NO = '".$_search['COMM_NO']."' ";
                 }
 
-                if(isset($_search[COMM_NO]) && ( $_search[COMM_GB] == "CLINIC" || $_search[COMM_GB] == "TALK" || $_search[COMM_GB] == "CLUB")){
-                    if (isset($_search[PARENT_NO]) && $_search[PARENT_NO] != "") {
-                        $search_where .= "AND PARENT_NO = '".$_search[PARENT_NO]."' ";
+                if(isset($_search['COMM_NO']) && ( $_search['COMM_GB'] == "CLINIC" || $_search['COMM_GB'] == "TALK" || $_search['COMM_GB'] == "CLUB")){
+                    if (isset($_search['PARENT_NO']) && $_search['PARENT_NO'] != "") {
+                        $search_where .= "AND PARENT_NO = '".$_search['PARENT_NO']."' ";
                     }else{
 //                        $search_where .= "AND PARENT_NO = '0' ";
                     }
@@ -176,67 +176,67 @@
 //                    $search_where .= "AND PARENT_NO = '0' ";
                 }
 
-                if(isset($_search[MY_QNA]) && $_search[MY_QNA] == "Y"){
+                if(isset($_search['MY_QNA']) && $_search['MY_QNA'] == "Y"){
                     $search_where .= "AND B.REG_UID = '".$_SESSION['uid']."'";
                 }
 
-                if (isset($_search[BOARD_GB]) && $_search[BOARD_GB] != "") {
-                    $search_where .= "AND BOARD_GB = '".$_search[BOARD_GB]."' ";
+                if (isset($_search['BOARD_GB']) && $_search['BOARD_GB'] != "") {
+                    $search_where .= "AND BOARD_GB = '".$_search['BOARD_GB']."' ";
                 }
 
-                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                    $search_where .= "AND SYSTEM_GB = '".$_search[SYSTEM_GB]."' ";
+                if (isset($_search['SYSTEM_GB']) && $_search['SYSTEM_GB'] != "") {
+                    $search_where .= "AND SYSTEM_GB = '".$_search['SYSTEM_GB']."' ";
                 }
 
-                if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
-                    $search_where .= "AND B.REG_UID = '".$_search[REG_UID]."' ";
+                if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
+                    $search_where .= "AND B.REG_UID = '".$_search['REG_UID']."' ";
                 }
 
-                if (isset($_search[PHOTO_TYPE]) && $_search[PHOTO_TYPE] != "" && $_search[PHOTO_TYPE] != "ALL") {
-                    $search_where .= "AND PHOTO_TYPE = '".$_search[PHOTO_TYPE]."'
-                                    AND PHOTO_GB = '".$_search[PHOTO_GB]."'
+                if (isset($_search['PHOTO_TYPE']) && $_search['PHOTO_TYPE'] != "" && $_search['PHOTO_TYPE'] != "ALL") {
+                    $search_where .= "AND PHOTO_TYPE = '".$_search['PHOTO_TYPE']."'
+                                    AND PHOTO_GB = '".$_search['PHOTO_GB']."'
                                 ";
                 }
 
-                if (isset($_search[FAQ_TYPE]) && $_search[FAQ_TYPE] != "" && $_search[FAQ_TYPE] != "ALL") {
-                    $search_where .= "AND FAQ_TYPE = '".$_search[FAQ_TYPE]."'
-                                    AND FAQ_GB = '".$_search[FAQ_GB]."'
+                if (isset($_search['FAQ_TYPE']) && $_search['FAQ_TYPE'] != "" && $_search['FAQ_TYPE'] != "ALL") {
+                    $search_where .= "AND FAQ_TYPE = '".$_search['FAQ_TYPE']."'
+                                    AND FAQ_GB = '".$_search['FAQ_GB']."'
                                 ";
                 }
 
-                if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
-                    $search_where .= "AND CATEGORY_NO = '".$_search[CATEGORY_NO]."' ";
+                if (isset($_search['CATEGORY_NO']) && $_search['CATEGORY_NO'] != "") {
+                    $search_where .= "AND CATEGORY_NO = '".$_search['CATEGORY_NO']."' ";
                 }
 
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    if($_search[CONDITION][value] == "SUBJECT+BODY"){
-                        $search_where .= "AND (SUBJECT LIKE '%".$_search[KEYWORD]."%' OR BODY LIKE '%".$_search[KEYWORD]."%')";
+                if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                    if($_search['CONDITION']['value'] == "SUBJECT+BODY"){
+                        $search_where .= "AND (SUBJECT LIKE '%".$_search['KEYWORD']."%' OR BODY LIKE '%".$_search['KEYWORD']."%')";
                     }else{
-                        $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                        $search_where .= "AND ".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%'";
                     }
                 }
 
-                if (isset($_search[NOTICE_FL]) && $_search[NOTICE_FL] != "") {
-                    $search_where .= "AND NOTICE_FL = '".$_search[NOTICE_FL]."' ";
+                if (isset($_search['NOTICE_FL']) && $_search['NOTICE_FL'] != "") {
+                    $search_where .= "AND NOTICE_FL = '".$_search['NOTICE_FL']."' ";
                 }
 
-                if (isset($_search[COMM_NO_NOT]) && $_search[COMM_NO_NOT] != "") {
-                    $search_where .= "AND COMM_NO != '".$_search[COMM_NO_NOT]."' ";
+                if (isset($_search['COMM_NO_NOT']) && $_search['COMM_NO_NOT'] != "") {
+                    $search_where .= "AND COMM_NO != '".$_search['COMM_NO_NOT']."' ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order = ", ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order = ", ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
                 if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
-                if(isset($_search[SUPPORT_NO]) && $_search[SUPPORT_NO] != ""){
-                    $search_where .= "AND CATEGORY_NO = '".$_search[SUPPORT_NO]."' ";
+                if(isset($_search['SUPPORT_NO']) && $_search['SUPPORT_NO'] != ""){
+                    $search_where .= "AND CATEGORY_NO = '".$_search['SUPPORT_NO']."' ";
                 }
 
-                if(isset($_search[BOARD_ST]) && $_search[BOARD_ST] != ""){
+                if(isset($_search['BOARD_ST']) && $_search['BOARD_ST'] != ""){
                     $search_where .= "AND BOARD_ST IS NULL";
                 }
 
@@ -376,44 +376,44 @@
                 $sort_order = ", REG_DT DESC";
                 $limit = "";
 
-                if (isset($_search[COMM_NO_IN]) && $_search[COMM_NO_IN] != "") {
-                    $search_where .= "AND COMM_NO IN (".$_search[COMM_NO_IN].") ";
+                if (isset($_search['COMM_NO_IN']) && $_search['COMM_NO_IN'] != "") {
+                    $search_where .= "AND COMM_NO IN (".$_search['COMM_NO_IN'].") ";
                 }
 
-                if (isset($_search[COMM_NO]) && $_search[COMM_NO] != "") {
-                    $search_where .= "AND COMM_NO = '".$_search[COMM_NO]."' ";
+                if (isset($_search['COMM_NO']) && $_search['COMM_NO'] != "") {
+                    $search_where .= "AND COMM_NO = '".$_search['COMM_NO']."' ";
                 }
 
-                if (isset($_search[PARENT_NO]) && $_search[PARENT_NO] != "") {
-                    $search_where .= "AND PARENT_NO = '".$_search[PARENT_NO]."' ";
+                if (isset($_search['PARENT_NO']) && $_search['PARENT_NO'] != "") {
+                    $search_where .= "AND PARENT_NO = '".$_search['PARENT_NO']."' ";
                 }
 
-                if (isset($_search[BOARD_GB]) && $_search[BOARD_GB] != "") {
-                    $search_where .= "AND BOARD_GB = '".$_search[BOARD_GB]."' ";
+                if (isset($_search['BOARD_GB']) && $_search['BOARD_GB'] != "") {
+                    $search_where .= "AND BOARD_GB = '".$_search['BOARD_GB']."' ";
                 }
 
-                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                    $search_where .= "AND SYSTEM_GB = '".$_search[SYSTEM_GB]."' ";
+                if (isset($_search['SYSTEM_GB']) && $_search['SYSTEM_GB'] != "") {
+                    $search_where .= "AND SYSTEM_GB = '".$_search['SYSTEM_GB']."' ";
                 }
 
-                if (isset($_search[NOTICE_FL]) && $_search[NOTICE_FL] != "") {
-                    $search_where .= "AND NOTICE_FL = '".$_search[NOTICE_FL]."' ";
+                if (isset($_search['NOTICE_FL']) && $_search['NOTICE_FL'] != "") {
+                    $search_where .= "AND NOTICE_FL = '".$_search['NOTICE_FL']."' ";
                 }
 
-                if (isset($_search[COMM_NO_NOT]) && $_search[COMM_NO_NOT] != "") {
-                    $search_where .= "AND COMM_NO != '".$_search[COMM_NO_NOT]."' ";
+                if (isset($_search['COMM_NO_NOT']) && $_search['COMM_NO_NOT'] != "") {
+                    $search_where .= "AND COMM_NO != '".$_search['COMM_NO_NOT']."' ";
                 }
 
-                if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
-                    $search_where .= "AND REG_UID = '".$_search[REG_UID]."' ";
+                if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
+                    $search_where .= "AND REG_UID = '".$_search['REG_UID']."' ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order = ", ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order = ", ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
                 if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
                 $sql = "SELECT
@@ -442,7 +442,7 @@
 
                 $__trn = '';
                 $result = $_d->sql_query($sql,true);
-                MtUtil::_d("### [START]");
+                MtUtil::_d("### ['START']");
                 if($_search['FILE']) {
                     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
@@ -480,13 +480,13 @@
             } else if ($_type == 'pre') {
 
                 $search_where = "";
-                if(isset($_search[PARENT_NO]) && $_search[PARENT_NO] != ""){
-                    $search_where .= "AND PARENT_NO = '".$_search[PARENT_NO]."' ";
+                if(isset($_search['PARENT_NO']) && $_search['PARENT_NO'] != ""){
+                    $search_where .= "AND PARENT_NO = '".$_search['PARENT_NO']."' ";
                 }else{
                     $search_where .= "AND PARENT_NO = '0' ";
                 }
 
-                $sql = "SELECT NO, SUBJECT,NICK_NM, BOARD_ST, REG_UID, BLIND_FL,CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL  FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND NOTICE_FL = 0 AND BOARD_ST IS NULL AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY  NO DESC LIMIT 1";
+                $sql = "SELECT NO, SUBJECT,NICK_NM, BOARD_ST, REG_UID, BLIND_FL,CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL  FROM COM_BOARD WHERE NO < ".$_search['KEY']." AND NOTICE_FL = 0 AND BOARD_ST IS NULL AND COMM_NO=".$_search['COMM_NO']." ".$search_where." ORDER BY  NO DESC LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -497,13 +497,13 @@
             } else if ($_type == 'next') {
 
                 $search_where = "";
-                if(isset($_search[PARENT_NO]) && $_search[PARENT_NO] != ""){
-                    $search_where .= "AND PARENT_NO = '".$_search[PARENT_NO]."' ";
+                if(isset($_search['PARENT_NO']) && $_search['PARENT_NO'] != ""){
+                    $search_where .= "AND PARENT_NO = '".$_search['PARENT_NO']."' ";
                 }else{
                     $search_where .= "AND PARENT_NO = '0' ";
                 }
 
-                $sql = "SELECT NO, SUBJECT,NICK_NM, BOARD_ST, REG_UID, BLIND_FL,CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND NOTICE_FL = 0  AND BOARD_ST IS NULL  AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY NO LIMIT 1";
+                $sql = "SELECT NO, SUBJECT,NICK_NM, BOARD_ST, REG_UID, BLIND_FL,CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL FROM COM_BOARD WHERE NO > ".$_search['KEY']." AND NOTICE_FL = 0  AND BOARD_ST IS NULL  AND COMM_NO=".$_search['COMM_NO']." ".$search_where." ORDER BY NO LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -513,19 +513,19 @@
                 }
             } else if ($_type == 'category') {
 
-//                if (isset($_search[COMM_NO]) && $_search[COMM_NO] == "") {
-//                    $search_where .= "AND CATEGORY_GB = '".$_search[COMM_NO]."' ";
+//                if (isset($_search['COMM_NO']) && $_search['COMM_NO'] == "") {
+//                    $search_where .= "AND CATEGORY_GB = '".$_search['COMM_NO']."' ";
 //                }
 
-                if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
-                    $search_where .= "AND CC.NO = '".$_search[CATEGORY_NO]."' ";
+                if (isset($_search['CATEGORY_NO']) && $_search['CATEGORY_NO'] != "") {
+                    $search_where .= "AND CC.NO = '".$_search['CATEGORY_NO']."' ";
                 }
 
-                if (isset($_search[PARENT_NO]) && $_search[PARENT_NO] != "") {
-                    $search_where .= "AND CC.PARENT_NO = '".$_search[PARENT_NO]."' ";
+                if (isset($_search['PARENT_NO']) && $_search['PARENT_NO'] != "") {
+                    $search_where .= "AND CC.PARENT_NO = '".$_search['PARENT_NO']."' ";
                 }
 
-                if (isset($_search[ALL]) && $_search[ALL] != "") {
+                if (isset($_search['ALL']) && $_search['ALL'] != "") {
                     $search_where .= "AND CC.CATEGORY_NM <> '전체'";
                 }
                 //
@@ -538,7 +538,7 @@
                                         FROM CMS_CATEGORY CC
                                         WHERE 1=1
                                         AND CC.SYSTEM_GB = 'ANGE'
-                                        AND CC.CATEGORY_GB = '".$_search[COMM_NO]."'
+                                        AND CC.CATEGORY_GB = '".$_search['COMM_NO']."'
                                         ".$search_where."
                                         ORDER BY SORT_IDX ASC
                     ) AS DATA
@@ -598,16 +598,16 @@
 
                 $search_where = "";
 
-                if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
-                    $search_where .= "AND L.TARGET_GB = '".$_search[TARGET_GB]."' ";
+                if (isset($_search['TARGET_GB']) && $_search['TARGET_GB'] != "") {
+                    $search_where .= "AND L.TARGET_GB = '".$_search['TARGET_GB']."' ";
                 }
 /*
-                if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
-                    $search_common .= "AND L.REG_UID = '".$_search[REG_UID]."' ";
+                if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
+                    $search_common .= "AND L.REG_UID = '".$_search['REG_UID']."' ";
                 }*/
 
-                if (isset($_search[NO]) && $_search[NO] != "") {
-                    $search_common .= "AND B.NO = '".$_search[NO]."' ";
+                if (isset($_search['NO']) && $_search['NO'] != "") {
+                    $search_common .= "AND B.NO = '".$_search['NO']."' ";
                 }
 
                 $sql = "SELECT    CASE IFNULL(L.TARGET_NO, 'N') WHEN 'N' THEN 'N' ELSE 'Y' END AS LIKE_FL, COUNT(*) AS TOTAL_COUNT
@@ -631,8 +631,8 @@
                 $sql = "SELECT COUNT(*) AS CHECK_COUNT
                         FROM COM_BOARD
                         WHERE SYSTEM_GB = 'ANGE'
-                          AND NO = ".$_search[NO]."
-                          AND PASSWORD = ".$_search[PASSWORD]."";
+                          AND NO = ".$_search['NO']."
+                          AND PASSWORD = ".$_search['PASSWORD']."";
 
                 $data = $_d->sql_query($sql);
 
@@ -646,8 +646,8 @@
                 $sql = "SELECT AC.COMM_MG_ID, AC.COMM_MG_NM
                         FROM ANGE_COMM AC
                         WHERE 1=1
-                          AND NO = '".$_search[COMM_NO]."'
-                          AND COMM_GB = '".$_search[COMM_GB]."'";
+                          AND NO = '".$_search['COMM_NO']."'
+                          AND COMM_GB = '".$_search['COMM_GB']."'";
 
                 $data = $_d->sql_query($sql);
 
@@ -670,10 +670,10 @@
             $err = 0;
             $msg = "";
 
-            if( trim($_model[SUBJECT]) == '' ){
+            if( trim($_model['SUBJECT']) == '' ){
                 $_d->failEnd("제목을 작성 하세요");
             }
-            if( trim($_model[BODY]) == '' ){
+            if( trim($_model['BODY']) == '' ){
                 $_d->failEnd("내용이 비어있습니다");
             }
 
@@ -682,56 +682,56 @@
             $source_path = '../../..'.$file_path;
             $insert_path = array();
 
-            $body_str = $_model[BODY];
+            $body_str = $_model['BODY'];
 
             try {
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                         @mkdir($source_path.'thumbnail/');
                         @mkdir($source_path.'medium/');
                     }
 
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                    for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                         $file = $files[$i];
 
 
-                        if (file_exists($upload_path.$file[name])) {
+                        if (file_exists($upload_path.$file['name'])) {
                             $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                            rename($upload_path.$file['name'], $source_path.$uid);
+                            rename($upload_path.'thumbnail/'.$file['name'], $source_path.'thumbnail/'.$uid);
 
-                            if ($file[version] == 6 ) {
-                                $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
-                                $body_str = str_replace(BASE_URL.'/upload/files/'.$file[name], BASE_URL.$file_path.$uid, $body_str);
+                            if ($file['version'] == 6 ) {
+                                $body_str = str_replace($file['url'], BASE_URL.$file_path.$uid, $body_str);
+                                $body_str = str_replace(BASE_URL.'/upload/files/'.$file['name'], BASE_URL.$file_path.$uid, $body_str);
                             } else {
-                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-                                $body_str = str_replace(BASE_URL.'/upload/files/medium/'.$file[name], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                rename($upload_path.'medium/'.$file['name'], $source_path.'medium/'.$uid);
+                                $body_str = str_replace($file['mediumUrl'], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                $body_str = str_replace(BASE_URL.'/upload/files/medium/'.$file['name'], BASE_URL.$file_path.'medium/'.$uid, $body_str);
                             }
 
-                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
 
-                            MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                            MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i]['path']);
 
 
                         }
                     }
                 }
 
-                $_model[BODY] = $body_str;
+                $_model['BODY'] = $body_str;
             } catch(Exception $e) {
                 $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
                 break;
             }
 //            MtUtil::_d("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
 
-            if($_model[PARENT_NO] == ''){
-                $board_no = "(SELECT COUNT(*)+1 FROM COM_BOARD A WHERE A.COMM_NO = '".$_model[COMM_NO]."' AND A.PARENT_NO = 0)";
+            if($_model['PARENT_NO'] == ''){
+                $board_no = "(SELECT COUNT(*)+1 FROM COM_BOARD A WHERE A.COMM_NO = '".$_model['COMM_NO']."' AND A.PARENT_NO = 0)";
             }else{
                 //$board_no = 0;
-                $board_no = "(SELECT COUNT(*)+1 FROM COM_BOARD A WHERE A.COMM_NO = '".$_model[COMM_NO]."' AND A.PARENT_NO = '".$_model[PARENT_NO]."')";
+                $board_no = "(SELECT COUNT(*)+1 FROM COM_BOARD A WHERE A.COMM_NO = '".$_model['COMM_NO']."' AND A.PARENT_NO = '".$_model['PARENT_NO']."')";
             }
 
             $_d->sql_beginTransaction();
@@ -766,33 +766,33 @@
                         ,BOARD_NO
                         ,CATEGORY_NO
                     ) VALUES (
-                        '".$_model[PARENT_NO]."'
-                        ,'".$_model[COMM_NO]."'
-                        ,'".$_model[HEAD]."'
-                        ,'".addslashes($_model[SUBJECT])."'
-                        , '".addslashes($_model[BODY])."'
-                        , '".$_model[BOARD_GB]."'
-                        , '".$_model[SYSTEM_GB]."'
+                        '".$_model['PARENT_NO']."'
+                        ,'".$_model['COMM_NO']."'
+                        ,'".$_model['HEAD']."'
+                        ,'".addslashes($_model['SUBJECT'])."'
+                        , '".addslashes($_model['BODY'])."'
+                        , '".$_model['BOARD_GB']."'
+                        , '".$_model['SYSTEM_GB']."'
                         , '".$_SESSION['uid']."'
                         , '".$_SESSION['name']."'
                         , '".$_SESSION['nick']."'
                         , SYSDATE()
-                        , '".($_model[NOTICE_FL] == "true" ? "1" : "0")."'
-                        , '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
-                        , '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
-                        , '".$_model[TAG]."'
-                        , '".$_model[ETC1]."'
-                        , '".$_model[ETC2]."'
-                        , '".$_model[ETC3]."'
-                        , '".$_model[ETC4]."'
-                        , '".$_model[ETC5]."'
-                        , '".$_model[PASSWORD]."'
-                        , '".$_model[PHOTO_TYPE]."'
-                        , '".$_model[PHOTO_GB]."'
-                        , '".$_model[FAQ_TYPE]."'
-                        , '".$_model[FAQ_GB]."'
+                        , '".($_model['NOTICE_FL'] == "true" ? "1" : "0")."'
+                        , '".($_model['SCRAP_FL'] == "true" ? "Y" : "N")."'
+                        , '".($_model['REPLY_FL'] == "true" ? "Y" : "N")."'
+                        , '".$_model['TAG']."'
+                        , '".$_model['ETC1']."'
+                        , '".$_model['ETC2']."'
+                        , '".$_model['ETC3']."'
+                        , '".$_model['ETC4']."'
+                        , '".$_model['ETC5']."'
+                        , '".$_model['PASSWORD']."'
+                        , '".$_model['PHOTO_TYPE']."'
+                        , '".$_model['PHOTO_GB']."'
+                        , '".$_model['FAQ_TYPE']."'
+                        , '".$_model['FAQ_GB']."'
                         , $board_no
-                        , '".$_model[CATEGORY_NO]."'
+                        , '".$_model['CATEGORY_NO']."'
                     )";
 
             $_d->sql_query($sql);
@@ -803,20 +803,20 @@
                 $msg = $_d->mysql_error;
             }
 
-            if (count($_model[FILES]) > 0) {
-                $files = $_model[FILES];
+            if (count($_model['FILES']) > 0) {
+                $files = $_model['FILES'];
 
-                for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                     $file = $files[$i];
                     MtUtil::_d("------------>>>>> file : ".$file['name']);
-                    MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                    MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i]['path']);
 
-                    if($_model[BOARD_GB] == 'PHOTO'){
-                        if(!isset($file[kind])){
+                    if($_model['BOARD_GB'] == 'PHOTO'){
+                        if(!isset($file['kind'])){
                             $_d->failEnd("대표이미지를 선택하세요.");
                         }
                     }
-//                    if($file[kind] != 'MAIN'){
+//                    if($file['kind'] != 'MAIN'){
 //                        $_d->failEnd("대표이미지를 선택하세요.");
 //                    }
 
@@ -835,15 +835,15 @@
                                 ,TARGET_NO
                                 ,TARGET_GB
                             ) VALUES (
-                                '".$file[name]."'
-                                , '".$insert_path[$i][uid]."'
-                                , '".$insert_path[$i][path]."'
-                                , '".$file[type]."'
-                                , '".$file[size]."'
+                                '".$file['name']."'
+                                , '".$insert_path[$i]['uid']."'
+                                , '".$insert_path[$i]['path']."'
+                                , '".$file['type']."'
+                                , '".$file['size']."'
                                 , '0'
                                 , SYSDATE()
                                 , 'C'
-                                , '".$file[kind]."'
+                                , '".$file['kind']."'
                                 , '".$i."'
                                 , '".$no."'
                                 , 'BOARD'
@@ -858,19 +858,19 @@
                 }
             }
 
-            if ($_model[BOARD_GB] == "CLINIC") {
+            if ($_model['BOARD_GB'] == "CLINIC") {
                 $sql = "SELECT
                             C.COMM_NM, C.COMM_MG_ID, C.COMM_MG_NM, C.EN_SMS_FL, U.USER_NM, U.EMAIL, U.PHONE_2
                         FROM
                             ANGE_COMM C
                             LEFT OUTER JOIN COM_USER U ON C.COMM_MG_ID = U.USER_ID
                         WHERE
-                            C.NO = '".$_model[COMM_NO]."'
+                            C.NO = '".$_model['COMM_NO']."'
                         ";
 
                 $data = $_d->sql_fetch($sql);
 
-                if ($data[EN_SMS_FL] == 'Y') {
+                if ($data['EN_SMS_FL'] == 'Y') {
                     $sql = "insert into em_smt_tran
                             (
                                 date_client_req,
@@ -884,7 +884,7 @@
                             values
                             (
                                 sysdate(),
-                                '[앙쥬] 전문가 상담실에 질문을 게시했습니다.',
+                                '['앙쥬'] 전문가 상담실에 질문을 게시했습니다.',
                                 '023334650',
                                 '0',
                                 'N',
@@ -900,12 +900,12 @@
                     }
                 }
 
-                if (isset($data[EMAIL]) && $data[EMAIL] != "") {
+                if (isset($data['EMAIL']) && $data['EMAIL'] != "") {
                     $from_email = __SMTP_USR__;
                     $from_user = __SMTP_USR_NM__;
                     $to = $data['EMAIL'];
                     $to_user = $data['USER_NM'];
-                    $subject = "[앙쥬] 전문가 상담실에 질문을 게시했습니다.";
+                    $subject = "['앙쥬'] 전문가 상담실에 질문을 게시했습니다.";
                     $message = "<html>
                                 <head>
                                 <title>@ange_member</title>
@@ -931,11 +931,11 @@
                                     </tr>
                                     <tr>
                                         <td bgcolor='#ededed' style='text-align:center; font-weight:600; '>질문</td>
-                                        <td  style='padding:15px;'>".$_model[SUBJECT]."</td>
+                                        <td  style='padding:15px;'>".$_model['SUBJECT']."</td>
                                     </tr>
                                     <tr>
                                         <td bgcolor='#ededed' style='text-align:center; font-weight:600'>내용</td>
-                                        <td  style='padding:15px; text-align:justify'>".$_model[BODY]."</td>
+                                        <td  style='padding:15px; text-align:justify'>".$_model['BODY']."</td>
                                     </tr>
                                 </table>
                                 <p></p>
@@ -943,11 +943,11 @@
                                 <input type='hidden' id='_method' name='_method' value='POST'>
                                 <input type='hidden' id='_type' name='_type' value='clinic'>
                                 <input type='hidden' id='parent_no' name='parent_no' value='".$no."'>
-                                <input type='hidden' id='comm_no' name='comm_no' value='".$_model[COMM_NO]."'>
+                                <input type='hidden' id='comm_no' name='comm_no' value='".$_model['COMM_NO']."'>
                                 <table width='750' border='0' cellpadding='0' cellspacing='0' style=' font-family:'나눔고딕'; color:#444444; font-size:13px; line-height:1.8; border-collapse:collapse;'>
                                     <tr>
                                        <td width='110' bgcolor='#ededed' style='text-align:center; font-weight:600'>주제</td>
-                                        <td width='649'  style='padding:15px; ' ><input type='text' name='subject' value='[RE]".$_model[SUBJECT]."'></td>
+                                        <td width='649'  style='padding:15px; ' ><input type='text' name='subject' value='['RE']".$_model['SUBJECT']."'></td>
                                     </tr>
                                     <tr>
                                         <td bgcolor='#ededed' style='text-align:center; font-weight:600'>답변</td>
@@ -990,44 +990,44 @@
                 $source_path = '../../..'.$file_path;
                 $insert_path = array();
 
-                $body_str = $_model[BODY];
+                $body_str = $_model['BODY'];
 
 
                 try {
-                    if (count($_model[FILES]) > 0) {
-                        $files = $_model[FILES];
+                    if (count($_model['FILES']) > 0) {
+                        $files = $_model['FILES'];
 
                         @mkdir($source_path);
                         @mkdir($source_path.'thumbnail/');
                         @mkdir($source_path.'medium/');
 
-                        for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                        for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                             $file = $files[$i];
 
-                            if (file_exists($upload_path.$file[name])) {
+                            if (file_exists($upload_path.$file['name'])) {
                                 $uid = uniqid();
-                                rename($upload_path.$file[name], $source_path.$uid);
-                                rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                                rename($upload_path.$file['name'], $source_path.$uid);
+                                rename($upload_path.'thumbnail/'.$file['name'], $source_path.'thumbnail/'.$uid);
 
-                                if ($file[version] == 6 ) {
-                                    $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
-                                    $body_str = str_replace(BASE_URL.'/upload/files/'.$file[name], BASE_URL.$file_path.$uid, $body_str);
+                                if ($file['version'] == 6 ) {
+                                    $body_str = str_replace($file['url'], BASE_URL.$file_path.$uid, $body_str);
+                                    $body_str = str_replace(BASE_URL.'/upload/files/'.$file['name'], BASE_URL.$file_path.$uid, $body_str);
                                 } else {
-                                    rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                                    $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-                                    $body_str = str_replace(BASE_URL.'/upload/files/medium/'.$file[name], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                    rename($upload_path.'medium/'.$file['name'], $source_path.'medium/'.$uid);
+                                    $body_str = str_replace($file['mediumUrl'], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                    $body_str = str_replace(BASE_URL.'/upload/files/medium/'.$file['name'], BASE_URL.$file_path.'medium/'.$uid, $body_str);
                                 }
 
-                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
                             } else {
                                 $uid = uniqid();
                                 $insert_path[$i] = array(path => '', uid => '', kind => '');
-                                //$insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                                //$insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
                             }
                         }
                     }
 
-                    $_model[BODY] = $body_str;
+                    $_model['BODY'] = $body_str;
                 } catch(Exception $e) {
                     $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
                     break;
@@ -1040,34 +1040,34 @@
 
                 $_d->sql_beginTransaction();
 
-                if( trim($_model[SUBJECT]) == '' ){
+                if( trim($_model['SUBJECT']) == '' ){
                     $_d->failEnd("제목을 작성 하세요");
                 }
-                if( trim($_model[BODY]) == '' ){
+                if( trim($_model['BODY']) == '' ){
                     $_d->failEnd("내용이 비어있습니다");
                 }
 
                 $sql = "UPDATE COM_BOARD
                     SET
-                        HEAD = '".$_model[HEAD]."'
-                        ,SUBJECT = '".addslashes($_model[SUBJECT])."'
-                        ,BODY = '".addslashes($_model[BODY])."'
-                        ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "1" : "0")."'
-                        ,SCRAP_FL = '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
-                        ,REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
-                        ,TAG = '".$_model[TAG]."'
-                        ,ETC1 = '".$_model[ETC1]."'
-                        ,ETC2 = '".$_model[ETC2]."'
-                        ,ETC3 = '".$_model[ETC3]."'
-                        ,ETC4 = '".$_model[ETC4]."'
-                        ,ETC5 = '".$_model[ETC5]."'
-                        ,PASSWORD = '".$_model[PASSWORD]."'
-                        ,PHOTO_TYPE = '".$_model[PHOTO_TYPE]."'
-                        ,PHOTO_GB = '".$_model[PHOTO_GB]."'
-                        ,FAQ_TYPE = '".$_model[FAQ_TYPE]."'
-                        ,FAQ_GB = '".$_model[FAQ_GB]."'
-                        ,COMM_NO = '".$_model[COMM_NO]."'
-                        ,CATEGORY_NO = '".$_model[CATEGORY_NO]."'
+                        HEAD = '".$_model['HEAD']."'
+                        ,SUBJECT = '".addslashes($_model['SUBJECT'])."'
+                        ,BODY = '".addslashes($_model['BODY'])."'
+                        ,NOTICE_FL = '".($_model['NOTICE_FL'] == "true" ? "1" : "0")."'
+                        ,SCRAP_FL = '".($_model['SCRAP_FL'] == "true" ? "Y" : "N")."'
+                        ,REPLY_FL = '".($_model['REPLY_FL'] == "true" ? "Y" : "N")."'
+                        ,TAG = '".$_model['TAG']."'
+                        ,ETC1 = '".$_model['ETC1']."'
+                        ,ETC2 = '".$_model['ETC2']."'
+                        ,ETC3 = '".$_model['ETC3']."'
+                        ,ETC4 = '".$_model['ETC4']."'
+                        ,ETC5 = '".$_model['ETC5']."'
+                        ,PASSWORD = '".$_model['PASSWORD']."'
+                        ,PHOTO_TYPE = '".$_model['PHOTO_TYPE']."'
+                        ,PHOTO_GB = '".$_model['PHOTO_GB']."'
+                        ,FAQ_TYPE = '".$_model['FAQ_TYPE']."'
+                        ,FAQ_GB = '".$_model['FAQ_GB']."'
+                        ,COMM_NO = '".$_model['COMM_NO']."'
+                        ,CATEGORY_NO = '".$_model['CATEGORY_NO']."'
                     WHERE
                         NO = ".$_key."
                     ";
@@ -1093,13 +1093,13 @@
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                     $is_delete = "Y";
 
-                    if (count($_model[FILES]) > 0) {
-                        $files = $_model[FILES];
+                    if (count($_model['FILES']) > 0) {
+                        $files = $_model['FILES'];
 
                         MtUtil::_d("------------>>>>> FILES >>>>>>>>>>>>>>>: ".count($files));
 
                         for ($i = 0 ; $i < count($files); $i++) {
-                            if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
+                            if ($row['FILE_NM'] == $files[$i]['name'] && $row['FILE_SIZE'] == $files[$i]['size']) {
                                 $is_delete = "N";
                             }
                         }
@@ -1108,35 +1108,35 @@
                     MtUtil::_d("------------>>>>> is_delete >>>>>>>>>>>>>>>: ".$is_delete);
 
                     if ($is_delete == "Y") {
-                        MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                        $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
+                        MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
+                        $sql = "DELETE FROM COM_FILE WHERE NO = ".$row['NO'];
 
                         $_d->sql_query($sql);
 
-                        MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+                        MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
 
-                        if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                            unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                            unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                            unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                        if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                            unlink('../../..'.$row['PATH'].$row['FILE_ID']);
+                            unlink('../../..'.$row['PATH'].'thumbnail/'.$row['FILE_ID']);
+                            unlink('../../..'.$row['PATH'].'medium/'.$row['FILE_ID']);
                         }
                     }
                 }
 
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
 
                     for ($i = 0 ; $i < count($files); $i++) {
                         $file = $files[$i];
                         MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                        if($_model[BOARD_GB] == 'PHOTO'){
-                            if(!isset($file[kind])){
+                        if($_model['BOARD_GB'] == 'PHOTO'){
+                            if(!isset($file['kind'])){
                                 $_d->failEnd("대표이미지를 선택하세요.");
                             }
                         }
 
-                        if ($insert_path[$i][uid] != "") {
+                        if ($insert_path[$i]['uid'] != "") {
                             $sql = "INSERT INTO COM_FILE
                             (
                                 FILE_NM
@@ -1152,15 +1152,15 @@
                                 ,TARGET_NO
                                 ,TARGET_GB
                             ) VALUES (
-                                '".$file[name]."'
-                                , '".$insert_path[$i][uid]."'
-                                , '".$insert_path[$i][path]."'
-                                , '".$file[type]."'
-                                , '".$file[size]."'
+                                '".$file['name']."'
+                                , '".$insert_path[$i]['uid']."'
+                                , '".$insert_path[$i]['path']."'
+                                , '".$file['type']."'
+                                , '".$file['size']."'
                                 , '0'
                                 , SYSDATE()
                                 , 'C'
-                                , '".$file[kind]."'
+                                , '".$file['kind']."'
                                 , '".$i."'
                                 , '".$_key."'
                                 , 'BOARD'
@@ -1289,15 +1289,15 @@
 
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row['NO'];
 
                     $_d->sql_query($sql);
 
-                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                        unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                        unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                    if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                        unlink('../../..'.$row['PATH'].$row['FILE_ID']);
+                        unlink('../../..'.$row['PATH'].'thumbnail/'.$row['FILE_ID']);
+                        unlink('../../..'.$row['PATH'].'medium/'.$row['FILE_ID']);
                     }
                 }
 

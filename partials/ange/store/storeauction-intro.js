@@ -15,7 +15,7 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-            $scope.community = "마일리지 적립방법";
+
         };
 
         /********** 이벤트 **********/

@@ -16,7 +16,7 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_d("### [START]");
+MtUtil::_d("### ['START']");
 MtUtil::_d(print_r($_REQUEST,true));
 
 MtUtil::_d(json_encode(file_get_contents("php://input"),true));
@@ -26,8 +26,8 @@ MtUtil::_d(json_encode(file_get_contents("php://input"),true));
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
 $_d = new MtJson(null);
@@ -91,20 +91,20 @@ switch ($_method) {
             $sort_order = "";
             $limit = "";
 
-            if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+            if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                $search_where .= "AND ".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%'";
             }
 
-            if (isset($_search[COMPANY_GB]) && $_search[COMPANY_GB] != "") {
-                $search_where .= "AND COMPANY_GB = '".$_search[COMPANY_GB]."'";
+            if (isset($_search['COMPANY_GB']) && $_search['COMPANY_GB'] != "") {
+                $search_where .= "AND COMPANY_GB = '".$_search['COMPANY_GB']."'";
             }
 
-            if (isset($_search[SORT]) && $_search[SORT] != "") {
-                $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+            if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
             }
 
             if (isset($_page)) {
-                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
             }
 
             $sql = "SELECT
@@ -172,19 +172,19 @@ switch ($_method) {
         $file_name = null;
 
         try {
-            if (count($_model[FILE]) > 0) {
-                $file = $_model[FILE];
-                $file_name = $file[name];
+            if (count($_model['FILE']) > 0) {
+                $file = $_model['FILE'];
+                $file_name = $file['name'];
                 if (!file_exists($source_path) && !is_dir($source_path)) {
                     @mkdir($source_path);
                 }
 
-                if (file_exists($upload_path.$file[name])) {
+                if (file_exists($upload_path.$file['name'])) {
                     $uid = uniqid();
-                    copy($upload_path.$file[name], $source_path.$uid);
-                    $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                    copy($upload_path.$file['name'], $source_path.$uid);
+                    $insert_path = array(path => $file_path, uid => $uid, kind => $file['kind']);
 
-                    MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[path]);
+                    MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path['path']);
                 }
             }
         } catch(Exception $e) {
@@ -213,17 +213,17 @@ switch ($_method) {
                     COMPANY_AGREE_YN,
                     REG_DT
                 ) VALUES (
-                    '".$_model[CATEGORY_GB]."',
-                    '".$_model[AFFILIATE_FL]."',
-                    '".$_model[AFFILIATE_GB]."',
-                    '".$_model[COMPANY_GB]."',
-                    '".$_model[COMPANY_NM]."',
-                    '".$_model[CHARGE_NM]."',
-                    '".$_model[URL]."',
-                    '".$_model[EMAIL]."',
-                    '".$_model[PHONE_1]."',
-                    '".$_model[PHONE_2]."',
-                    '".$_model[NOTE]."',
+                    '".$_model['CATEGORY_GB']."',
+                    '".$_model['AFFILIATE_FL']."',
+                    '".$_model['AFFILIATE_GB']."',
+                    '".$_model['COMPANY_GB']."',
+                    '".$_model['COMPANY_NM']."',
+                    '".$_model['CHARGE_NM']."',
+                    '".$_model['URL']."',
+                    '".$_model['EMAIL']."',
+                    '".$_model['PHONE_1']."',
+                    '".$_model['PHONE_2']."',
+                    '".$_model['NOTE']."',
                     'Y',
                     SYSDATE()
                 )";
@@ -236,12 +236,12 @@ switch ($_method) {
             $msg = $_d->mysql_error;
         }
 
-        if (isset($_model[FILE]) && $_model[FILE] != "") {
-            $file = $_model[FILE];
+        if (isset($_model['FILE']) && $_model['FILE'] != "") {
+            $file = $_model['FILE'];
 
             MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-            /*if($file[kind] != 'MAIN'){
+            /*if($file['kind'] != 'MAIN'){
                 $_d->failEnd("대표이미지를 선택하세요.");
             }*/
 
@@ -260,15 +260,15 @@ switch ($_method) {
                         ,TARGET_NO
                         ,TARGET_GB
                     ) VALUES (
-                        '".$file[name]."'
-                        , '".$insert_path[uid]."'
-                        , '".$insert_path[path]."'
-                        , '".$file[type]."'
-                        , '".$file[size]."'
+                        '".$file['name']."'
+                        , '".$insert_path['uid']."'
+                        , '".$insert_path['path']."'
+                        , '".$file['type']."'
+                        , '".$file['size']."'
                         , '0'
                         , SYSDATE()
                         , 'C'
-                        , '".$file[kind]."'
+                        , '".$file['kind']."'
                         , '0'
                         , '".$no."'
                         , 'COMPANY'
@@ -284,23 +284,40 @@ switch ($_method) {
 
         MtUtil::_d("------------>>>>> mysql_errno : ".$_d->mysql_errno);
 
-        if ($_model[COMPANY_GB] == "AFFILIATE") {
-            $from_email = $_model[EMAIL];
-            $from_user = $_model[CHARGE_NM];
-            $to = __SMTP_USR__;
-            $to_user = __SMTP_USR_NM__;
+        if ($_model['COMPANY_GB'] == "AFFILIATE") {
+            $from_email = $to = __SMTP_USR__;
+            $from_user = $to_user = __SMTP_USR_NM__;
+            $aff_gb = "월간 앙쥬(잡지) 광고 문의";
+
+            if ($_model['AFFILIATE_GB'] == "MAGAZINE") {
+                $to = "ange@ange.co.kr";
+                $aff_gb = "월간 앙쥬(잡지) 광고 문의";
+            } else if ($_model['AFFILIATE_GB'] == "ONLINE") {
+                $aff_gb = "온라인 광고 및 제휴 문의";
+            } else if ($_model['AFFILIATE_GB'] == "EVENT") {
+                $to = "ange@ange.co.kr";
+                $aff_gb = "체험단 및 이벤트/공동구매 문의";
+            } else if ($_model['AFFILIATE_GB'] == "STORE") {
+                $to = "ange@ange.co.kr";
+                $aff_gb = "스토어 판매 관련 문의";
+            }
+
+//            $from_email = $_model['EMAIL'];
+//            $from_user = $_model['CHARGE_NM'];
+
 //            $from_email = __SMTP_USR__;
 //            $from_user = __SMTP_USR_NM__;
-//            $to = $_model[EMAIL];
-//            $to_user = $_model[CHARGE_NM];
-            $subject = "$_model[COMPANY_NM]의 제휴&광고문의 입니다.";
-            $message = "안녕하세요. ".$_model[COMPANY_NM]."의 제휴&광고문의 내용입니다.".
-                        "<br>기업명 : ".$_model[COMPANY_NM].
-                        "<br>담당자 : ".$_model[COMPANY_NM].
-                        "<br>담당자 : ".$_model[URL].
-                        "<br>유선전화 : ".$_model[PHONE_1].
-                        "<br>휴대폰 : ".$_model[PHONE_2].
-                        "<br>내용 : ".str_replace("\n", "<br />", $_model[NOTE]);
+//            $to = $_model['EMAIL'];
+//            $to_user = $_model['CHARGE_NM'];
+            $subject = $_model['COMPANY_NM']."의 제휴&광고문의 입니다.";
+            $message = "안녕하세요. ".$_model['COMPANY_NM']."의 제휴&광고문의 내용입니다.".
+                        "<br>광고구분 : ".$aff_gb.
+                        "<br>기업명 : ".$_model['COMPANY_NM'].
+                        "<br>담당자 : ".$_model['COMPANY_NM'].
+                        "<br>홈페이지 : ".$_model['URL'].
+                        "<br>유선전화 : ".$_model['PHONE_1'].
+                        "<br>휴대폰 : ".$_model['PHONE_2'].
+                        "<br>내용 : ".str_replace("\n", "<br />", $_model['NOTE']);
 
             $result = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user, $file_name);
 
@@ -329,16 +346,16 @@ switch ($_method) {
             $insert_path = null;
 
             try {
-                if (count($_model[FILE]) > 0) {
-                    $file = $_model[FILE];
+                if (count($_model['FILE']) > 0) {
+                    $file = $_model['FILE'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                     }
 
-                    if (file_exists($upload_path.$file[name])) {
+                    if (file_exists($upload_path.$file['name'])) {
                         $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$uid);
-                        $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                        rename($upload_path.$file['name'], $source_path.$uid);
+                        $insert_path = array(path => $file_path, uid => $uid, kind => $file['kind']);
                     } else {
                         $insert_path = array(path => '', uid => '', kind => '');
                     }
@@ -355,17 +372,17 @@ switch ($_method) {
 
             $sql = "UPDATE ANGE_COMPANY
                     SET
-                        CATEGORY_GB = '".$_model[CATEGORY_GB]."'
-                        ,AFFILIATE_FL = '".$_model[AFFILIATE_FL]."'
-                        ,AFFILIATE_GB = '".$_model[AFFILIATE_GB]."'
-                        ,COMPANY_GB = '".$_model[COMPANY_GB]."'
-                        ,COMPANY_NM = '".$_model[COMPANY_NM]."'
-                        ,CHARGE_NM= '".$_model[CHARGE_NM]."'
-                        ,URL= '".$_model[URL]."'
-                        ,EMAIL= '".$_model[EMAIL]."'
-                        ,PHONE_1= '".$_model[PHONE_1]."'
-                        ,PHONE_2= '".$_model[PHONE_2]."'
-                        ,NOTE = '".$_model[NOTE]."'
+                        CATEGORY_GB = '".$_model['CATEGORY_GB']."'
+                        ,AFFILIATE_FL = '".$_model['AFFILIATE_FL']."'
+                        ,AFFILIATE_GB = '".$_model['AFFILIATE_GB']."'
+                        ,COMPANY_GB = '".$_model['COMPANY_GB']."'
+                        ,COMPANY_NM = '".$_model['COMPANY_NM']."'
+                        ,CHARGE_NM= '".$_model['CHARGE_NM']."'
+                        ,URL= '".$_model['URL']."'
+                        ,EMAIL= '".$_model['EMAIL']."'
+                        ,PHONE_1= '".$_model['PHONE_1']."'
+                        ,PHONE_2= '".$_model['PHONE_2']."'
+                        ,NOTE = '".$_model['NOTE']."'
                     WHERE
                         NO = '".$_key."'
                 ";
@@ -391,31 +408,31 @@ switch ($_method) {
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                 $is_delete = true;
 
-                if (count($_model[FILE]) > 0) {
-                    $file = $_model[FILE];
-                    if ($row[FILE_NM] == $file[name] && $row[FILE_SIZE] == $file[size]) {
+                if (count($_model['FILE']) > 0) {
+                    $file = $_model['FILE'];
+                    if ($row['FILE_NM'] == $file['name'] && $row['FILE_SIZE'] == $file['size']) {
                         $is_delete = false;
                     }
                 }
 
                 if ($is_delete) {
-                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                    $sql = "DELETE COM_FROM FILE WHERE TARGET_GB = 'COMPANY' NO = ".$row[NO];
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
+                    $sql = "DELETE COM_FROM FILE WHERE TARGET_GB = 'COMPANY' NO = ".$row['NO'];
 
                     $_d->sql_query($sql);
 
-                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                    if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                        unlink('../../..'.$row['PATH'].$row['FILE_ID']);
                     }
                 }
             }
 
-            if (count($_model[FILE]) > 0) {
-                $file = $_model[FILE];
+            if (count($_model['FILE']) > 0) {
+                $file = $_model['FILE'];
 
                 MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                if ($insert_path[uid] != "") {
+                if ($insert_path['uid'] != "") {
                     $sql = "INSERT INTO COM_FILE
                             (
                                 FILE_NM
@@ -431,15 +448,15 @@ switch ($_method) {
                                 ,TARGET_NO
                                 ,TARGET_GB
                             ) VALUES (
-                                '".$file[name]."'
-                                , '".$insert_path[uid]."'
-                                , '".$insert_path[path]."'
-                                , '".$file[type]."'
-                                , '".$file[size]."'
+                                '".$file['name']."'
+                                , '".$insert_path['uid']."'
+                                , '".$insert_path['path']."'
+                                , '".$file['type']."'
+                                , '".$file['size']."'
                                 , '0'
                                 , SYSDATE()
                                 , 'C'
-                                , '".$file[kind]."'
+                                , '".$file['kind']."'
                                 , '0'
                                 , '".$_key."'
                                 , 'COMPANY'
@@ -495,7 +512,7 @@ switch ($_method) {
 
         $result = $_d->sql_query($sql,true);
         for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-            $sql = "DELETE FROM COM_FILE WHERE TARGET_GB = 'COMPANY' AND NO = ".$row[NO];
+            $sql = "DELETE FROM COM_FILE WHERE TARGET_GB = 'COMPANY' AND NO = ".$row['NO'];
 
             $_d->sql_query($sql);
 
@@ -504,8 +521,8 @@ switch ($_method) {
                 $msg = $_d->mysql_error;
             }
 
-            if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                unlink('../../..'.$row[PATH].$row[FILE_ID]);
+            if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                unlink('../../..'.$row['PATH'].$row['FILE_ID']);
             }
         }
 

@@ -16,14 +16,14 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -56,7 +56,7 @@
                             FROM
                                 CMS_SERIES
                             WHERE
-                                NO = ".$data[SERIES_NO]."
+                                NO = ".$data['SERIES_NO']."
                             ";
 
                     $result = $_d->sql_query($sql);
@@ -95,9 +95,9 @@
                     $sort_order = "";
                     $limit = "";
 
-                    if (isset($_search[STATUS])) {
+                    if (isset($_search['STATUS'])) {
                         $in_str = "";
-                        $arr_status = explode(',', $_search[STATUS]);
+                        $arr_status = explode(',', $_search['STATUS']);
                         for($i=0;$i< sizeof($arr_status);$i++){
                             $in_str = $in_str."'".$arr_status[$i]."'";
                             if (sizeof($arr_status) - 1 != $i) $in_str = $in_str.",";
@@ -105,27 +105,27 @@
 
                         $search_where = "AND PROJECT_ST IN (".$in_str.") ";
                     }
-                    if (isset($_search[IS_PROGRESS]) && $_search[IS_PROGRESS] != "") {
-                        if ($_search[IS_PROGRESS] == 'true') {
+                    if (isset($_search['IS_PROGRESS']) && $_search['IS_PROGRESS'] != "") {
+                        if ($_search['IS_PROGRESS'] == 'true') {
                             $search_where .= "AND PROJECT_ST IN ('0', '1') ";
                         }
                     }
-                    if (isset($_search[YEAR]) && $_search[YEAR] != "") {
-                        $search_where .= "AND YEAR  = '".$_search[YEAR]."' ";
+                    if (isset($_search['YEAR']) && $_search['YEAR'] != "") {
+                        $search_where .= "AND YEAR  = '".$_search['YEAR']."' ";
                     }
-                    if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                        $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' OR NOTE LIKE '%".$_search[KEYWORD]."%'";
+                    if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                        $search_where .= "AND ".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%' OR NOTE LIKE '%".$_search['KEYWORD']."%'";
                     }
 
-                    if (isset($_search[SORT]) && $_search[SORT] != "") {
-                        $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                    if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                        $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                     }
 
                     if (isset($_page)) {
-                        $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                        $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                     }
 
-                    if (isset($_search[ROLE]) && $_search[ROLE] != "") {
+                    if (isset($_search['ROLE']) && $_search['ROLE'] != "") {
                         $sql = "SELECT
                                     NO AS PROJECT_NO, SUBJECT
                                 FROM
@@ -178,12 +178,12 @@
 
         case "POST":
 
-            if ( trim($_model[SUBJECT]) == "" ) {
+            if ( trim($_model['SUBJECT']) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
             }
 
-            if ( trim($_model[PROJECT_ST]) == "" ) {
-                $_model[PROJECT_ST] = '0';
+            if ( trim($_model['PROJECT_ST']) == "" ) {
+                $_model['PROJECT_ST'] = '0';
             }
 
             $upload_path = '../../../upload/files/';
@@ -192,24 +192,24 @@
             $insert_path = null;
 
             try {
-                if (count($_model[FILE]) > 0) {
-                    $file = $_model[FILE];
+                if (count($_model['FILE']) > 0) {
+                    $file = $_model['FILE'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                         @mkdir($source_path.'thumbnail/');
                         @mkdir($source_path.'medium/');
                     }
 
-                    if (file_exists($upload_path.$file[name])) {
+                    if (file_exists($upload_path.$file['name'])) {
                         $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$uid);
-                        rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                        rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                        rename($upload_path.$file['name'], $source_path.$uid);
+                        rename($upload_path.'thumbnail/'.$file['name'], $source_path.'thumbnail/'.$uid);
+                        rename($upload_path.'medium/'.$file['name'], $source_path.'medium/'.$uid);
                         $insert_path = array(path => $file_path, uid => $uid);
                     }
                 }
 
-                $_model[BODY] = $body_str;
+                $_model['BODY'] = $body_str;
             } catch(Exception $e) {
                 $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
                 break;
@@ -232,15 +232,15 @@
                         ,PROJECT_ST
                         ,NOTE
                     ) VALUES (
-                        '".$_model[SERIES][NO]."'
-                        ,'".$_model[YEAR]."'
-                        ,'".$_model[SUBJECT]."'
-                        ,'".$_model[ISBN_NO]."'
+                        '".$_model['SERIES']['NO']."'
+                        ,'".$_model['YEAR']."'
+                        ,'".$_model['SUBJECT']."'
+                        ,'".$_model['ISBN_NO']."'
                         ,'".$_SESSION['uid']."'
                         ,'".$_SESSION['name']."'
                         ,SYSDATE()
                         ,'0'
-                        ,'".$_model[NOTE]."'
+                        ,'".$_model['NOTE']."'
                     )";
 
             $_d->sql_query($sql);
@@ -251,8 +251,8 @@
                 $msg = $_d->mysql_error;
             }
 
-            if (isset($_model[FILE]) && $_model[FILE] != "") {
-                $file = $_model[FILE];
+            if (isset($_model['FILE']) && $_model['FILE'] != "") {
+                $file = $_model['FILE'];
 
                 MtUtil::_d("------------>>>>> file : ".$file['name']);
 
@@ -271,15 +271,15 @@
                             ,TARGET_NO
                             ,TARGET_GB
                         ) VALUES (
-                            '".$file[name]."'
-                            , '".$insert_path[uid]."'
-                            , '".$insert_path[path]."'
-                            , '".$file[type]."'
-                            , '".$file[size]."'
+                            '".$file['name']."'
+                            , '".$insert_path['uid']."'
+                            , '".$insert_path['path']."'
+                            , '".$file['type']."'
+                            , '".$file['size']."'
                             , '0'
                             , SYSDATE()
                             , 'C'
-                            , '".$file[kind]."'
+                            , '".$file['kind']."'
                             , '".$i."'
                             , '".$no."'
                             , 'PROJECT'
@@ -314,22 +314,22 @@
             $insert_path = null;
 
             try {
-                if (count($_model[FILE]) > 0) {
-                    $file = $_model[FILE];
+                if (count($_model['FILE']) > 0) {
+                    $file = $_model['FILE'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                         @mkdir($source_path.'thumbnail/');
                         @mkdir($source_path.'medium/');
                     }
 
-                    if (file_exists($upload_path.$file[name])) {
+                    if (file_exists($upload_path.$file['name'])) {
                         $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$uid);
-                        rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                        rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                        rename($upload_path.$file['name'], $source_path.$uid);
+                        rename($upload_path.'thumbnail/'.$file['name'], $source_path.'thumbnail/'.$uid);
+                        rename($upload_path.'medium/'.$file['name'], $source_path.'medium/'.$uid);
                         $insert_path = array(path => $file_path, uid => $uid);
 
-                        MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
+                        MtUtil::_d("------------>>>>> mediumUrl : ".$file['mediumUrl']);
                         MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
                         MtUtil::_d("------------>>>>> body_str : ".$body_str);
                     } else {
@@ -341,7 +341,7 @@
                 break;
             }
 
-            if ( trim($_model[SUBJECT]) == "" ) {
+            if ( trim($_model['SUBJECT']) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
             }
 
@@ -352,12 +352,12 @@
 
             $sql = "UPDATE CMS_PROJECT
                     SET
-                        SERIES_NO = '".$_model[SERIES][NO]."'
-                        ,YEAR = '".$_model[YEAR]."'
-                        ,SUBJECT = '".$_model[SUBJECT]."'
-                        ,ISBN_NO = '".$_model[ISBN_NO]."'
-                        ,PROJECT_ST = '".( $_model[COMPLETE_FL] == "true" ? "3" : $_model[PROJECT_ST] )."'
-                        ,NOTE = '".$_model[NOTE]."'
+                        SERIES_NO = '".$_model['SERIES']['NO']."'
+                        ,YEAR = '".$_model['YEAR']."'
+                        ,SUBJECT = '".$_model['SUBJECT']."'
+                        ,ISBN_NO = '".$_model['ISBN_NO']."'
+                        ,PROJECT_ST = '".( $_model['COMPLETE_FL'] == "true" ? "3" : $_model['PROJECT_ST'] )."'
+                        ,NOTE = '".$_model['NOTE']."'
                     WHERE
                         NO = ".$_key."
                     ";
@@ -383,35 +383,35 @@
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                 $is_delete = true;
 
-                if (count($_model[FILE]) > 0) {
-                    $file = $_model[FILE];
-                    if ($row[FILE_NM] == $file[name] && $row[FILE_SIZE] == $file[size]) {
+                if (count($_model['FILE']) > 0) {
+                    $file = $_model['FILE'];
+                    if ($row['FILE_NM'] == $file['name'] && $row['FILE_SIZE'] == $file['size']) {
                         $is_delete = false;
                     }
                 }
 
                 if ($is_delete) {
-                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row['NO'];
 
                     $_d->sql_query($sql);
 
-                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
 
-                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                        unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                        unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                    if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                        unlink('../../..'.$row['PATH'].$row['FILE_ID']);
+                        unlink('../../..'.$row['PATH'].'thumbnail/'.$row['FILE_ID']);
+                        unlink('../../..'.$row['PATH'].'medium/'.$row['FILE_ID']);
                     }
                 }
             }
 
-            if (count($_model[FILE]) > 0) {
-                $file = $_model[FILE];
+            if (count($_model['FILE']) > 0) {
+                $file = $_model['FILE'];
 
                 MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                if ($insert_path[uid] != "") {
+                if ($insert_path['uid'] != "") {
                     $sql = "INSERT INTO COM_FILE
                             (
                                 FILE_NM
@@ -427,15 +427,15 @@
                                 ,TARGET_NO
                                 ,TARGET_GB
                             ) VALUES (
-                                '".$file[name]."'
-                                , '".$insert_path[uid]."'
-                                , '".$insert_path[path]."'
-                                , '".$file[type]."'
-                                , '".$file[size]."'
+                                '".$file['name']."'
+                                , '".$insert_path['uid']."'
+                                , '".$insert_path['path']."'
+                                , '".$file['type']."'
+                                , '".$file['size']."'
                                 , '0'
                                 , SYSDATE()
                                 , 'C'
-                                , '".$file[kind]."'
+                                , '".$file['kind']."'
                                 , '".$i."'
                                 , '".$_key."'
                                 , 'PROJECT'
@@ -478,7 +478,7 @@
 
             $data = $_d->sql_fetch($sql);
 
-            if ($data["COUNT"] > 0) {
+            if ($data['"COUNT"'] > 0) {
                 $err++;
                 $msg = "등록된 태스크가 있습니다.";
             } else {
