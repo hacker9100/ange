@@ -409,7 +409,7 @@ define([
                 return;
             }
 
-            $scope.openViewMessageRegModal(null, item, 'lg');
+            $scope.openViewMessageRegModal(item, 'lg');
         };
 
         /********** 화면 초기화 **********/
