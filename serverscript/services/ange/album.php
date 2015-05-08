@@ -16,7 +16,7 @@
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
     MtUtil::_d(print_r($_REQUEST,true));
 
     MtUtil::_d(json_encode(file_get_contents("php://input"),true));
@@ -26,8 +26,8 @@
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -96,7 +96,7 @@
                     $search_where .= "AND PARENT_NO <> '{$_search['PARENT_NO_NOT']}' ";
                 }
 
-                if (isset($_search['COMM_NO_IN]']) && $_search['COMM_NO_IN'] != "") {
+                if (isset($_search['COMM_NO_IN']) && $_search['COMM_NO_IN'] != "") {
                     $search_where .= "AND COMM_NO IN ({$_search['COMM_NO_IN']}) ";
                 }
 
@@ -175,10 +175,10 @@
                             ,NICK_NM
                             ,REG_DT
                         ) VALUES (
-                            '".$_model[SUBJECT]."'
+                            '".$_model['SUBJECT']."'
                             ,'ALBUM'
-                            ,'".$_model[SUMMARY]."'
-                            ,'".$_model[SUMMARY]."'
+                            ,'".$_model['SUMMARY']."'
+                            ,'".$_model['SUMMARY']."'
                             , '".$_SESSION['uid']."'
                             , '".$_SESSION['name']."'
                             , '".$_SESSION['nick']."'
@@ -212,22 +212,22 @@
                 $insert_path = array();
 
                 try {
-                    if (count($_model[FILES]) > 0) {
-                        $files = $_model[FILES];
+                    if (count($_model['FILES']) > 0) {
+                        $files = $_model['FILES'];
                         if (!file_exists($source_path.'thumbnail/') && !is_dir($source_path.'thumbnail/')) {
                             @mkdir($source_path);
                             @mkdir($source_path.'thumbnail/');
                         }
 
-                        for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                        for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                             $file = $files[$i];
 
-                            if (file_exists($upload_path.$file[name])) {
+                            if (file_exists($upload_path.$file['name'])) {
                                 $uid = uniqid();
-                                rename($upload_path.$file[name], $source_path.$uid);
-                                rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                                rename($upload_path.$file['name'], $source_path.$uid);
+                                rename($upload_path.'thumbnail/'.$file['name'], $source_path.'thumbnail/'.$uid);
 
-                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
                             }
                         }
                     }
@@ -241,10 +241,10 @@
 
                 $_d->sql_beginTransaction();
 
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
 
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                    for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                         $file = $files[$i];
 
                         $sql = "INSERT INTO ANGE_ALBUM
@@ -261,17 +261,17 @@
                                     ,TAG
                                     ,SHOOTING_YMD
                                 ) VALUES (
-                                    '".$_model[PARENT_NO]."'
+                                    '".$_model['PARENT_NO']."'
                                     ,'PICTURE'
-                                    ,'".$_model[SUBJECT]."'
-                                    ,'".$_model[SUMMARY]."'
-                                    ,'".$_model[BODY]."'
+                                    ,'".$_model['SUBJECT']."'
+                                    ,'".$_model['SUMMARY']."'
+                                    ,'".$_model['BODY']."'
                                     , '".$_SESSION['uid']."'
                                     , '".$_SESSION['name']."'
                                     , '".$_SESSION['nick']."'
                                     , SYSDATE()
-                                    , '".$_model[TAG]."'
-                                    , '".$_model[SHOOTING_YMD]."'
+                                    , '".$_model['TAG']."'
+                                    , '".$_model['SHOOTING_YMD']."'
                                 )";
 
                         $_d->sql_query($sql);
@@ -297,15 +297,15 @@
                                     ,TARGET_NO
                                     ,TARGET_GB
                                 ) VALUES (
-                                    '".$file[name]."'
-                                    , '".$insert_path[$i][uid]."'
-                                    , '".$insert_path[$i][path]."'
-                                    , '".$file[type]."'
-                                    , '".$file[size]."'
+                                    '".$file['name']."'
+                                    , '".$insert_path[$i]['uid']."'
+                                    , '".$insert_path[$i]['path']."'
+                                    , '".$file['type']."'
+                                    , '".$file['size']."'
                                     , '0'
                                     , SYSDATE()
                                     , 'C'
-                                    , '".$file[kind]."'
+                                    , '".$file['kind']."'
                                     , '".$i."'
                                     , '".$no."'
                                     , 'ALBUM'
@@ -344,9 +344,9 @@
 
                 $sql = "UPDATE ANGE_ALBUM
                     SET
-                        SUBJECT = '".$_model[SUBJECT]."'
-                        ,BODY = '".$_model[BODY]."'
-                        ,SUMMARY = '".$_model[SUMMARY]."'
+                        SUBJECT = '".$_model['SUBJECT']."'
+                        ,BODY = '".$_model['BODY']."'
+                        ,SUMMARY = '".$_model['SUMMARY']."'
                     WHERE
                         NO = ".$_key."
                     ";
@@ -377,22 +377,22 @@
                 $insert_path = array();
 
                 try {
-                    if (count($_model[FILES]) > 0) {
-                        $files = $_model[FILES];
+                    if (count($_model['FILES']) > 0) {
+                        $files = $_model['FILES'];
 
                         if (!file_exists($source_path.'thumbnail/') && !is_dir($source_path.'thumbnail/')) {
                             @mkdir($source_path);
                             @mkdir($source_path.'thumbnail/');
                         }
 
-                        for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                        for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                             $file = $files[$i];
 
-                            if (file_exists($upload_path.$file[name])) {
+                            if (file_exists($upload_path.$file['name'])) {
                                 $uid = uniqid();
-                                rename($upload_path.$file[name], $source_path.$uid);
-                                rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                                rename($upload_path.$file['name'], $source_path.$uid);
+                                rename($upload_path.'thumbnail/'.$file['name'], $source_path.'thumbnail/'.$uid);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
 
                             } else {
                                 $insert_path[$i] = array(path => '', uid => '', kind => '');
@@ -412,13 +412,13 @@
 
                 $sql = "UPDATE ANGE_ALBUM
                     SET
-                        SUBJECT = '".$_model[SUBJECT]."'
-                        ,BODY = '".$_model[BODY]."'
-                        ,SUMMARY = '".$_model[SUMMARY]."'
+                        SUBJECT = '".$_model['SUBJECT']."'
+                        ,BODY = '".$_model['BODY']."'
+                        ,SUMMARY = '".$_model['SUMMARY']."'
                         ,REG_UID = '".$_SESSION['uid']."'
                         ,REG_NM = '".$_SESSION['name']."'
-                        ,TAG = '".$_model[TAG]."'
-                        ,SHOOTING_YMD = '".$_model[SHOOTING_YMD]."'
+                        ,TAG = '".$_model['TAG']."'
+                        ,SHOOTING_YMD = '".$_model['SHOOTING_YMD']."'
                     WHERE
                         NO = ".$_key."
                     ";
@@ -442,10 +442,10 @@
                 $result = $_d->sql_fetch($sql);
                 $is_delete = true;
 
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
                     for ($i = 0 ; $i < count($files); $i++) {
-                        if ($result[FILE_NM] == $files[$i][name] && $result[FILE_SIZE] == $files[$i][size]) {
+                        if ($result['FILE_NM'] == $files[$i]['name'] && $result['FILE_SIZE'] == $files[$i]['size']) {
                             $is_delete = false;
                         }
                     }
@@ -461,24 +461,24 @@
                         $msg = $_d->mysql_error;
                     }
 
-                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$result[NO];
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$result['NO'];
                     $_d->sql_query($sql);
 
-                    if (file_exists('../../..'.$result[PATH].$result[FILE_ID])) {
-                        unlink('../../..'.$result[PATH].$result[FILE_ID]);
-                        unlink('../../..'.$result[PATH].'thumbnail/'.$result[FILE_ID]);
+                    if (file_exists('../../..'.$result['PATH'].$result['FILE_ID'])) {
+                        unlink('../../..'.$result['PATH'].$result['FILE_ID']);
+                        unlink('../../..'.$result['PATH'].'thumbnail/'.$result['FILE_ID']);
                     }
                 }
 
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
 
                     for ($i = 0 ; $i < count($files); $i++) {
                         $file = $files[$i];
 
                         MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                        if ($insert_path[$i][uid] != "") {
+                        if ($insert_path[$i]['uid'] != "") {
                             $sql = "INSERT INTO ANGE_ALBUM
                                 (
                                     PARENT_NO
@@ -493,17 +493,17 @@
                                     ,TAG
                                     ,SHOOTING_YMD
                                 ) VALUES (
-                                    '".$_model[PARENT_NO]."'
+                                    '".$_model['PARENT_NO']."'
                                     ,'PICTURE'
-                                    ,'".$_model[SUBJECT]."'
-                                    ,'".$_model[SUMMARY]."'
-                                    ,'".$_model[BODY]."'
+                                    ,'".$_model['SUBJECT']."'
+                                    ,'".$_model['SUMMARY']."'
+                                    ,'".$_model['BODY']."'
                                     , '".$_SESSION['uid']."'
                                     , '".$_SESSION['name']."'
                                     , '".$_SESSION['nick']."'
                                     , SYSDATE()
-                                    , '".$_model[TAG]."'
-                                    , '".$_model[SHOOTING_YMD]."'
+                                    , '".$_model['TAG']."'
+                                    , '".$_model['SHOOTING_YMD']."'
                                 )";
 
                             $_d->sql_query($sql);
@@ -524,15 +524,15 @@
                             ,TARGET_NO
                             ,TARGET_GB
                         ) VALUES (
-                            '".$file[name]."'
-                            , '".$insert_path[$i][uid]."'
-                            , '".$insert_path[$i][path]."'
-                            , '".$file[type]."'
-                            , '".$file[size]."'
+                            '".$file['name']."'
+                            , '".$insert_path[$i]['uid']."'
+                            , '".$insert_path[$i]['path']."'
+                            , '".$file['type']."'
+                            , '".$file['size']."'
                             , '0'
                             , SYSDATE()
                             , 'C'
-                            , '".$file[kind]."'
+                            , '".$file['kind']."'
                             , '".$i."'
                             , '".$no."'
                             , 'ALBUM'
@@ -608,8 +608,8 @@
                             ";
 
                     $result = $_d->sql_fetch($sql);
-                    MtUtil::_d("------------>>>>> DELETE NO : ".$result[NO]);
-                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$result[NO];
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$result['NO']);
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$result['NO'];
 
                     $_d->sql_query($sql);
 
@@ -618,9 +618,9 @@
                         $msg = $_d->mysql_error;
                     }
 
-                    if (file_exists('../../..'.$result[PATH].$result[FILE_ID])) {
-                        unlink('../../..'.$result[PATH].$result[FILE_ID]);
-                        unlink('../../..'.$result[PATH].'thumbnail/'.$result[FILE_ID]);
+                    if (file_exists('../../..'.$result['PATH'].$result['FILE_ID'])) {
+                        unlink('../../..'.$result['PATH'].$result['FILE_ID']);
+                        unlink('../../..'.$result['PATH'].'thumbnail/'.$result['FILE_ID']);
                     }
                 }
 
@@ -664,8 +664,8 @@
                 ";
 
                 $result = $_d->sql_fetch($sql);
-                MtUtil::_d("------------>>>>> DELETE NO : ".$result[NO]);
-                $sql = "DELETE FROM COM_FILE WHERE NO = ".$result[NO];
+                MtUtil::_d("------------>>>>> DELETE NO : ".$result['NO']);
+                $sql = "DELETE FROM COM_FILE WHERE NO = ".$result['NO'];
 
                 $_d->sql_query($sql);
 
@@ -674,9 +674,9 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if (file_exists('../../..'.$result[PATH].$result[FILE_ID])) {
-                    unlink('../../..'.$result[PATH].$result[FILE_ID]);
-                    unlink('../../..'.$result[PATH].'thumbnail/'.$result[FILE_ID]);
+                if (file_exists('../../..'.$result['PATH'].$result['FILE_ID'])) {
+                    unlink('../../..'.$result['PATH'].$result['FILE_ID']);
+                    unlink('../../..'.$result['PATH'].'thumbnail/'.$result['FILE_ID']);
                 }
 
                 if($err > 0){

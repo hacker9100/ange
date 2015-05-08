@@ -16,7 +16,7 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_d("### [START]");
+MtUtil::_d("### ['START']");
 MtUtil::_d(print_r($_REQUEST,true));
 
 MtUtil::_d(json_encode(file_get_contents("php://input"),true));
@@ -26,8 +26,8 @@ MtUtil::_d(json_encode(file_get_contents("php://input"),true));
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
 $_d = new MtJson(null);
@@ -52,51 +52,51 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
 switch ($_method) {
     case "GET":
-        if ($_type == 'list' && $_search[SEARCH_KEYWORD]!='' ) {
+        if ($_type == 'list' && $_search['SEARCH_KEYWORD']!='' ) {
             $search_where = "";
             $limit = "";
 
             if (isset($_page)) {
-                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
             }
 
             /* 스토리 검색 */
-            if ($_search[BOARD_GB]=='STORY'){
+            if ($_search['BOARD_GB']=='STORY'){
 
-                //$sql = "select count(*) as TOTAL_COUNT from CMS_TASK where PHASE>='30' and (SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) ";
-                $sql = "select count(*) as TOTAL_COUNT from CMS_TASK T INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO where T.PHASE>='30' and (T.SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or T.SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or T.TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) ";
+                //$sql = "select count(*) as TOTAL_COUNT from CMS_TASK where PHASE>='30' and (SUBJECT LIKE '%{$_search['SEARCH_KEYWORD']}%' or SUMMARY LIKE '%{$_search['SEARCH_KEYWORD']}%' or TAG LIKE '%{$_search['SEARCH_KEYWORD']}%' ) ";
+                $sql = "select count(*) as TOTAL_COUNT from CMS_TASK T INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO where T.PHASE>='30' and (T.SUBJECT LIKE '%{$_search['SEARCH_KEYWORD']}%' or T.SUMMARY LIKE '%{$_search['SEARCH_KEYWORD']}%' or T.TAG LIKE '%{$_search['SEARCH_KEYWORD']}%' ) ";
                 $result = $_d->sql_query($sql,true);
                 $row=$_d->sql_fetch_array($result);
                 $t_total_count = $row['TOTAL_COUNT'];
 
-                //$sql = "select * from CMS_TASK where PHASE>='30' and ( SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) order by NO desc {$limit};";
+                //$sql = "select * from CMS_TASK where PHASE>='30' and ( SUBJECT LIKE '%{$_search['SEARCH_KEYWORD']}%' or SUMMARY LIKE '%{$_search['SEARCH_KEYWORD']}%' or TAG LIKE '%{$_search['SEARCH_KEYWORD']}%' ) order by NO desc {$limit};";
                 $sql = "select P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.SUMMARY, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO
                         from CMS_TASK T INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
                         where T.PHASE>='30'
-                        and ( T.SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or T.SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or T.TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' )
+                        and ( T.SUBJECT LIKE '%{$_search['SEARCH_KEYWORD']}%' or T.SUMMARY LIKE '%{$_search['SEARCH_KEYWORD']}%' or T.TAG LIKE '%{$_search['SEARCH_KEYWORD']}%' )
                         order by NO desc {$limit};";
 
 
             }else{
 
-                if ($_search[BOARD_GB]=='BOARD'){
+                if ($_search['BOARD_GB']=='BOARD'){
                     $search_where = " and CB.COMM_NO in (1,2,3,4,5,6,7) " ;
                 }
 
-                if ($_search[BOARD_GB]=='CLINIC'){
+                if ($_search['BOARD_GB']=='CLINIC'){
                     $search_where = " and ( PASSWORD='' or PASSWORD is null ) and CB.PARENT_NO=0 and CB.SUBJECT<>'' " ;
                 }
 
-                if ($_search[BOARD_GB]=='PHOTO'){
+                if ($_search['BOARD_GB']=='PHOTO'){
                     $search_where = " and CB.COMM_NO in (11,12,13) " ;
                 }
 
-                $sql = "select count(*) as TOTAL_COUNT from COM_BOARD CB where BOARD_GB='{$_search[BOARD_GB]}' and NOTICE_FL=0 {$search_where} and ( SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or BODY LIKE '%{$_search[SEARCH_KEYWORD]}%'); ";
+                $sql = "select count(*) as TOTAL_COUNT from COM_BOARD CB where BOARD_GB='{$_search['BOARD_GB']}' and NOTICE_FL=0 {$search_where} and ( SUBJECT LIKE '%{$_search['SEARCH_KEYWORD']}%' or BODY LIKE '%{$_search['SEARCH_KEYWORD']}%'); ";
                 $result = $_d->sql_query($sql,true);
                 $row=$_d->sql_fetch_array($result);
                 $t_total_count = $row['TOTAL_COUNT'];
 
-                $sql = "select CB.*,AC.COMM_NM,AC.SHORT_NM,AC.MENU_ID from COM_BOARD CB left join ANGE_COMM AC on CB.COMM_NO=AC.NO where CB.BOARD_GB='{$_search[BOARD_GB]}' {$search_where} and ( CB.SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or CB.BODY LIKE '%{$_search[SEARCH_KEYWORD]}%') order by CB.NO desc {$limit};";
+                $sql = "select CB.*,AC.COMM_NM,AC.SHORT_NM,AC.MENU_ID from COM_BOARD CB left join ANGE_COMM AC on CB.COMM_NO=AC.NO where CB.BOARD_GB='{$_search['BOARD_GB']}' {$search_where} and ( CB.SUBJECT LIKE '%{$_search['SEARCH_KEYWORD']}%' or CB.BODY LIKE '%{$_search['SEARCH_KEYWORD']}%') order by CB.NO desc {$limit};";
 
             }
             $data = null;

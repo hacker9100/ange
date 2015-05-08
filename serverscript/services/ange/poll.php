@@ -88,24 +88,24 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $sort_order = "";
                 $limit = "";
 
-                if (isset($_search[POLL_ST]) && $_search[POLL_ST] != "") {
-                    $search_where .= "AND ada_state = '".$_search[POLL_ST]."' ";
+                if (isset($_search['POLL_ST']) && $_search['POLL_ST'] != "") {
+                    $search_where .= "AND ada_state = '".$_search['POLL_ST']."' ";
                 }
 
-                if (isset($_search[CLOSE_DT]) && $_search[CLOSE_DT] != "") {
+                if (isset($_search['CLOSE_DT']) && $_search['CLOSE_DT'] != "") {
                     $search_where .= "AND DATE_FORMAT(ada_date_close, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d') ";
                 }
 
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                    $search_where .= "AND ".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%' ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
                 if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
 //                $sql = "SELECT
@@ -212,7 +212,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 $sql = "SELECT COUNT(DISTINCT adu_id) AS POLL_ANSWER_CNT
                         FROM adm_history_join
-                        WHERE ada_idx = ".$_search[ada_idx]."
+                        WHERE ada_idx = ".$_search['ada_idx']."
                           AND adu_id = '".$_SESSION['uid']."'";
 
                 $data = $_d->sql_query($sql);
@@ -226,7 +226,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 $sql2 = "SELECT ada_que_info
                         FROM adm_ad
-                        WHERE ada_idx = ".$_search[ada_idx]."
+                        WHERE ada_idx = ".$_search['ada_idx']."
                         ";
 
                 $result2 = $_d->sql_query($sql2,true);
@@ -344,7 +344,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 $sql2 = "SELECT ada_que_info
                         FROM adm_ad
-                        WHERE ada_idx = ".$_search[ada_idx]."
+                        WHERE ada_idx = ".$_search['ada_idx']."
                         ";
 
                 $result2 = $_d->sql_query($sql2,true);
@@ -356,7 +356,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 $sql = "SELECT adhj_answers
                         FROM adm_history_join
-                        WHERE ada_idx = ".$_search[ada_idx]."
+                        WHERE ada_idx = ".$_search['ada_idx']."
                         ";
 
 
@@ -501,12 +501,12 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                             POLL_ST,
                             REG_DT
                         ) VALUES (
-                            '".$_model[SUBJECT]."',
-                            '".$_model[START_YMD]."',
-                            '".$_model[END_YMD]."',
-                            '".$_model[PRESENT]."',
-                            '".$_model[QUERY_CNT]."',
-                            '".$_model[POLL_ST]."',
+                            '".$_model['SUBJECT']."',
+                            '".$_model['START_YMD']."',
+                            '".$_model['END_YMD']."',
+                            '".$_model['PRESENT']."',
+                            '".$_model['QUERY_CNT']."',
+                            '".$_model['POLL_ST']."',
                             SYSDATE()
                         )";
 
@@ -519,8 +519,8 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 }
 
                 $i = 0;
-                foreach ($_model[QUERY] as $e) {
-                    if (isset($e[QUERY]) && $e[QUERY] != "") {
+                foreach ($_model['QUERY'] as $e) {
+                    if (isset($e['QUERY']) && $e['QUERY'] != "") {
                         $sql = "INSERT INTO ANGE_POLL_QUERY
                                 (
                                     POLL_NO
@@ -531,9 +531,9 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                                 ) VALUES (
                                     '".$no."'
                                     ,'".$i++."'
-                                    ,'".$e[BABY_SEX_GB]."'
-                                    ,'".$e[QUERY_GB]."'
-                                    ,'".$e[QUERY]."'
+                                    ,'".$e['BABY_SEX_GB']."'
+                                    ,'".$e['QUERY_GB']."'
+                                    ,'".$e['QUERY']."'
                                 )";
 
                         $_d->sql_query($sql);
@@ -544,8 +544,8 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                         }
 
                         $j = 0;
-                        foreach ($e[SELECT] as $s) {
-                            if (isset($s[NOTE]) && $s[NOTE] != "") {
+                        foreach ($e['SELECT'] as $s) {
+                            if (isset($s['NOTE']) && $s['NOTE'] != "") {
                                 $sql = "INSERT INTO ANGE_POLL_SELECT
                                         (
                                             POLL_NO
@@ -556,7 +556,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                                             '".$no."'
                                             ,'".$i++."'
                                             ,'".$j."'
-                                            ,'".$s[NOTE]."'
+                                            ,'".$s['NOTE']."'
                                         )";
 
                                 $_d->sql_query($sql);
@@ -582,7 +582,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $err = 0;
                 $msg = "";
 
-               /* ".$_SESSION['uid']."*/
+               /* ".$_SESSION[''uid'']."*/
 //                $j = 0;
 //                foreach ($_model as $s) {
 //
@@ -594,48 +594,48 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 //                   $note = "";
 //
 //                    // 질문 유형이 주관식일때
-//                    if ($s[QUERY_GB] == 'S') {
-//                        $query_no = $s[QUERY_NO];
-//                        $query_sort = $s[QUERY_SORT];
-//                        $poll_no = $s[BOARD_NO];
+//                    if ($s['QUERY_GB'] == 'S') {
+//                        $query_no = $s['QUERY_NO'];
+//                        $query_sort = $s['QUERY_SORT'];
+//                        $poll_no = $s['BOARD_NO'];
 //                        $select_answer = 0;
-//                        $select_short_answer = $s[SELECT_SHORT_ANSWER];
+//                        $select_short_answer = $s['SELECT_SHORT_ANSWER'];
 //                        $note = '';
-//                    } else if($s[QUERY_GB] == 'M'){ // 객관식일때
+//                    } else if($s['QUERY_GB'] == 'M'){ // 객관식일때
 //
-//                        if(!isset($s[SELECT_ANSWER])){
-//                            $query_no = $s[QUERY_NO];
-//                            $query_sort = $s[QUERY_SORT];
-//                            $poll_no = $s[BOARD_NO];
+//                        if(!isset($s['SELECT_ANSWER'])){
+//                            $query_no = $s['QUERY_NO'];
+//                            $query_sort = $s['QUERY_SORT'];
+//                            $poll_no = $s['BOARD_NO'];
 //                            $select_answer = 0;
 //                            $select_short_answer = '';
 //                            $note = '';
 //                        }else{
-//                            $query_no = $s[SELECT_ANSWER][QUERY_NO];
-//                            $query_sort = $s[SELECT_ANSWER][QUERY_SORT];
-//                            $poll_no = $s[SELECT_ANSWER][BOARD_NO];
-//                            $select_answer = $s[SELECT_ANSWER][SELECT_SORT];
-//                            $note = $s[SELECT_ANSWER][NOTE];
-//                            $select_short_answer = $s[SELECT_SHORT_ANSWER];
+//                            $query_no = $s['SELECT_ANSWER']['QUERY_NO'];
+//                            $query_sort = $s['SELECT_ANSWER']['QUERY_SORT'];
+//                            $poll_no = $s['SELECT_ANSWER']['BOARD_NO'];
+//                            $select_answer = $s['SELECT_ANSWER']['SELECT_SORT'];
+//                            $note = $s['SELECT_ANSWER']['NOTE'];
+//                            $select_short_answer = $s['SELECT_SHORT_ANSWER'];
 //                        }
-//                    }else if($s[QUERY_GB] == 'D'){ // 다중객관식일때
+//                    }else if($s['QUERY_GB'] == 'D'){ // 다중객관식일때
 //
-//                        if(!isset($s[SELECT_ANSWER])){
-//                            $query_no = $s[QUERY_NO];
-//                            $query_sort = $s[QUERY_SORT];
-//                            $poll_no = $s[BOARD_NO];
+//                        if(!isset($s['SELECT_ANSWER'])){
+//                            $query_no = $s['QUERY_NO'];
+//                            $query_sort = $s['QUERY_SORT'];
+//                            $poll_no = $s['BOARD_NO'];
 //                            $select_answer = 0;
 //                            $select_short_answer = '';
 //                            $note = '';
 //                        }else{
-//                            foreach ($s[SELECT_ANSWER] as $e) {
+//                            foreach ($s['SELECT_ANSWER'] as $e) {
 //
-//                                $query_no = $e[QUERY_NO];
-//                                $query_sort = $e[QUERY_SORT];
-//                                $poll_no = $e[BOARD_NO];
-//                                $select_answer = $e[SELECT_SORT];
-//                                $note = $e[NOTE];
-//                                $select_short_answer = $e[SELECT_SHORT_ANSWER];
+//                                $query_no = $e['QUERY_NO'];
+//                                $query_sort = $e['QUERY_SORT'];
+//                                $poll_no = $e['BOARD_NO'];
+//                                $select_answer = $e['SELECT_SORT'];
+//                                $note = $e['NOTE'];
+//                                $select_short_answer = $e['SELECT_SHORT_ANSWER'];
 //                            }
 //                        }
 //                    }
@@ -654,9 +654,9 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 //                                ) VALUES (
 //                                    '".$query_no."'
 //                                    ,'".$query_sort."'
-//                                    ,'".$_SESSION['uid']."'
+//                                    ,'".$_SESSION[''uid'']."'
 //                                    ,'".$poll_no."'
-//                                    ,'".$_SESSION['name']."'
+//                                    ,'".$_SESSION[''name'']."'
 //                                    ,'".$select_answer."'
 //                                    ,'".$select_short_answer."'
 //                                    ,'".$note."'
@@ -674,8 +674,8 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 //                }
                 // 응모/신청 광고센터 adm_history_join 테이블에 insert -> 실적통계에서 확인가능
 //                MtUtil::_d("########################MYSQL ERROR########################\n"
-//                    ."SQL:::[".$sql."]\n"
-//                    ."MSG:::[".mysql_errno() . ":" . mysql_error()
+//                    ."SQL:::['".$sql."']\n"
+//                    ."MSG:::['".mysql_errno() . ":" . mysql_error()
 //                    ."\n###########################################################");
 
                 $_d->sql_beginTransaction();
@@ -688,11 +688,11 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                                     adhj_date_request,
                                     adhj_answers
                                 ) VALUES (
-                                    '".$_model[ada_idx]."'
+                                    '".$_model['ada_idx']."'
                                     , '".$_SESSION['uid']."'
                                     , '".$_SESSION['name']."'
                                     , NOW()
-                                    , '".$_model[ANSWER]."'
+                                    , '".$_model['ANSWER']."'
                                 )";
 
                 $_d->sql_query($sql);
@@ -705,7 +705,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 // 신청자명 증가
                 $sql = "UPDATE adm_ad
                   SET  ada_count_request = ada_count_request + 1
-                  WHERE ada_idx = '".$_model[ada_idx]."'";
+                  WHERE ada_idx = '".$_model['ada_idx']."'";
 
                 $_d->sql_query($sql);
 
@@ -730,7 +730,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            if( trim($_model[SUBJECT]) == "" ){
+            if( trim($_model['SUBJECT']) == "" ){
                 $_d->failEnd("제목을 작성 하세요");
             }
 
@@ -741,12 +741,12 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
             $sql = "UPDATE ANGE_POLL
                     SET
-                        SUBJECT = '".$_model[SUBJECT]."',
-                        START_YMD = '".$_model[START_YMD]."',
-                        END_YMD = '".$_model[END_YMD]."',
-                        PRESENT = '".$_model[PRESENT]."',
-                        QUERY_CNT = '".$_model[QUERY_CNT]."',
-                        POLL_ST = '".$_model[POLL_ST]."'
+                        SUBJECT = '".$_model['SUBJECT']."',
+                        START_YMD = '".$_model['START_YMD']."',
+                        END_YMD = '".$_model['END_YMD']."',
+                        PRESENT = '".$_model['PRESENT']."',
+                        QUERY_CNT = '".$_model['QUERY_CNT']."',
+                        POLL_ST = '".$_model['POLL_ST']."'
                     WHERE
                         NO = ".$_key."
                     ";
@@ -773,8 +773,8 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             }
 
             $i = 0;
-            foreach ($_model[QUERY] as $e) {
-                if (isset($e[QUERY]) && $e[QUERY] != "") {
+            foreach ($_model['QUERY'] as $e) {
+                if (isset($e['QUERY']) && $e['QUERY'] != "") {
                     $sql = "INSERT INTO ANGE_POLL_QUERY
                             (
                                 POLL_NO
@@ -785,9 +785,9 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                             ) VALUES (
                                 '".$no."'
                                 ,'".$i++."'
-                                ,'".$e[BABY_SEX_GB]."'
-                                ,'".$e[QUERY_GB]."'
-                                ,'".$e[QUERY]."'
+                                ,'".$e['BABY_SEX_GB']."'
+                                ,'".$e['QUERY_GB']."'
+                                ,'".$e['QUERY']."'
                             )";
 
                     $_d->sql_query($sql);
@@ -798,8 +798,8 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     }
 
                     $j = 0;
-                    foreach ($e[SELECT] as $s) {
-                        if (isset($s[NOTE]) && $s[NOTE] != "") {
+                    foreach ($e['SELECT'] as $s) {
+                        if (isset($s['NOTE']) && $s['NOTE'] != "") {
                             $sql = "INSERT INTO ANGE_POLL_SELECT
                                     (
                                         POLL_NO
@@ -810,7 +810,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                                         '".$no."'
                                         ,'".$i++."'
                                         ,'".$j."'
-                                        ,'".$s[NOTE]."'
+                                        ,'".$s['NOTE']."'
                                     )";
 
                             $_d->sql_query($sql);

@@ -16,7 +16,7 @@
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
     MtUtil::_d(print_r($_REQUEST,true));
 
     MtUtil::_d(json_encode(file_get_contents("php://input"),true));
@@ -26,8 +26,8 @@
         if (isset($_REQUEST['_category'])) {
             $category = explode("/", $_REQUEST['_category']);
 
-            Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-            Util::_c("FUNC[processApi] category.cnt : ".count($category));
+            Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+            Util::_c("FUNC['processApi'] category.cnt : ".count($category));
         }
     */
 
@@ -83,28 +83,28 @@ switch ($_method) {
             $sort_order = "";
             $limit = "";
 
-/*            if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                $search_where .= "AND S.SECTION_NM LIKE '%".$_search[KEYWORD]."%' ";
+/*            if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                $search_where .= "AND S.SECTION_NM LIKE '%".$_search['KEYWORD']."%' ";
             }
 
-            if (isset($_search[SEARCH_SEASON_NM][SEASON_NM]) && $_search[SEARCH_SEASON_NM][SEASON_NM] != "") {
-                $search_where .= "AND S.SEASON_NM  = '".$_search[SEARCH_SEASON_NM][SEASON_NM]."' ";
+            if (isset($_search['SEARCH_SEASON_NM']['SEASON_NM']) && $_search['SEARCH_SEASON_NM']['SEASON_NM'] != "") {
+                $search_where .= "AND S.SEASON_NM  = '".$_search['SEARCH_SEASON_NM']['SEASON_NM']."' ";
             }
 
-            if (isset($_search[SORT]) && $_search[SORT] != "") {
-                $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+            if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
             }*/
 
-//            if (isset($_search[USER_ID]) && $_search[USER_ID] != "") {
-//                $search_where .= "AND AC.USER_ID  = '".$_search[USER_ID]."' ";
+//            if (isset($_search['USER_ID']) && $_search['USER_ID'] != "") {
+//                $search_where .= "AND AC.USER_ID  = '".$_search['USER_ID']."' ";
 //            }
 //
-//            if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
-//                $search_where .= "AND AC.TARGET_GB  = '".$_search[TARGET_GB]."' ";
+//            if (isset($_search['TARGET_GB']) && $_search['TARGET_GB'] != "") {
+//                $search_where .= "AND AC.TARGET_GB  = '".$_search['TARGET_GB']."' ";
 //            }
 
             if (isset($_page)) {
-                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
             }
 
 
@@ -151,7 +151,7 @@ switch ($_method) {
 
             $sql = "SELECT COUNT(*) AS COMP_CNT
                  FROM adm_history_join
-                 WHERE ada_idx = ".$_search[ada_idx]."
+                 WHERE ada_idx = ".$_search['ada_idx']."
                    AND adu_id = '".$_SESSION['uid']."'";
 
             $data = $_d->sql_query($sql);
@@ -169,7 +169,7 @@ switch ($_method) {
 
             $sql = "SELECT COUNT(*) AS COMP_CNT
                  FROM adm_history_join
-                 WHERE ada_idx = ".$_search[ada_idx]."
+                 WHERE ada_idx = ".$_search['ada_idx']."
                    AND adu_id = '".$_SESSION['uid']."'";
 
             $data = $_d->sql_query($sql);
@@ -203,7 +203,7 @@ switch ($_method) {
 
             $sql = "SELECT COUNT(*) AS COMP_CNT
                  FROM ANGE_COMP
-                 WHERE TARGET_NO = ".$_search[TARGET_NO]."
+                 WHERE TARGET_NO = ".$_search['TARGET_NO']."
                    AND USER_ID = '".$_SESSION['uid']."'";
 
             $data = $_d->sql_query($sql);
@@ -217,12 +217,12 @@ switch ($_method) {
 //        else if ($_type == 'samplepackCheck') {
 //
 //            $search_where = "";
-//            if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-//                $search_where .= "AND ACW.TARGET_NO =".$_search[TARGET_NO]."";
+//            if (isset($_search['TARGET_NO']) && $_search['TARGET_NO'] != "") {
+//                $search_where .= "AND ACW.TARGET_NO =".$_search['TARGET_NO']."";
 //            }
 //
-//            if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
-//                $search_where .= "  AND ACW.TARGET_GB ='".$_search[TARGET_GB]."'";
+//            if (isset($_search['TARGET_GB']) && $_search['TARGET_GB'] != "") {
+//                $search_where .= "  AND ACW.TARGET_GB ='".$_search['TARGET_GB']."'";
 //            }
 //
 //            $sql = "SELECT COUNT(*) COUNT
@@ -288,36 +288,36 @@ switch ($_method) {
                         CHILD_FL,
                         BABY_BIRTH
                     ) VALUES (
-                         '".$_model[NO]."'
+                         '".$_model['NO']."'
                         , '".$_SESSION['uid']."'
                         , '".$_SESSION['nick']."'
                         , '".$_SESSION['name']."'
                         , SYSDATE()
-                        , '".$_model[PREG_FL]."'
-                        ,'".$_model[BABY_MONTH]."'
-                        ,'".$_model[BABY_AGE]."'
-                        ,'".$_model[BLOG_URL]."'
-                        ,'".$_model[ANSWER]."'
-                        ,'".$_model[ADD1]."'
-                        ,'".$_model[ADD2]."'
-                        ,'".$_model[ADD3]."'
-                        ,'".$_model[CHILD_CNT]."'
+                        , '".$_model['PREG_FL']."'
+                        ,'".$_model['BABY_MONTH']."'
+                        ,'".$_model['BABY_AGE']."'
+                        ,'".$_model['BLOG_URL']."'
+                        ,'".$_model['ANSWER']."'
+                        ,'".$_model['ADD1']."'
+                        ,'".$_model['ADD2']."'
+                        ,'".$_model['ADD3']."'
+                        ,'".$_model['CHILD_CNT']."'
                         , '".$_SESSION['phone1']."'
                         , '".$_SESSION['phone2']."'
-                        ,'".$_model[PRODUCT]."'
-                        ,'".$_model[CREDIT_FL]."'
-                        ,'".$_model[REASON]."'
-                        ,'".$_model[TARGET_GB]."'
-                        ,'".$_model[HOPE_REASON]."'
-                        ,'".$_model[SIZE1]."'
-                        ,'".$_model[SIZE2]."'
-                        ,'".$_model[SIZE3]."'
-                        ,'".$_model[ANGE_MEET]."'
-                        ,'".$_model[PLACE]."'
-                        ,".$_model[PREGNANT_WEEKS]."
-                        ,'".$_model[CHILD_AGE]."'
-                        ,'".$_model[CHILD_FL]."'
-                        ,'".$_model[BABY_BIRTH]."'
+                        ,'".$_model['PRODUCT']."'
+                        ,'".$_model['CREDIT_FL']."'
+                        ,'".$_model['REASON']."'
+                        ,'".$_model['TARGET_GB']."'
+                        ,'".$_model['HOPE_REASON']."'
+                        ,'".$_model['SIZE1']."'
+                        ,'".$_model['SIZE2']."'
+                        ,'".$_model['SIZE3']."'
+                        ,'".$_model['ANGE_MEET']."'
+                        ,'".$_model['PLACE']."'
+                        ,".$_model['PREGNANT_WEEKS']."
+                        ,'".$_model['CHILD_AGE']."'
+                        ,'".$_model['CHILD_FL']."'
+                        ,'".$_model['BABY_BIRTH']."'
                     )";
 
             $_d->sql_query($sql);
@@ -342,19 +342,19 @@ switch ($_method) {
             $source_path = '../../..'.$file_path;
             $insert_path = null;
 
-            $body_str = $_model[BODY];
+            $body_str = $_model['BODY'];
 
             try {
-                if (count($_model[FILE]) > 0) {
-                    $file = $_model[FILE];
+                if (count($_model['FILE']) > 0) {
+                    $file = $_model['FILE'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                     }
 
-                    if (file_exists($upload_path.$file[name])) {
+                    if (file_exists($upload_path.$file['name'])) {
                         $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$file[name]);
-                        $insert_path = array(path => $file_path, name => $file[name], kind => $file[kind]);
+                        rename($upload_path.$file['name'], $source_path.$file['name']);
+                        $insert_path = array(path => $file_path, name => $file['name'], kind => $file['kind']);
                     }
                 }
 
@@ -363,15 +363,14 @@ switch ($_method) {
                 break;
             }
 
-            if(isset($_model[MILEAGE]) && $_model[MILEAGE] != ""){
+            if(isset($_model['MILEAGE']) && $_model['MILEAGE'] != ""){
                 // 신청자명 증가
                 $sql = "SELECT ada_count_request FROM adm_ad
-                        WHERE ada_idx = '".$_model[ada_idx]."'";
+                        WHERE ada_idx = '".$_model['ada_idx']."'";
 
                 $data = $_d->sql_fetch($sql);
 
-                if ($data['ada_count_request'] >= 199) {
-//                if ($data['ada_count_request'] >= 200) {
+                if ($data['ada_count_request'] >= 200) {
                     $_d->failEnd("샘플팩 신청이 마감되었습니다.");
                     break;
                 }
@@ -386,11 +385,11 @@ switch ($_method) {
                         adhj_date_request,
                         adhj_answers
                     ) VALUES (
-                         '".$_model[ada_idx]."'
+                         '".$_model['ada_idx']."'
                         , '".$_SESSION['uid']."'
                         , '".$_SESSION['name']."'
                         , NOW()
-                        , '".$_model[ANSWER]."'
+                        , '".$_model['ANSWER']."'
                     )";
 
             $_d->sql_query($sql);
@@ -398,12 +397,12 @@ switch ($_method) {
             // 신청자명 증가
             $sql = "UPDATE adm_ad
                     SET  ada_count_request = ada_count_request + 1
-                    WHERE ada_idx = '".$_model[ada_idx]."'";
+                    WHERE ada_idx = '".$_model['ada_idx']."'";
 
             $_d->sql_query($sql);
 
 
-            if(isset($_model[MILEAGE]) && $_model[MILEAGE] != ""){
+            if(isset($_model['MILEAGE']) && $_model['MILEAGE'] != ""){
                 $sql = "INSERT INTO ANGE_USER_MILEAGE
                         (
                             USER_ID,
@@ -453,12 +452,12 @@ switch ($_method) {
 
         //            $FORM = json_decode(file_get_contents("php://input"),true);
 
-        MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+        MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
-        /*            if($_model[OLD_SEASON_NM] != "" || $_model[OLD_SEASON_NM] != $_model[SEASON_NM]){
+        /*            if($_model['OLD_SEASON_NM'] != "" || $_model['OLD_SEASON_NM'] != $_model['SEASON_NM']){
                         $sql = "UPDATE CMS_SECTION SET
-                                    SEASON_NM = '".$_model[SEASON_NM]."'
-                             WHERE SEASON_NM = '".$_model[OLD_SEASON_NM]."'
+                                    SEASON_NM = '".$_model['SEASON_NM']."'
+                             WHERE SEASON_NM = '".$_model['OLD_SEASON_NM']."'
                                 ";
                     }else{
                         if (!isset($_key) || $_key == '') {
@@ -466,9 +465,9 @@ switch ($_method) {
                         }
                         $sql = "UPDATE CMS_SECTION
                                         SET
-                                            SECTION_NM = '".$_model[SECTION_NM]."'
-                                            ,SORT_IDX = '".$_model[SORT_IDX]."'
-                                            ,NOTE = '".$_model[NOTE]."'
+                                            SECTION_NM = '".$_model['SECTION_NM']."'
+                                            ,SORT_IDX = '".$_model['SORT_IDX']."'
+                                            ,NOTE = '".$_model['NOTE']."'
                                         WHERE
                                             NO = ".$_key."
                                     ";
@@ -478,15 +477,15 @@ switch ($_method) {
                     USER_ID = '".$_SESSION['uid']."'
                     ,NICK_NM = '".$_SESSION['nick']."'
                     ,USER_NM = '".$_SESSION['name']."'
-                    ,PREG_FL = '".$_model[PREG_FL]."'
-                    ,BABY_MONTH = '".$_model[BABY_MONTH]."'
-                    ,BABY_AGE = '".$_model[BABY_AGE]."'
-                    ,BLOG_URL = '".$_model[BLOG_URL]."'
-                    ,ANSWER = '".$_model[ANSWER]."'
-                    ,ADD1 = '".$_model[ADD1]."'
-                    ,ADD2 = '".$_model[ADD2]."'
-                    ,ADD3 = '".$_model[ADD3]."'
-                    ,CHILD_CNT  = '".$_model[CHILD_CNT]."'
+                    ,PREG_FL = '".$_model['PREG_FL']."'
+                    ,BABY_MONTH = '".$_model['BABY_MONTH']."'
+                    ,BABY_AGE = '".$_model['BABY_AGE']."'
+                    ,BLOG_URL = '".$_model['BLOG_URL']."'
+                    ,ANSWER = '".$_model['ANSWER']."'
+                    ,ADD1 = '".$_model['ADD1']."'
+                    ,ADD2 = '".$_model['ADD2']."'
+                    ,ADD3 = '".$_model['ADD3']."'
+                    ,CHILD_CNT  = '".$_model['CHILD_CNT']."'
                     ,PHONE1  = '".$_SESSION['phone1']."'
                     ,PHONE2  = '".$_SESSION['phone2']."'
                     ,CREDIT_FL = '".$_model['CREDIT_FL']."'
@@ -495,7 +494,7 @@ switch ($_method) {
                     NO = ".$_key."
 
          ";
-        // ,SEASON_NM = '".$_model[SEASON_NM]."'
+        // ,SEASON_NM = '".$_model['SEASON_NM']."'
 
 
         $_d->sql_query($sql);

@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('module-reply', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', function ($scope, $rootScope, $stateParams, $location, dialogs) {
+    controllers.controller('module-reply', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT) {
 
         /********** 초기화 **********/
         $scope.replyList = [];
@@ -46,6 +46,24 @@ define([
         }
 
         /********** 이벤트 **********/
+        var temp_num = '';
+
+        $scope.click_toggleReplyConfig = function (r_num) {
+            //alert('photo_menu_' + p_num);
+            if (r_num == temp_num) {
+                temp_num = '';
+            }
+
+            if(r_num){
+                document.getElementById('reply_menu_' + r_num).style.display = "block";
+            }
+
+            if(temp_num) {
+                document.getElementById('reply_menu_' + temp_num).style.display = "none";
+            }
+            temp_num = r_num;
+        };
+
         // 댓글 리스트
         $scope.getReplyList = function () {
 
@@ -65,6 +83,10 @@ define([
                     $scope.replyItem = {};
 
                     for(var i in reply) {
+
+                        if (reply[i].FILE_ID != null) {
+                            reply[i].profileImg = CONSTANT.BASE_URL + reply[i].PATH + reply[i].FILE_ID;
+                        }
 
                         $("textarea#comment").val(reply[i].COMMENT);
                         $scope.replyList.push(reply[i]);
@@ -145,8 +167,8 @@ define([
         $scope.click_blind = function (key){
 
             /*for(var i=0; i< replyList.length; i++){
-                $scope.item.NO = replyList[i].NO;
-            }*/
+             $scope.item.NO = replyList[i].NO;
+             }*/
 
             console.log(key);
 
@@ -167,15 +189,15 @@ define([
 
             console.log(key);
             $scope.updateItem('com/reply', 'blind_clear', key, {}, false)
-            .then(function(){
+                .then(function(){
 
-                dialogs.notify('알림', '블라인드 처리가 해제 되었습니다.', {size: 'md'});
+                    dialogs.notify('알림', '블라인드 처리가 해제 되었습니다.', {size: 'md'});
 
-                $scope.replyList = [];
-                $scope.getReplyList();
-                $scope.reply.COMMENT = "";
-            })
-            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    $scope.replyList = [];
+                    $scope.getReplyList();
+                    $scope.reply.COMMENT = "";
+                })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 댓글 수정
@@ -379,6 +401,17 @@ define([
             });
         };
 
+        // 메시지 버튼 클릭
+        $scope.click_sendMessage = function (item) {
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
+
+            $scope.openViewMessageRegModal(null, item, 'lg');
+        };
+
         /********** 화면 초기화 **********/
         $scope.init();
         $scope.getReplyList();
@@ -388,5 +421,5 @@ define([
 //            ['catch']($scope.reportProblems);
 
 
-	}]);
+    }]);
 });

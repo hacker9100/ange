@@ -16,7 +16,7 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_d("### [START]");
+MtUtil::_d("### ['START']");
 MtUtil::_d(print_r($_REQUEST,true));
 
 MtUtil::_d(json_encode(file_get_contents("php://input"),true));
@@ -26,8 +26,8 @@ MtUtil::_d(json_encode(file_get_contents("php://input"),true));
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
 $_d = new MtJson(null);
@@ -122,61 +122,61 @@ switch ($_method) {
             $sort_order = "";
             $limit = "";
 
-            if (isset($_search[PRODUCT_GB]) && $_search[PRODUCT_GB] != "") {
-                $search_where .= "AND PRODUCT_GB = '".$_search[PRODUCT_GB]."' ";
+            if (isset($_search['PRODUCT_GB']) && $_search['PRODUCT_GB'] != "") {
+                $search_where .= "AND PRODUCT_GB = '".$_search['PRODUCT_GB']."' ";
             }
 
-            if (isset($_search[ORDER_YN]) && $_search[ORDER_YN] != "") {
-                $search_where .= "AND ORDER_YN = '".$_search[ORDER_YN]."' ";
+            if (isset($_search['ORDER_YN']) && $_search['ORDER_YN'] != "") {
+                $search_where .= "AND ORDER_YN = '".$_search['ORDER_YN']."' ";
             }
 
-            if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
+            if (isset($_search['PROCESS']) && $_search['PROCESS'] != "") {
                 $search_where .= "AND DATE_FORMAT(NOW(), '%Y-%m-%d') BETWEEN START_YMD AND CLOSE_YMD ";
             }
 
-            if (isset($_search[PAST]) && $_search[PAST] != "") {
+            if (isset($_search['PAST']) && $_search['PAST'] != "") {
                 $search_where .= "AND CLOSE_YMD < DATE_FORMAT(NOW(), '%Y-%m-%d') ";
             }
 
-            if (isset($_search[PRODUCT_TYPE]) && $_search[PRODUCT_TYPE] != "" && $_search[PRODUCT_TYPE] != "ALL") {
+            if (isset($_search['PRODUCT_TYPE']) && $_search['PRODUCT_TYPE'] != "" && $_search['PRODUCT_TYPE'] != "ALL") {
 
-                if($_search[PRODUCT_TYPE] == 1){
+                if($_search['PRODUCT_TYPE'] == 1){
                     $search_where .= "AND PRICE <= 10000 ";
-                }else if($_search[PRODUCT_TYPE] == 2){
+                }else if($_search['PRODUCT_TYPE'] == 2){
                     $search_where .= "AND PRICE <= 30000 ";
-                }else if($_search[PRODUCT_TYPE] == 3){
+                }else if($_search['PRODUCT_TYPE'] == 3){
                     $search_where .= "AND PRICE <= 50000 ";
-                }else if($_search[PRODUCT_TYPE] == 4){
+                }else if($_search['PRODUCT_TYPE'] == 4){
                     $search_where .= "AND PRICE <= 100000 ";
-                }else if($_search[PRODUCT_TYPE] == 5){
+                }else if($_search['PRODUCT_TYPE'] == 5){
                     $search_where .= "AND PRICE >= 100000 ";
                 }
             }
 
-            if (isset($_search[NOT_PRODUCRT_NO]) && $_search[NOT_PRODUCRT_NO] != "") {
-                $search_where .= "AND NO  != '".$_search[NOT_PRODUCRT_NO]."' ";
+            if (isset($_search['NOT_PRODUCRT_NO']) && $_search['NOT_PRODUCRT_NO'] != "") {
+                $search_where .= "AND NO  != '".$_search['NOT_PRODUCRT_NO']."' ";
             }
 
-            if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
-                $search_where .= "AND CATEGORY_NO = '".$_search[CATEGORY_NO]."' ";
+            if (isset($_search['CATEGORY_NO']) && $_search['CATEGORY_NO'] != "") {
+                $search_where .= "AND CATEGORY_NO = '".$_search['CATEGORY_NO']."' ";
             }
 
-            if (isset($_search[SOLD_OUT]) && $_search[SOLD_OUT] == "N") {
+            if (isset($_search['SOLD_OUT']) && $_search['SOLD_OUT'] == "N") {
                 $search_where .= "AND SUM_IN_CNT - SUM_OUT_CNT > 0 ";
             }
 
-            for ($i = 0; $i < count($_search[CATEGORY]); $i++) {
-                $category = $_search[CATEGORY][$i];
-                $search_where .= "AND CATEGORY_NO = '".$category[NO]."' ";
+            for ($i = 0; $i < count($_search['CATEGORY']); $i++) {
+                $category = $_search['CATEGORY'][$i];
+                $search_where .= "AND CATEGORY_NO = '".$category['NO']."' ";
             }
 
 
-            if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+            if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                $search_where .= "AND ".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%'";
             }
 
             if (isset($_page)) {
-                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
             }
 
             $sql = "SELECT
@@ -240,9 +240,9 @@ switch ($_method) {
                 } else {
                     $_d->dataEnd2($data);
                 }
-            }else if(isset($_search[BOARD_NEXT]) && $_search[BOARD_NEXT] != "") {
+            }else if(isset($_search['BOARD_NEXT']) && $_search['BOARD_NEXT'] != "") {
 
-                $sql = "SELECT NO, PRODUCT_NM FROM ANGE_PRODUCT WHERE NO > ".$_search[KEY]." AND  PRODUCT_GB='".$_search[PRODUCT_GB]."' ORDER BY NO LIMIT 1";
+                $sql = "SELECT NO, PRODUCT_NM FROM ANGE_PRODUCT WHERE NO > ".$_search['KEY']." AND  PRODUCT_GB='".$_search['PRODUCT_GB']."' ORDER BY NO LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -252,9 +252,9 @@ switch ($_method) {
                     $_d->dataEnd2($data);
                 }
 
-            }else if(isset($_search[BOARD_PRE]) && $_search[BOARD_PRE] != "") {
+            }else if(isset($_search['BOARD_PRE']) && $_search['BOARD_PRE'] != "") {
 
-                $sql = "SELECT NO, PRODUCT_NM FROM ANGE_PRODUCT WHERE NO < ".$_search[KEY]." AND PRODUCT_GB='".$_search[PRODUCT_GB]."' ORDER BY  NO DESC LIMIT 1";
+                $sql = "SELECT NO, PRODUCT_NM FROM ANGE_PRODUCT WHERE NO < ".$_search['KEY']." AND PRODUCT_GB='".$_search['PRODUCT_GB']."' ORDER BY  NO DESC LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -278,7 +278,7 @@ switch ($_method) {
             $limit = "";
 
             if (isset($_page)) {
-                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
             }
 
             $sql = "SELECT
@@ -291,7 +291,7 @@ switch ($_method) {
                         FROM
                             ANGE_PRODUCT_STOCK
                         WHERE
-                            PRODUCT_NO = '".$_search[PRODUCT_NO]."'
+                            PRODUCT_NO = '".$_search['PRODUCT_NO']."'
                         ".$limit."
                     ) AS DATA,
                     (SELECT @RNUM := 0) R,
@@ -301,7 +301,7 @@ switch ($_method) {
                         FROM
                             ANGE_PRODUCT_STOCK
                         WHERE
-                            PRODUCT_NO = '".$_search[PRODUCT_NO]."'
+                            PRODUCT_NO = '".$_search['PRODUCT_NO']."'
                             ".$search_where."
                     ) CNT
                     ";
@@ -325,7 +325,7 @@ switch ($_method) {
             $err = 0;
             $msg = "";
 
-            if( trim($_model[PRODUCT_NM]) == "" ){
+            if( trim($_model['PRODUCT_NM']) == "" ){
                 $_d->failEnd("상품명을 작성 하세요");
             }
 
@@ -334,42 +334,42 @@ switch ($_method) {
             $source_path = '../../..'.$file_path;
             $insert_path = array();
 
-            $body_str = $_model[BODY];
+            $body_str = $_model['BODY'];
 
             try {
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                         @mkdir($source_path.'thumbnail/');
                         @mkdir($source_path.'medium/');
                     }
 
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                    for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                         $file = $files[$i];
 
-                        if (file_exists($upload_path.$file[name])) {
+                        if (file_exists($upload_path.$file['name'])) {
                             $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                            rename($upload_path.$file['name'], $source_path.$uid);
+                            rename($upload_path.'thumbnail/'.$file['name'], $source_path.'thumbnail/'.$uid);
 
-                            if ($file[version] == 6 ) {
-                                $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                            if ($file['version'] == 6 ) {
+                                $body_str = str_replace($file['url'], BASE_URL.$file_path.$uid, $body_str);
                             } else {
-                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                rename($upload_path.'medium/'.$file['name'], $source_path.'medium/'.$uid);
+                                $body_str = str_replace($file['mediumUrl'], BASE_URL.$file_path.'medium/'.$uid, $body_str);
                             }
 
-                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
 
-                            MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                            MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i]['path']);
 
 
                         }
                     }
                 }
 
-                $_model[BODY] = $body_str;
+                $_model['BODY'] = $body_str;
             } catch(Exception $e) {
                 $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
                 break;
@@ -377,10 +377,10 @@ switch ($_method) {
 
             $_d->sql_beginTransaction();
 
-            if (count($_model[CATEGORY]) > 0) {
-                $categories = $_model[CATEGORY];
+            if (count($_model['CATEGORY']) > 0) {
+                $categories = $_model['CATEGORY'];
 
-                for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
+                for ($i = 0 ; $i < count($_model['CATEGORY']); $i++) {
                     $category = $categories[$i];
 
                     if ($category['PARENT_NO'] == "1") {
@@ -408,21 +408,21 @@ switch ($_method) {
                         CLOSE_YMD,
                         CATEGORY_NO
                     ) VALUES (
-                        '".$_model[PRODUCT_NM]."',
-                        '".$_model[PRODUCT_GB][value]."',
-                        '".$_model[COMPANY_NO]."',
-                        '".$_model[COMPANY_NM]."',
-                        '".$_model[BODY]."',
-                        '".$_model[URL]."',
-                        '".$_model[PRICE]."',
-                        '".$_model[DIRECT_PRICE]."',
-                        '".$_model[SUM_IN_CNT]."',
-                        '".$_model[SUM_OUT_CNT]."',
-                        '".$_model[NOTE]."',
-                        '".$_model[DELIVERY_PRICE]."',
-                        '".$_model[DELIVERY_ST]."',
-                        '".$_model[START_YMD]."',
-                        '".$_model[CLOSE_YMD]."',
+                        '".$_model['PRODUCT_NM']."',
+                        '".$_model['PRODUCT_GB']['value']."',
+                        '".$_model['COMPANY_NO']."',
+                        '".$_model['COMPANY_NM']."',
+                        '".$_model['BODY']."',
+                        '".$_model['URL']."',
+                        '".$_model['PRICE']."',
+                        '".$_model['DIRECT_PRICE']."',
+                        '".$_model['SUM_IN_CNT']."',
+                        '".$_model['SUM_OUT_CNT']."',
+                        '".$_model['NOTE']."',
+                        '".$_model['DELIVERY_PRICE']."',
+                        '".$_model['DELIVERY_ST']."',
+                        '".$_model['START_YMD']."',
+                        '".$_model['CLOSE_YMD']."',
                         '".$category_no."'
                     )";
 
@@ -434,10 +434,10 @@ switch ($_method) {
                 $msg = $_d->mysql_error;
             }
 
-            if (count($_model[CATEGORY]) > 0) {
-                $categories = $_model[CATEGORY];
+            if (count($_model['CATEGORY']) > 0) {
+                $categories = $_model['CATEGORY'];
 
-                for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
+                for ($i = 0 ; $i < count($_model['CATEGORY']); $i++) {
                     $category = $categories[$i];
 
                     if (isset($category['NO'])) {
@@ -447,7 +447,7 @@ switch ($_method) {
                                     ,TARGET_NO
                                     ,TARGET_GB
                                 ) VALUES (
-                                    '".$category[NO]."'
+                                    '".$category['NO']."'
                                     , '".$no."'
                                     , 'PRODUCT'
                                 )";
@@ -473,7 +473,7 @@ switch ($_method) {
                         '".$no."',
                         'IN',
                         '0',
-                        ".$_model[SUM_IN_CNT].",
+                        ".$_model['SUM_IN_CNT'].",
                         SYSDATE()
                     )";
 
@@ -484,13 +484,13 @@ switch ($_method) {
                 $msg = $_d->mysql_error;
             }
 
-            if (count($_model[FILES]) > 0) {
-                $files = $_model[FILES];
+            if (count($_model['FILES']) > 0) {
+                $files = $_model['FILES'];
 
-                for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                     $file = $files[$i];
                     MtUtil::_d("------------>>>>> file : ".$file['name']);
-                    MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                    MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i]['path']);
 
                     $sql = "INSERT INTO COM_FILE
                             (
@@ -507,15 +507,15 @@ switch ($_method) {
                                 ,TARGET_NO
                                 ,TARGET_GB
                             ) VALUES (
-                                '".$file[name]."'
-                                , '".$insert_path[$i][uid]."'
-                                , '".$insert_path[$i][path]."'
-                                , '".$file[type]."'
-                                , '".$file[size]."'
+                                '".$file['name']."'
+                                , '".$insert_path[$i]['uid']."'
+                                , '".$insert_path[$i]['path']."'
+                                , '".$file['type']."'
+                                , '".$file['size']."'
                                 , '0'
                                 , SYSDATE()
                                 , 'C'
-                                , '".$file[kind]."'
+                                , '".$file['kind']."'
                                 , '".$i."'
                                 , '".$no."'
                                 , 'PRODUCT'
@@ -555,10 +555,10 @@ switch ($_method) {
                         IN_OUT_CNT,
                         REG_DT
                     ) VALUES (
-                        '".$_model[PRODUCT_NO]."',
-                        '".$_model[IN_OUT_GB]."',
+                        '".$_model['PRODUCT_NO']."',
+                        '".$_model['IN_OUT_GB']."',
                         '0',
-                        '".$_model[IN_OUT_CNT]."',
+                        '".$_model['IN_OUT_CNT']."',
                         SYSDATE()
                     )";
 
@@ -571,17 +571,17 @@ switch ($_method) {
 
             $update_set = '';
 
-            if ($_model[IN_OUT_GB] == 'IN') {
-                $update_set = "SUM_IN_CNT = SUM_IN_CNT + ".$_model[IN_OUT_CNT];
+            if ($_model['IN_OUT_GB'] == 'IN') {
+                $update_set = "SUM_IN_CNT = SUM_IN_CNT + ".$_model['IN_OUT_CNT'];
             } else {
-                $update_set = "SUM_OUT_CNT = SUM_OUT_CNT + ".$_model[IN_OUT_CNT];
+                $update_set = "SUM_OUT_CNT = SUM_OUT_CNT + ".$_model['IN_OUT_CNT'];
             }
 
             $sql = "UPDATE ANGE_PRODUCT
                     SET
                         ".$update_set."
                     WHERE
-                        NO = ".$_model[PRODUCT_NO]."
+                        NO = ".$_model['PRODUCT_NO']."
                 ";
 
             $_d->sql_query($sql);
@@ -611,44 +611,44 @@ switch ($_method) {
             $source_path = '../../..'.$file_path;
             $insert_path = array();
 
-            $body_str = $_model[BODY];
+            $body_str = $_model['BODY'];
 
             try {
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                         @mkdir($source_path.'thumbnail/');
                         @mkdir($source_path.'medium/');
                     }
 
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                    for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                         $file = $files[$i];
 
-                        if (file_exists($upload_path.$file[name])) {
+                        if (file_exists($upload_path.$file['name'])) {
                             $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                            rename($upload_path.$file['name'], $source_path.$uid);
+                            rename($upload_path.'thumbnail/'.$file['name'], $source_path.'thumbnail/'.$uid);
 
-                            if ($file[version] == 6 ) {
-                                $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                            if ($file['version'] == 6 ) {
+                                $body_str = str_replace($file['url'], BASE_URL.$file_path.$uid, $body_str);
                             } else {
-                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                rename($upload_path.'medium/'.$file['name'], $source_path.'medium/'.$uid);
+                                $body_str = str_replace($file['mediumUrl'], BASE_URL.$file_path.'medium/'.$uid, $body_str);
                             }
 
-                            $insert_path[$i] = array('path' => $file_path, 'uid' => $uid, 'kind' => $file[kind]);
+                            $insert_path[$i] = array('path' => $file_path, 'uid' => $uid, 'kind' => $file['kind']);
 
-                            MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
+                            MtUtil::_d("------------>>>>> mediumUrl : ".$file['mediumUrl']);
                             MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
 
                         } else {
-                            $insert_path[$i] = array('path' => '', 'uid' => '', 'kind' => $file[kind]);
+                            $insert_path[$i] = array('path' => '', 'uid' => '', 'kind' => $file['kind']);
                         }
                     }
                 }
 
-                $_model[BODY] = $body_str;
+                $_model['BODY'] = $body_str;
             } catch(Exception $e) {
                 $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
                 break;
@@ -662,14 +662,14 @@ switch ($_method) {
             $_d->sql_beginTransaction();
 
 
-            if( trim($_model[PRODUCT_NM]) == '' ){
+            if( trim($_model['PRODUCT_NM']) == '' ){
                 $_d->failEnd("제목을 작성 하세요");
             }
 
-            if (count($_model[CATEGORY]) > 0) {
-                $categories = $_model[CATEGORY];
+            if (count($_model['CATEGORY']) > 0) {
+                $categories = $_model['CATEGORY'];
 
-                for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
+                for ($i = 0 ; $i < count($_model['CATEGORY']); $i++) {
                     $category = $categories[$i];
 
                     if ($category['PARENT_NO'] == "1") {
@@ -680,21 +680,21 @@ switch ($_method) {
 
             $sql = "UPDATE ANGE_PRODUCT
                     SET
-                        PRODUCT_NM = '".$_model[PRODUCT_NM]."',
-                        PRODUCT_GB = '".$_model[PRODUCT_GB][value]."',
-                        COMPANY_NO = '".$_model[COMPANY_NO]."',
-                        COMPANY_NM = '".$_model[COMPANY_NM]."',
-                        BODY = '".$_model[BODY]."',
-                        URL = '".$_model[URL]."',
-                        PRICE = ".($_model[PRICE] == '' ? 0 : $_model[PRICE]).",
-                        DIRECT_PRICE = ".($_model[DIRECT_PRICE] == '' ? 0 : $_model[DIRECT_PRICE]).",
-                        SUM_IN_CNT = ".$_model[SUM_IN_CNT].",
-                        SUM_OUT_CNT = ".$_model[SUM_OUT_CNT].",
-                        NOTE = '".$_model[NOTE]."',
-                        DELIVERY_PRICE = '".$_model[DELIVERY_PRICE]."',
-                        DELIVERY_ST = '".$_model[DELIVERY_ST]."',
-                        START_YMD = '".$_model[START_YMD]."',
-                        CLOSE_YMD = '".$_model[CLOSE_YMD]."',
+                        PRODUCT_NM = '".$_model['PRODUCT_NM']."',
+                        PRODUCT_GB = '".$_model['PRODUCT_GB']['value']."',
+                        COMPANY_NO = '".$_model['COMPANY_NO']."',
+                        COMPANY_NM = '".$_model['COMPANY_NM']."',
+                        BODY = '".$_model['BODY']."',
+                        URL = '".$_model['URL']."',
+                        PRICE = ".($_model['PRICE'] == '' ? 0 : $_model['PRICE']).",
+                        DIRECT_PRICE = ".($_model['DIRECT_PRICE'] == '' ? 0 : $_model['DIRECT_PRICE']).",
+                        SUM_IN_CNT = ".$_model['SUM_IN_CNT'].",
+                        SUM_OUT_CNT = ".$_model['SUM_OUT_CNT'].",
+                        NOTE = '".$_model['NOTE']."',
+                        DELIVERY_PRICE = '".$_model['DELIVERY_PRICE']."',
+                        DELIVERY_ST = '".$_model['DELIVERY_ST']."',
+                        START_YMD = '".$_model['START_YMD']."',
+                        CLOSE_YMD = '".$_model['CLOSE_YMD']."',
                         CATEGORY_NO = '".$category_no."'
                     WHERE
                         NO = ".$_key."
@@ -708,7 +708,7 @@ switch ($_method) {
                 $msg = $_d->mysql_error;
             }
 
-            if (count($_model[CATEGORY]) > 0) {
+            if (count($_model['CATEGORY']) > 0) {
 
                 $sql = "DELETE FROM CONTENT_CATEGORY
                         WHERE
@@ -723,9 +723,9 @@ switch ($_method) {
                     $msg = $_d->mysql_error;
                 }
 
-                $categories = $_model[CATEGORY];
+                $categories = $_model['CATEGORY'];
 
-                for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
+                for ($i = 0 ; $i < count($_model['CATEGORY']); $i++) {
                     $category = $categories[$i];
 
                     if (isset($category['NO'])) {
@@ -735,7 +735,7 @@ switch ($_method) {
                                     ,TARGET_NO
                                     ,TARGET_GB
                                 ) VALUES (
-                                    '".$category[NO]."'
+                                    '".$category['NO']."'
                                     , '".$_key."'
                                     , 'PRODUCT'
                                 )";
@@ -763,42 +763,42 @@ switch ($_method) {
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                 $is_delete = true;
 
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
                     for ($i = 0 ; $i < count($files); $i++) {
-                        if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
+                        if ($row['FILE_NM'] == $files[$i]['name'] && $row['FILE_SIZE'] == $files[$i]['size']) {
                             $is_delete = false;
 
-                            $sql = "UPDATE COM_FILE SET FILE_GB = '".$files[$i][kind]."' WHERE NO = ".$row[NO];
+                            $sql = "UPDATE COM_FILE SET FILE_GB = '".$files[$i]['kind']."' WHERE NO = ".$row['NO'];
                             $_d->sql_query($sql);
                         }
                     }
                 }
 
                 if ($is_delete) {
-                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row['NO'];
 
                     $_d->sql_query($sql);
 
-                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
 
-                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                        unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                        unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                    if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                        unlink('../../..'.$row['PATH'].$row['FILE_ID']);
+                        unlink('../../..'.$row['PATH'].'thumbnail/'.$row['FILE_ID']);
+                        unlink('../../..'.$row['PATH'].'medium/'.$row['FILE_ID']);
                     }
                 }
             }
 
-            if (count($_model[FILES]) > 0) {
-                $files = $_model[FILES];
+            if (count($_model['FILES']) > 0) {
+                $files = $_model['FILES'];
 
                 for ($i = 0 ; $i < count($files); $i++) {
                     $file = $files[$i];
                     MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                    if ($insert_path[$i][uid] != "") {
+                    if ($insert_path[$i]['uid'] != "") {
                         $sql = "INSERT INTO COM_FILE
                                 (
                                     FILE_NM
@@ -814,15 +814,15 @@ switch ($_method) {
                                     ,TARGET_NO
                                     ,TARGET_GB
                                 ) VALUES (
-                                    '".$file[name]."'
-                                    , '".$insert_path[$i][uid]."'
-                                    , '".$insert_path[$i][path]."'
-                                    , '".$file[type]."'
-                                    , '".$file[size]."'
+                                    '".$file['name']."'
+                                    , '".$insert_path[$i]['uid']."'
+                                    , '".$insert_path[$i]['path']."'
+                                    , '".$file['type']."'
+                                    , '".$file['size']."'
                                     , '0'
                                     , SYSDATE()
                                     , 'C'
-                                    , '".$file[kind]."'
+                                    , '".$file['kind']."'
                                     , '".$i."'
                                     , '".$_key."'
                                     , 'PRODUCT'
@@ -855,8 +855,8 @@ switch ($_method) {
 
             $sql = "UPDATE ANGE_PRODUCT_STOCK
                     SET
-                        IN_OUT_GB = '".$_model[IN_OUT_GB]."',
-                        IN_OUT_CNT = '".$_model[IN_OUT_CNT]."'
+                        IN_OUT_GB = '".$_model['IN_OUT_GB']."',
+                        IN_OUT_CNT = '".$_model['IN_OUT_CNT']."'
                     WHERE
                         NO = '".$_key."'
                     ";
@@ -870,17 +870,17 @@ switch ($_method) {
 
             $update_set = '';
 
-            if ($_model[IN_OUT_GB] == 'IN') {
-                $update_set = "SUM_IN_CNT = SUM_IN_CNT - ".($_model[OLD_IN_OUT_CNT] - $_model[IN_OUT_CNT]);
+            if ($_model['IN_OUT_GB'] == 'IN') {
+                $update_set = "SUM_IN_CNT = SUM_IN_CNT - ".($_model['OLD_IN_OUT_CNT'] - $_model['IN_OUT_CNT']);
             } else {
-                $update_set = "SUM_OUT_CNT = SUM_OUT_CNT - ".($_model[OLD_IN_OUT_CNT] - $_model[IN_OUT_CNT]);
+                $update_set = "SUM_OUT_CNT = SUM_OUT_CNT - ".($_model['OLD_IN_OUT_CNT'] - $_model['IN_OUT_CNT']);
             }
 
             $sql = "UPDATE ANGE_PRODUCT
                     SET
                         ".$update_set."
                     WHERE
-                        NO = ".$_model[PRODUCT_NO]."
+                        NO = ".$_model['PRODUCT_NO']."
                 ";
 
             $_d->sql_query($sql);
@@ -955,8 +955,8 @@ switch ($_method) {
 
             $result = $_d->sql_query($sql,true);
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
+                MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
+                $sql = "DELETE FROM COM_FILE WHERE NO = ".$row['NO'];
 
                 $_d->sql_query($sql);
 
@@ -965,10 +965,10 @@ switch ($_method) {
                     $msg = $_d->mysql_error;
                 }
 
-                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                    unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                    unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                    unlink('../../..'.$row['PATH'].$row['FILE_ID']);
+                    unlink('../../..'.$row['PATH'].'thumbnail/'.$row['FILE_ID']);
+                    unlink('../../..'.$row['PATH'].'medium/'.$row['FILE_ID']);
                 }
             }
 
@@ -998,17 +998,17 @@ switch ($_method) {
 
             $update_set = '';
 
-            if ($product_data[IN_OUT_GB] == 'IN') {
-                $update_set = "SUM_IN_CNT = SUM_IN_CNT - ".$product_data[IN_OUT_CNT];
+            if ($product_data['IN_OUT_GB'] == 'IN') {
+                $update_set = "SUM_IN_CNT = SUM_IN_CNT - ".$product_data['IN_OUT_CNT'];
             } else {
-                $update_set = "SUM_OUT_CNT = SUM_OUT_CNT - ".$product_data[IN_OUT_CNT];
+                $update_set = "SUM_OUT_CNT = SUM_OUT_CNT - ".$product_data['IN_OUT_CNT'];
             }
 
             $sql = "UPDATE ANGE_PRODUCT
                     SET
                         ".$update_set."
                     WHERE
-                        NO = ".$product_data[PRODUCT_NO]."
+                        NO = ".$product_data['PRODUCT_NO']."
                     ";
 
             $_d->sql_query($sql);

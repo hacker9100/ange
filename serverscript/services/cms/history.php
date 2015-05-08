@@ -16,14 +16,14 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -56,7 +56,7 @@
                     $_d->dataEnd2($data);
                 }
             } else if ($_type == 'list') {
-                if ( trim($_search[TASK_NO]) == "" ) {
+                if ( trim($_search['TASK_NO']) == "" ) {
                     $_d->failEnd("태스크 순번이 없습니다.");
                 }
 
@@ -66,7 +66,7 @@
                             CMS_HISTORY H
                             LEFT OUTER JOIN COM_USER U ON H.WORKER_ID = U.USER_ID
                         WHERE
-                            WORK_ID = '".$_search[TASK_NO]."'
+                            WORK_ID = '".$_search['TASK_NO']."'
                         ORDER BY H.WORK_DT ASC
                         ";
 

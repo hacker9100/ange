@@ -251,6 +251,7 @@ class MtUtil extends Mt {
         $mail->Port       = __SMTP_PORT__;                   // set the SMTP port for the GMAIL server
         $mail->Username   = __SMTP_USR__;             // GMAIL username
         $mail->Password   = __SMTP_PWD__;              // GMAIL password
+        $mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
 
 //        $mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
 //        $mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server

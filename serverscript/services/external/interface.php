@@ -17,14 +17,14 @@
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/services/passwordHash.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -42,26 +42,26 @@
             break;
 
         case "POST":
-            MtUtil::_d("### INFO [maileage] ".$_method);
-            MtUtil::_d("### INFO [maileage] ".$user_id);
+            MtUtil::_d("### INFO ['maileage'] ".$_method);
+            MtUtil::_d("### INFO ['maileage'] ".$user_id);
 
             if ($_type == 'mail') {
                 $from_email = __SMTP_USR__;
                 $from_user = __SMTP_USR_NM__;
-                $to = $_model[EMAIL];
-                $to_user = $_model[USER_NM];
+                $to = $_model['EMAIL'];
+                $to_user = $_model['USER_NM'];
                 $headers = "From: hacker9100@gmail.com";
                 $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
-                $message = "안녕하세요. ".$_model[USER_NM]."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='http://ange.marveltree.com/serverscript/services/external/interface.php?_method=POST&_type=mileage&user_id=hong&earn_gb=20150306&point=50'>마일리지 적립</a>";
+                $message = "안녕하세요. ".$_model['USER_NM']."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='http://ange.marveltree.com/serverscript/services/external/interface.php?_method=POST&_type=mileage&user_id=hong&earn_gb=20150306&point=50'>마일리지 적립</a>";
 
                 $return = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user, null);
                 $_d->succEnd('');
             } else if ($_type == 'point') {
                 $err = 0;
                 $msg = "";
-                MtUtil::_d("### INFO [maileage] ".$user_id);
+                MtUtil::_d("### INFO ['maileage'] ".$user_id);
                 if (!isset($user_id) || $user_id == '') {
-                    MtUtil::_d("### ERROR [maileage] user_id");
+                    MtUtil::_d("### ERROR ['maileage'] user_id");
                     ob_end_clean();
                     header('Content-type: text/html; charset=utf-8');
 
@@ -74,7 +74,7 @@
                 }
 
                 if (!isset($point) || $point == '') {
-                    MtUtil::_d("### ERROR [maileage] point");
+                    MtUtil::_d("### ERROR ['maileage'] point");
                     ob_end_clean();
                     header('Content-type: text/html; charset=utf-8');
 
@@ -87,7 +87,7 @@
                 }
 
                 if (!isset($earn_gb) || $earn_gb == '') {
-                    MtUtil::_d("### ERROR [maileage] earn_gb");
+                    MtUtil::_d("### ERROR ['maileage'] earn_gb");
                     ob_end_clean();
                     header('Content-type: text/html; charset=utf-8');
 
@@ -105,7 +105,7 @@
                 $data  = $_d->sql_fetch($sql);
 
                 if (!$data) {
-                    MtUtil::_d("### ERROR [maileage] check");
+                    MtUtil::_d("### ERROR ['maileage'] check");
                     ob_end_clean();
                     header('Content-type: text/html; charset=utf-8');
 
@@ -121,7 +121,7 @@
                 $data  = $_d->sql_fetch($sql);
 
                 if ($data['CNT'] > 0) {
-                    MtUtil::_d("### ERROR [maileage] duple");
+                    MtUtil::_d("### ERROR ['maileage'] duple");
                     ob_end_clean();
                     header('Content-type: text/html; charset=utf-8');
 
@@ -186,7 +186,7 @@
                     $msg = $_d->mysql_error;
                 }
 
-                MtUtil::_d("### END [maileage]");
+                MtUtil::_d("### END ['maileage']");
 
                 if ($err > 0) {
                     $_d->sql_rollback();
@@ -219,7 +219,7 @@
                 $msg = "";
 
                 if (!isset($comm_no) || $comm_no == '') {
-                    MtUtil::_d("### ERROR [maileage] user_id");
+                    MtUtil::_d("### ERROR ['maileage'] user_id");
                     ob_end_clean();
                     header('Content-type: text/html; charset=utf-8');
 
@@ -232,7 +232,7 @@
                 }
 
                 if (!isset($parent_no) || $parent_no == '') {
-                    MtUtil::_d("### ERROR [maileage] user_id");
+                    MtUtil::_d("### ERROR ['maileage'] user_id");
                     ob_end_clean();
                     header('Content-type: text/html; charset=utf-8');
 
@@ -266,7 +266,7 @@
                 $data  = $_d->sql_fetch($sql);
 
                 if ($data['CNT'] > 0) {
-                    MtUtil::_d("### ERROR [clinic] duple");
+                    MtUtil::_d("### ERROR ['clinic'] duple");
                     ob_end_clean();
                     header('Content-type: text/html; charset=utf-8');
 
@@ -319,7 +319,7 @@
                     $msg = $_d->mysql_error;
                 }
 
-                MtUtil::_d("### END [clinic]");
+                MtUtil::_d("### END ['clinic']");
 
                 if ($err > 0) {
                     $_d->sql_rollback();

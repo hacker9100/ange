@@ -16,7 +16,7 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_d("### [START]");
+MtUtil::_d("### ['START']");
 MtUtil::_d(print_r($_REQUEST,true));
 
 MtUtil::_d(json_encode(file_get_contents("php://input"),true));
@@ -26,8 +26,8 @@ MtUtil::_d(json_encode(file_get_contents("php://input"),true));
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
 $_d = new MtJson(null);
@@ -45,16 +45,16 @@ switch ($_method) {
         if ($_type == 'item') {
             $search_where = "";
 
-            if (isset($_search[YEAR]) && $_search[YEAR] != "") {
-                $search_where .= "AND YEAR = '".$_search[YEAR]."' ";
+            if (isset($_search['YEAR']) && $_search['YEAR'] != "") {
+                $search_where .= "AND YEAR = '".$_search['YEAR']."' ";
             }
 
-            if (isset($_search[MONTH]) && $_search[MONTH] != "") {
-                $search_where .= "AND MONTH = '".$_search[MONTH]."' ";
+            if (isset($_search['MONTH']) && $_search['MONTH'] != "") {
+                $search_where .= "AND MONTH = '".$_search['MONTH']."' ";
             }
 
-            if (isset($_search[DAY]) && $_search[DAY] != "") {
-                $search_where .= "AND DAY = '".$_search[DAY]."' ";
+            if (isset($_search['DAY']) && $_search['DAY'] != "") {
+                $search_where .= "AND DAY = '".$_search['DAY']."' ";
             }
 
             $err = 0;
@@ -108,7 +108,7 @@ switch ($_method) {
         $err = 0;
         $msg = "";
 
-        if( trim($_model[SUBJECT]) == "" ){
+        if( trim($_model['SUBJECT']) == "" ){
             $_d->failEnd("제목을 작성 하세요");
         }
 
@@ -117,19 +117,19 @@ switch ($_method) {
         $source_path = '../../..'.$file_path;
         $insert_path = null;
 
-        $body_str = $_model[BODY];
+        $body_str = $_model['BODY'];
 
         try {
-            if (count($_model[FILE]) > 0) {
-                $file = $_model[FILE];
+            if (count($_model['FILE']) > 0) {
+                $file = $_model['FILE'];
                 if (!file_exists($source_path) && !is_dir($source_path)) {
                     @mkdir($source_path);
                 }
 
-                if (file_exists($upload_path.$file[name])) {
+                if (file_exists($upload_path.$file['name'])) {
                     $uid = uniqid();
-                    rename($upload_path.$file[name], $source_path.$uid);
-                    $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                    rename($upload_path.$file['name'], $source_path.$uid);
+                    $insert_path = array(path => $file_path, uid => $uid, kind => $file['kind']);
                 }
             }
 
@@ -148,11 +148,11 @@ switch ($_method) {
                     SUBJECT,
                     BODY
                 ) VALUES (
-                    '".$_model[YEAR]."',
-                    '".$_model[MONTH]."',
-                    '".$_model[DAY]."',
-                    '".$_model[SUBJECT]."',
-                    '".$_model[BODY]."'
+                    '".$_model['YEAR']."',
+                    '".$_model['MONTH']."',
+                    '".$_model['DAY']."',
+                    '".$_model['SUBJECT']."',
+                    '".$_model['BODY']."'
                 )";
 
         $_d->sql_query($sql);
@@ -163,8 +163,8 @@ switch ($_method) {
             $msg = $_d->mysql_error;
         }
 
-        if (isset($_model[FILE]) && $_model[FILE] != "") {
-            $file = $_model[FILE];
+        if (isset($_model['FILE']) && $_model['FILE'] != "") {
+            $file = $_model['FILE'];
 
             $sql = "INSERT INTO COM_FILE
                     (
@@ -181,15 +181,15 @@ switch ($_method) {
                         ,TARGET_NO
                         ,TARGET_GB
                     ) VALUES (
-                        '".$file[name]."'
-                        , '".$insert_path[uid]."'
-                        , '".$insert_path[path]."'
-                        , '".$file[type]."'
-                        , '".$file[size]."'
+                        '".$file['name']."'
+                        , '".$insert_path['uid']."'
+                        , '".$insert_path['path']."'
+                        , '".$file['type']."'
+                        , '".$file['size']."'
                         , '0'
                         , SYSDATE()
                         , 'C'
-                        , '".$file[kind]."'
+                        , '".$file['kind']."'
                         , '".$i."'
                         , '".$no."'
                         , 'TALK'
@@ -225,19 +225,19 @@ switch ($_method) {
             $source_path = '../../..'.$file_path;
             $insert_path = null;
 
-            $body_str = $_model[BODY];
+            $body_str = $_model['BODY'];
 
             try {
-                if (count($_model[FILE]) > 0) {
-                    $file = $_model[FILE];
+                if (count($_model['FILE']) > 0) {
+                    $file = $_model['FILE'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                     }
 
-                    if (file_exists($upload_path.$file[name])) {
+                    if (file_exists($upload_path.$file['name'])) {
                         $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$uid);
-                        $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                        rename($upload_path.$file['name'], $source_path.$uid);
+                        $insert_path = array(path => $file_path, uid => $uid, kind => $file['kind']);
 
                     } else {
                         $insert_path = array(path => '', uid => '', kind => '');
@@ -283,28 +283,28 @@ switch ($_method) {
             $result_data = $_d->sql_fetch($sql,true);
             $is_delete = true;
 
-            if (count($_model[FILE]) > 0) {
-                $file = $_model[FILE];
-                if ($result_data[FILE_NM] == $file[name] && $result_data[FILE_SIZE] == $file[size]) {
+            if (count($_model['FILE']) > 0) {
+                $file = $_model['FILE'];
+                if ($result_data['FILE_NM'] == $file['name'] && $result_data['FILE_SIZE'] == $file['size']) {
                     $is_delete = false;
                 }
             }
 
             if ($result_data && $is_delete) {
-                MtUtil::_d("------------>>>>> DELETE NO : ".$result_data[NO]);
-                $sql = "DELETE FROM COM_FILE WHERE NO = ".$result_data[NO];
+                MtUtil::_d("------------>>>>> DELETE NO : ".$result_data['NO']);
+                $sql = "DELETE FROM COM_FILE WHERE NO = ".$result_data['NO'];
 
                 $_d->sql_query($sql);
 
-                if (file_exists('../../..'.$result_data[PATH].$result_data[FILE_ID])) {
-                    unlink('../../..'.$result_data[PATH].$result_data[FILE_ID]);
+                if (file_exists('../../..'.$result_data['PATH'].$result_data['FILE_ID'])) {
+                    unlink('../../..'.$result_data['PATH'].$result_data['FILE_ID']);
                 }
             }
 
-            if (count($_model[FILE]) > 0) {
-                $file = $_model[FILE];
+            if (count($_model['FILE']) > 0) {
+                $file = $_model['FILE'];
 
-                if ($insert_path[uid] != "") {
+                if ($insert_path['uid'] != "") {
                     $sql = "INSERT INTO COM_FILE
                             (
                                 FILE_NM
@@ -320,15 +320,15 @@ switch ($_method) {
                                 ,TARGET_NO
                                 ,TARGET_GB
                             ) VALUES (
-                                '".$file[name]."'
-                                , '".$insert_path[uid]."'
-                                , '".$insert_path[path]."'
-                                , '".$file[type]."'
-                                , '".$file[size]."'
+                                '".$file['name']."'
+                                , '".$insert_path['uid']."'
+                                , '".$insert_path['path']."'
+                                , '".$file['type']."'
+                                , '".$file['size']."'
                                 , '0'
                                 , SYSDATE()
                                 , 'C'
-                                , '".$file[kind]."'
+                                , '".$file['kind']."'
                                 , '".$i."'
                                 , '".$_key."'
                                 , 'TALK'
@@ -381,15 +381,15 @@ switch ($_method) {
 
         $result = $_d->sql_query($sql,true);
         for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-            MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-            $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
+            MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
+            $sql = "DELETE FROM COM_FILE WHERE NO = ".$row['NO'];
 
             $_d->sql_query($sql);
 
-            if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+            if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                unlink('../../..'.$row['PATH'].$row['FILE_ID']);
+                unlink('../../..'.$row['PATH'].'thumbnail/'.$row['FILE_ID']);
+                unlink('../../..'.$row['PATH'].'medium/'.$row['FILE_ID']);
             }
         }
 

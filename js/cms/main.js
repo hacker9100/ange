@@ -80,12 +80,6 @@ require.config({
         'fileupload-validate': '../../lib/file-upload/jquery.fileupload-validate',
         'fileupload-angular': '../../lib/file-upload/jquery.fileupload-angular',
 
-        // fullcalendar 모듈
-        'fullcalendar': '../../lib/fullcalendar/fullcalendar',
-        'ko': '../../lib/fullcalendar/lang/ko',
-        'uiCalendar': '../../lib/fullcalendar/calendar',
-        'moment': '../../lib/fullcalendar/lib/moment.min',
-
 //        'ngMock': '../lib/angular/angular-mocks',
 
         'library': '../../lib'
@@ -140,15 +134,6 @@ require.config({
         },
         'ngActivityIndicator':{
             deps:['angular']
-        },
-        'fullcalendar':{
-            deps:['jquery','moment']
-        },
-        'ko':{
-            deps:['jquery','moment']
-        },
-        'uiCalendar':{
-            deps:['angular','fullcalendar']
         },
         'jquery-blueimp-gallery':{
             deps:['jquery','blueimp-gallery']

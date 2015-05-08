@@ -16,14 +16,14 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -57,6 +57,10 @@
             break;
 
         case "POST":
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
             $err = 0;
             $msg = "";
 
@@ -64,17 +68,17 @@
 
             $update_table = "";
 
-            if ($_model[TARGET_GB] == "CONTENT") {
+            if ($_model['TARGET_GB'] == "CONTENT") {
                 $update_table = "CMS_TASK";
-            } else if ($_model[TARGET_GB] == "BOARD") {
+            } else if ($_model['TARGET_GB'] == "BOARD") {
                 $update_table = "COM_BOARD";
-            } else if ($_model[TARGET_GB] == "EVENT") {
+            } else if ($_model['TARGET_GB'] == "EVENT") {
                 $update_table = "ANGE_EVENT";
-            } else if ($_model[TARGET_GB] == "REVIEW") {
+            } else if ($_model['TARGET_GB'] == "REVIEW") {
                 $update_table = "ANGE_REVIEW";
             }
 
-            if (isset($_model[LIKE_FL]) && $_model[LIKE_FL] != "") {
+            if (isset($_model['LIKE_FL']) && $_model['LIKE_FL'] != "") {
                 $sql = "SELECT COUNT(*) AS LIKE_CNT
                         FROM ANGE_LIKE
                         WHERE TARGET_NO = ".$_model['TARGET_NO']."
@@ -83,7 +87,7 @@
 
                 $data = $_d->sql_fetch($sql);
 
-                if ($data['LIKE_CNT'] == 0 && $_model[LIKE_FL] == "N") {
+                if ($data['LIKE_CNT'] == 0 && $_model['LIKE_FL'] == "N") {
                     $sql = "INSERT INTO ANGE_LIKE
                             (
                                 TARGET_NO,
@@ -91,8 +95,8 @@
                                 REG_UID,
                                 REG_DT
                             ) VALUES (
-                                '".$_model[TARGET_NO]."',
-                                '".$_model[TARGET_GB]."',
+                                '".$_model['TARGET_NO']."',
+                                '".$_model['TARGET_GB']."',
                                 '".$_SESSION['uid']."',
                                 SYSDATE()
                             )";
@@ -105,15 +109,15 @@
                         $msg = $_d->mysql_error;
                     }
 
-                    if ($_model[TARGET_GB] == "CONTENT") {
+                    if ($_model['TARGET_GB'] == "CONTENT") {
                         $sql = "SELECT
                                     COUNT(*) AS SCRAP_CNT
                                 FROM
                                     COM_SCRAP
                                 WHERE
                                     REG_UID = '".$_SESSION['uid']."'
-                                    AND TARGET_NO = '".$_model[TARGET_NO]."'
-                                    AND TARGET_GB = '".$_model[TARGET_GB]."'
+                                    AND TARGET_NO = '".$_model['TARGET_NO']."'
+                                    AND TARGET_GB = '".$_model['TARGET_GB']."'
                                 ";
 
                         $result = $_d->sql_query($sql);
@@ -129,8 +133,8 @@
                                         REG_NM,
                                         REG_DT
                                     ) VALUES (
-                                         ".$_model[TARGET_NO]."
-                                        , '".$_model[TARGET_GB]."'
+                                         ".$_model['TARGET_NO']."
+                                        , '".$_model['TARGET_GB']."'
                                         , '".$_SESSION['uid']."'
                                         , '".$_SESSION['nick']."'
                                         , '".$_SESSION['name']."'
@@ -148,7 +152,7 @@
 
                     $sql = "UPDATE ".$update_table." SET
                                     LIKE_CNT = LIKE_CNT + 1
-                             WHERE NO = ".$_model[TARGET_NO]."
+                             WHERE NO = ".$_model['TARGET_NO']."
                                 ";
 
                     $_d->sql_query($sql);
@@ -161,8 +165,8 @@
                     $sql = "DELETE FROM ANGE_LIKE
                             WHERE
                                 REG_UID = '".$_SESSION['uid']."'
-                                AND TARGET_NO = '".$_model[TARGET_NO]."'
-                                AND TARGET_GB = '".$_model[TARGET_GB]."'
+                                AND TARGET_NO = '".$_model['TARGET_NO']."'
+                                AND TARGET_GB = '".$_model['TARGET_GB']."'
                             ";
 
                     $_d->sql_query($sql);
@@ -173,15 +177,15 @@
                         $msg = $_d->mysql_error;
                     }
 
-                    if ($_model[TARGET_GB] == "CONTENT") {
+                    if ($_model['TARGET_GB'] == "CONTENT") {
 //                        $sql = "SELECT
 //                                    COUNT(*)
 //                                FROM
 //                                    ANGE_LIKE
 //                                WHERE
 //                                    REG_UID = '".$_SESSION['uid']."'
-//                                    AND TARGET_NO = '".$_model[TARGET_NO]."'
-//                                    AND TARGET_GB = '".$_model[TARGET_GB]."'
+//                                    AND TARGET_NO = '".$_model['TARGET_NO']."'
+//                                    AND TARGET_GB = '".$_model['TARGET_GB']."'
 //                                ";
 //
 //                        $result = $_d->sql_query($sql);
@@ -191,8 +195,8 @@
                             $sql = "DELETE FROM COM_SCRAP
                                     WHERE
                                         REG_UID = '".$_SESSION['uid']."'
-                                        AND TARGET_NO = '".$_model[TARGET_NO]."'
-                                        AND TARGET_GB = '".$_model[TARGET_GB]."'
+                                        AND TARGET_NO = '".$_model['TARGET_NO']."'
+                                        AND TARGET_GB = '".$_model['TARGET_GB']."'
                                     ";
 
                             $_d->sql_query($sql);
@@ -207,7 +211,7 @@
 
                     $sql = "UPDATE ".$update_table." SET
                                     LIKE_CNT = LIKE_CNT - 1
-                             WHERE NO = ".$_model[TARGET_NO]."
+                             WHERE NO = ".$_model['TARGET_NO']."
                                 ";
 
                     $_d->sql_query($sql);
@@ -232,42 +236,9 @@
             break;
 
         case "PUT":
-            if (!isset($_key) || $_key == '') {
-                $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
-            }
-
-            $err = 0;
-            $msg = "";
-
-            $_d->sql_beginTransaction();
-
-            $sql = "UPDATE COM_
-                    SET
-                    WHERE
-                        NO = ".$_key."
-                    ";
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("수정실패입니다:".$msg);
-            }else{
-                $_d->sql_commit();
-                $_d->succEnd($no);
-            }
-
             break;
 
         case "DELETE":
-            //TODO: 삭제
-
             break;
     }
 ?>

@@ -16,7 +16,7 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_d("### [START]");
+MtUtil::_d("### ['START']");
 MtUtil::_d(print_r($_REQUEST,true));
 
 MtUtil::_d(json_encode(file_get_contents("php://input"),true));
@@ -26,8 +26,8 @@ MtUtil::_d(json_encode(file_get_contents("php://input"),true));
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
 $_d = new MtJson(null);
@@ -78,24 +78,24 @@ switch ($_method) {
             $sort_order = "";
             $limit = "";
 
-            if (isset($_search[PRODUCT_GB]) && $_search[PRODUCT_GB] != "") {
-                $search_where .= "AND PRODUCT_GB = '".$_search[PRODUCT_GB]."' ";
+            if (isset($_search['PRODUCT_GB']) && $_search['PRODUCT_GB'] != "") {
+                $search_where .= "AND PRODUCT_GB = '".$_search['PRODUCT_GB']."' ";
             }
 
-            /*            if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                            $search_where .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
+            /*            if (isset($_search['TARGET_NO']) && $_search['TARGET_NO'] != "") {
+                            $search_where .= "AND TARGET_NO = ".$_search['TARGET_NO']." ";
                         }*/
 
-            if (isset($_search[PRODUCT_NM]) && $_search[PRODUCT_NM] != "") {
-                $search_where .= "AND AP.PRODUCT_NM LIKE '%".$_search[PRODUCT_NM]."%'";
+            if (isset($_search['PRODUCT_NM']) && $_search['PRODUCT_NM'] != "") {
+                $search_where .= "AND AP.PRODUCT_NM LIKE '%".$_search['PRODUCT_NM']."%'";
             }
 
-            if (isset($_search[START_DT]) && $_search[START_DT] != "") {
-                $search_where .= "AND DATE_FORMAT(AC.REG_DT, '%Y-%m-%d') BETWEEN '".$_search[START_DT]."' AND '".$_search[END_DT]."'";
+            if (isset($_search['START_DT']) && $_search['START_DT'] != "") {
+                $search_where .= "AND DATE_FORMAT(AC.REG_DT, '%Y-%m-%d') BETWEEN '".$_search['START_DT']."' AND '".$_search['END_DT']."'";
             }
 
             if (isset($_page)) {
-                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
             }
 
             $sql = "SELECT    TOTAL_COUNT, NO, PRODUCT_NO, SUBJECT, COUNSEL_ST, PROGRESS_ST,
@@ -131,7 +131,7 @@ switch ($_method) {
 
             $data = null;
 
-            if (isset($_search[FILE])) {
+            if (isset($_search['FILE'])) {
                 $__trn = '';
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
@@ -181,7 +181,7 @@ switch ($_method) {
         $err = 0;
         $msg = "";
 
-        /*        if( trim($_model[PRODUCT_NM]) == "" ){
+        /*        if( trim($_model['PRODUCT_NM']) == "" ){
                     $_d->failEnd("상품명을 작성 하세요");
                 }*/
 
@@ -190,42 +190,42 @@ switch ($_method) {
         $source_path = '../../..'.$file_path;
         $insert_path = array();
 
-        $body_str = $_model[BODY];
+        $body_str = $_model['BODY'];
 
         try {
-            if (count($_model[FILES]) > 0) {
-                $files = $_model[FILES];
+            if (count($_model['FILES']) > 0) {
+                $files = $_model['FILES'];
                 if (!file_exists($source_path) && !is_dir($source_path)) {
                     @mkdir($source_path);
                     @mkdir($source_path.'thumbnail/');
                     @mkdir($source_path.'medium/');
                 }
 
-                for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                     $file = $files[$i];
 
-                    if (file_exists($upload_path.$file[name])) {
+                    if (file_exists($upload_path.$file['name'])) {
                         $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$uid);
-                        rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                        rename($upload_path.$file['name'], $source_path.$uid);
+                        rename($upload_path.'thumbnail/'.$file['name'], $source_path.'thumbnail/'.$uid);
 
-                        if ($file[version] == 6 ) {
-                            $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                        if ($file['version'] == 6 ) {
+                            $body_str = str_replace($file['url'], BASE_URL.$file_path.$uid, $body_str);
                         } else {
-                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                            rename($upload_path.'medium/'.$file['name'], $source_path.'medium/'.$uid);
+                            $body_str = str_replace($file['mediumUrl'], BASE_URL.$file_path.'medium/'.$uid, $body_str);
                         }
 
-                        $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                        $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
 
-                        MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                        MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i]['path']);
 
 
                     }
                 }
             }
 
-            $_model[BODY] = $body_str;
+            $_model['BODY'] = $body_str;
         } catch(Exception $e) {
             $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
             break;
@@ -233,10 +233,10 @@ switch ($_method) {
 
         $_d->sql_beginTransaction();
         $_change_product_no = 0;
-        if(!isset($_model[CHANGE_PRODUCT][NO]) || $_model[CHANGE_PRODUCT][NO] == ''){
+        if(!isset($_model['CHANGE_PRODUCT']['NO']) || $_model['CHANGE_PRODUCT']['NO'] == ''){
            $_change_product_no = 0;
         }else{
-           $_change_product_no = $_model[CHANGE_PRODUCT][NO];
+           $_change_product_no = $_model['CHANGE_PRODUCT']['NO'];
         }
 
         $sql = "INSERT INTO ANGE_ORDER_COUNSEL
@@ -251,12 +251,12 @@ switch ($_method) {
                     USER_ID,
                     REG_DT
                 ) VALUES (
-                    ".$_model[PRODUCT][PRODUCT_NO].",
-                    '".$_model[PRODUCT_CODE][PRODUCT_CODE]."',
+                    ".$_model['PRODUCT']['PRODUCT_NO'].",
+                    '".$_model['PRODUCT_CODE']['PRODUCT_CODE']."',
                     ".$_change_product_no.",
-                    '".$_model[SUBJECT]."',
-                    '".$_model[BODY]."',
-                    '".$_model[COUNSEL_ST]."',
+                    '".$_model['SUBJECT']."',
+                    '".$_model['BODY']."',
+                    '".$_model['COUNSEL_ST']."',
                     1,
                     '".$_SESSION['uid']."',
                     SYSDATE()
@@ -269,7 +269,7 @@ switch ($_method) {
                 SET
                    PROGRESS_ST  = 1
                 WHERE
-                    PRODUCT_NO = '".$_model[PRODUCT][PRODUCT_NO]."'
+                    PRODUCT_NO = '".$_model['PRODUCT']['PRODUCT_NO']."'
                 ";
 
         $_d->sql_query($sql);
@@ -279,15 +279,15 @@ switch ($_method) {
             $msg = $_d->mysql_error;
         }
 
-        if (count($_model[FILES]) > 0) {
-            $files = $_model[FILES];
+        if (count($_model['FILES']) > 0) {
+            $files = $_model['FILES'];
 
-            for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+            for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                 $file = $files[$i];
                 MtUtil::_d("------------>>>>> file : ".$file['name']);
-                MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i]['path']);
 
-                /*if($file[kind] != 'MAIN'){
+                /*if($file['kind'] != 'MAIN'){
                     $_d->failEnd("대표이미지를 선택하세요.");
                 }*/
 
@@ -306,15 +306,15 @@ switch ($_method) {
                             ,TARGET_NO
                             ,TARGET_GB
                         ) VALUES (
-                            '".$file[name]."'
-                            , '".$insert_path[$i][uid]."'
-                            , '".$insert_path[$i][path]."'
-                            , '".$file[type]."'
-                            , '".$file[size]."'
+                            '".$file['name']."'
+                            , '".$insert_path[$i]['uid']."'
+                            , '".$insert_path[$i]['path']."'
+                            , '".$file['type']."'
+                            , '".$file['size']."'
                             , '0'
                             , SYSDATE()
                             , 'C'
-                            , '".$file[kind]."'
+                            , '".$file['kind']."'
                             , '".$i."'
                             , '".$no."'
                             , 'PRODUCT'
@@ -354,7 +354,7 @@ switch ($_method) {
 
             $sql = "UPDATE ANGE_ORDER_COUNSEL
                     SET
-                        PROCESS_ST = ".$_model[PROCESS_ST]."
+                        PROCESS_ST = ".$_model['PROCESS_ST']."
                     WHERE
                         NO = ".$_key."
                 ";

@@ -16,7 +16,7 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 
     $_d = new MtJson(null);
@@ -54,7 +54,7 @@
                         values
                         (
                             sysdate(),
-                            '[앙쥬] 본인인증을 위해 [".$_model['CERT_NO']."]를 입력해 주세요',
+                            '['앙쥬'] 본인인증을 위해 ['".$_model['CERT_NO']."']를 입력해 주세요',
                             '023334650',
                             '0',
                             'N',
@@ -111,46 +111,46 @@
 //                $sql = "select max(mt_pr) from em_smt_tran";
 //                $smt_pr = $_d->sql_fetch($sql);
 
-                if ($_model[CHECKED] == "C") {
-                    if (isset($_model[USER_ID_LIST])) {
+                if ($_model['CHECKED'] == "C") {
+                    if (isset($_model['USER_ID_LIST'])) {
                         $in_str = "";
-                        $in_size = sizeof($_model[USER_ID_LIST]);
+                        $in_size = sizeof($_model['USER_ID_LIST']);
                         for ($i=0; $i< $in_size; $i++) {
-                            $in_str .= "'".trim($_model[USER_ID_LIST][$i])."'";
+                            $in_str .= "'".trim($_model['USER_ID_LIST'][$i])."'";
                             if ($in_size - 1 != $i) $in_str .= ",";
                         }
 
                         $search_where = "AND USER_ID IN (".$in_str.") ";
                     }
                 } else {
-                    if ((isset($_model[CONDITION]) && $_model[CONDITION] != "") && (isset($_model[KEYWORD]) && $_model[KEYWORD] != "")) {
-                        if ($_model[CONDITION][value] == "USER_NM" || $_model[CONDITION][value] == "USER_ID" || $_model[CONDITION][value] == "NICK_NM") {
-                            $arr_keywords = explode(",", $_model[KEYWORD]);
+                    if ((isset($_model['CONDITION']) && $_model['CONDITION'] != "") && (isset($_model['KEYWORD']) && $_model['KEYWORD'] != "")) {
+                        if ($_model['CONDITION']['value'] == "USER_NM" || $_model['CONDITION']['value'] == "USER_ID" || $_model['CONDITION']['value'] == "NICK_NM") {
+                            $arr_keywords = explode(",", $_model['KEYWORD']);
                             $in_condition = "";
                             for ($i=0; $i< sizeof($arr_keywords); $i++) {
                                 $in_condition .= "'".trim($arr_keywords[$i])."'";
                                 if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
                             }
 
-                            $search_where .= "AND ".$_model[CONDITION][value]." IN (".$in_condition.") ";
-                        } else if ($_model[CONDITION][value] == "PHONE") {
-                            $search_where .= "AND ( PHONE_1 LIKE '%".$_model[KEYWORD]."%' OR PHONE_2 LIKE '%".$_model[KEYWORD]."%' ) ";
+                            $search_where .= "AND ".$_model['CONDITION']['value']." IN (".$in_condition.") ";
+                        } else if ($_model['CONDITION']['value'] == "PHONE") {
+                            $search_where .= "AND ( PHONE_1 LIKE '%".$_model['KEYWORD']."%' OR PHONE_2 LIKE '%".$_model['KEYWORD']."%' ) ";
                         } else {
-                            $search_where .= "AND ".$_model[CONDITION][value]." LIKE '%".$_model[KEYWORD]."%' ";
+                            $search_where .= "AND ".$_model['CONDITION']['value']." LIKE '%".$_model['KEYWORD']."%' ";
                         }
                     }
-                    if (isset($_model[TYPE]) && $_model[TYPE] != "") {
+                    if (isset($_model['TYPE']) && $_model['TYPE'] != "") {
 
                         $in_type = "";
-                        for ($i=0; $i< count($_model[TYPE]); $i++) {
-                            $in_type .= "'".$_model[TYPE][$i]."'";
-                            if (count($_model[TYPE]) - 1 != $i) $in_type .= ",";
+                        for ($i=0; $i< count($_model['TYPE']); $i++) {
+                            $in_type .= "'".$_model['TYPE'][$i]."'";
+                            if (count($_model['TYPE']) - 1 != $i) $in_type .= ",";
                         }
 
                         $search_where .= "AND USER_GB IN (".$in_type.") ";
                     }
-                    if (isset($_model[STATUS]) && $_model[STATUS] != "" && $_model[STATUS][value] != "A") {
-                        $search_where .= "AND USER_ST  = '".$_model[STATUS][value]."' ";
+                    if (isset($_model['STATUS']) && $_model['STATUS'] != "" && $_model['STATUS']['value'] != "A") {
+                        $search_where .= "AND USER_ST  = '".$_model['STATUS']['value']."' ";
                     }
                 }
 
@@ -164,7 +164,7 @@
 
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                    if ($row[PHONE_2] != "") {
+                    if ($row['PHONE_2'] != "") {
                         $sql = "insert into em_smt_client
                             (
                                 mt_pr,
@@ -181,7 +181,7 @@
                                 '".$no."',
                                 '".$i."',
                                 1,
-                                '".$row[PHONE_2]."',
+                                '".$row['PHONE_2']."',
                                 '".$_model['WORD1']."',
                                 '".$_model['WORD2']."',
                                 '".$_model['WORD3']."',
@@ -197,8 +197,8 @@
                     }
                 }
 
-                if (isset($_model[ADD_PHONE])) {
-                    $arr_phone = explode(",", $_model[ADD_PHONE]);
+                if (isset($_model['ADD_PHONE'])) {
+                    $arr_phone = explode(",", $_model['ADD_PHONE']);
                     for ($j=0; $j< sizeof($arr_phone); $j++) {
                         $sql = "insert into em_smt_client
                             (
@@ -216,7 +216,7 @@
                                 '".$no."',
                                 '".($i+$j)."',
                                 1,
-                                '".str_replace("-", "", trim($arr_phone[$j]))."',
+                                '".str_replace("-", "", trim($arr_phone['$j']))."',
                                 '".$_model['WORD1']."',
                                 '".$_model['WORD2']."',
                                 '".$_model['WORD3']."',

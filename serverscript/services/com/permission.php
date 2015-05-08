@@ -16,14 +16,14 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -60,8 +60,8 @@
             } else if ($_type == 'list') {
                 $search_where = "";
 
-                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                    $search_where .= "AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
+                if (isset($_search['SYSTEM_GB']) && $_search['SYSTEM_GB'] != "") {
+                    $search_where .= "AND SYSTEM_GB  = '".$_search['SYSTEM_GB']."' ";
                 }
 
                 $sql = "SELECT
@@ -86,7 +86,7 @@
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
 
-            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
             $err = 0;
             $msg = "";
@@ -122,7 +122,7 @@
             }
 
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
             $err = 0;
             $msg = "";
@@ -137,14 +137,14 @@
 
                     $sql = "UPDATE MENU_ROLE
                             SET
-                                MENU_FL = '".( $permission[MENU_FL] != null ? $permission[MENU_FL] : null )."'
-                                ,LIST_FL = '".( $permission[LIST_FL] != null ? $permission[LIST_FL] : null )."'
-                                ,VIEW_FL = '".( $permission[VIEW_FL] != null ? $permission[VIEW_FL] : null )."'
-                                ,EDIT_FL = '".( $permission[EDIT_FL] != null ? $permission[EDIT_FL] : null )."'
-                                ,MODIFY_FL = '".( $permission[MODIFY_FL] != null ? $permission[MODIFY_FL] : null )."'
+                                MENU_FL = '".( $permission['MENU_FL'] != null ? $permission['MENU_FL'] : null )."'
+                                ,LIST_FL = '".( $permission['LIST_FL'] != null ? $permission['LIST_FL'] : null )."'
+                                ,VIEW_FL = '".( $permission['VIEW_FL'] != null ? $permission['VIEW_FL'] : null )."'
+                                ,EDIT_FL = '".( $permission['EDIT_FL'] != null ? $permission['EDIT_FL'] : null )."'
+                                ,MODIFY_FL = '".( $permission['MODIFY_FL'] != null ? $permission['MODIFY_FL'] : null )."'
                             WHERE
-                                MENU_ID = '".$permission[MENU_ID]."'
-                                AND ROLE_ID = '".$permission[ROLE_ID]."'
+                                MENU_ID = '".$permission['MENU_ID']."'
+                                AND ROLE_ID = '".$permission['ROLE_ID']."'
                     ";
 
                     $_d->sql_query($sql);

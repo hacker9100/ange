@@ -16,14 +16,14 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -47,7 +47,7 @@
                         FROM
                             COM_SUB_MENU
                         WHERE
-                            MENU_URL = '".$row[MENU_URL]."'
+                            MENU_URL = '".$row['MENU_URL']."'
                         ORDER BY COLUMN_ORD ASC, ROW_ORD ASC
                         ";
 
@@ -61,8 +61,8 @@
             } else if ($_type == 'channel') {
                 $where_search = "";
 
-                if (isset($_search[CHANNEL_NO]) && $_search[CHANNEL_NO] != "") {
-                    $where_search .= "AND CHANNEL_NO = '".$_search[CHANNEL_NO]."' ";
+                if (isset($_search['CHANNEL_NO']) && $_search['CHANNEL_NO'] != "") {
+                    $where_search .= "AND CHANNEL_NO = '".$_search['CHANNEL_NO']."' ";
                 }
 
                 $sql = "SELECT
@@ -70,7 +70,7 @@
                         FROM
                             COM_CHANNEL
                         WHERE
-                            SYSTEM_GB  = '".$_search[CHANNEL_GB]."'
+                            SYSTEM_GB  = '".$_search['CHANNEL_GB']."'
                             ".$where_search."
                         ORDER BY CHANNEL_NO ASC
                         ";
@@ -79,14 +79,14 @@
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
-                    if ($_search[MENU]) {
+                    if ($_search['MENU']) {
                         $sql = "SELECT
                                     MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, DEPTH, LINK_FL, CLASS_GB, MENU_DESC, TAIL_DESC
                                 FROM
                                     COM_MENU
                                 WHERE
-                                    SYSTEM_GB  = '".$_search[CHANNEL_GB]."'
-                                    AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
+                                    SYSTEM_GB  = '".$_search['CHANNEL_GB']."'
+                                    AND CHANNEL_NO  = '".$row['CHANNEL_NO']."'
                                 ORDER BY MENU_ORD ASC
                                 ";
 
@@ -106,12 +106,12 @@
             } else if ($_type == 'menu') {
                 $where_search = "";
 
-                if (isset($_search[CHANNEL_NO]) && $_search[CHANNEL_NO] != "") {
-                    $where_search .= "AND CHANNEL_NO = '".$_search[CHANNEL_NO]."' ";
+                if (isset($_search['CHANNEL_NO']) && $_search['CHANNEL_NO'] != "") {
+                    $where_search .= "AND CHANNEL_NO = '".$_search['CHANNEL_NO']."' ";
                 }
 
-                if (isset($_search[ETC]) && $_search[ETC] != "") {
-                    $where_search .= "AND ETC = '".$_search[ETC]."' ";
+                if (isset($_search['ETC']) && $_search['ETC'] != "") {
+                    $where_search .= "AND ETC = '".$_search['ETC']."' ";
                 }
 
                 $sql = "SELECT
@@ -121,7 +121,7 @@
                         FROM
                             COM_MENU
                         WHERE
-                            SYSTEM_GB  = '".$_search[SYSTEM_GB]."'
+                            SYSTEM_GB  = '".$_search['SYSTEM_GB']."'
                             ".$where_search."
                         ORDER BY MENU_ORD ASC
                         ";
@@ -129,14 +129,14 @@
                 $__trn = '';
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                    $target_no = $row[NO];
+                    $target_no = $row['NO'];
                     $target_gb = 'MENU';
 
                     if ($row['CHANNEL_NO'] == '1') {
                         $in_str = "";
                         $arr_category = explode(',', $row['ETC']);
                         for($j=0;$j< sizeof($arr_category);$j++){
-                            $in_str = $in_str."'".trim($arr_category[$j])."'";
+                            $in_str = $in_str."'".trim($arr_category['$j'])."'";
                             if (sizeof($arr_category) - 1 != $j) $in_str = $in_str.",";
                         }
 
@@ -175,20 +175,20 @@
                         }
                     }
 
-                    if ($_search[SUB_MENU]) {
+                    if ($_search['SUB_MENU']) {
                         $sql = "SELECT
                                     NO, MENU_ID, MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, SUB_MENU_URL, API, CSS, COLUMN_ORD, ROW_ORD
                                 FROM
                                     COM_SUB_MENU
                                 WHERE
-                                    MENU_URL = '".$row[MENU_URL]."'
+                                    MENU_URL = '".$row['MENU_URL']."'
                                 ORDER BY COLUMN_ORD ASC, ROW_ORD ASC
                                 ";
 
                         $row['SUB_MENU'] = $_d->getData($sql);
                     }
 
-                    if ($_search[FILE]) {
+                    if ($_search['FILE']) {
                         $sql = "SELECT
                                 F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
                             FROM
@@ -215,12 +215,12 @@
             } else if ($_type == 'submenu') {
                 $where_search = "";
 
-                if (isset($_search[MENU_ID]) && $_search[MENU_ID] != "") {
-                    $where_search .= "AND MENU_ID = '".$_search[MENU_ID]."' ";
+                if (isset($_search['MENU_ID']) && $_search['MENU_ID'] != "") {
+                    $where_search .= "AND MENU_ID = '".$_search['MENU_ID']."' ";
                 }
 
-                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                    $where_search .= "AND SYSTEM_GB = '".$_search[SYSTEM_GB]."' ";
+                if (isset($_search['SYSTEM_GB']) && $_search['SYSTEM_GB'] != "") {
+                    $where_search .= "AND SYSTEM_GB = '".$_search['SYSTEM_GB']."' ";
                 }
 
                 $sql = "SELECT
@@ -242,7 +242,7 @@
                                 COM_FILE F
                             WHERE
                                 F.TARGET_GB = 'SUB_MENU'
-                                AND F.TARGET_NO = ".$row[NO]."
+                                AND F.TARGET_NO = ".$row['NO']."
                             ";
 
                     $row['FILES'] = $_d->getData($sql);
@@ -266,7 +266,7 @@
 
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
             if ($_type == 'menu') {
                 $err = 0;
@@ -290,19 +290,19 @@
                             TAIL_DESC,
                             ETC
                         ) VALUES (
-                            '".$_model[MENU_ID]."'
-                            , '".$_model[MENU_URL]."'
-                            , '".$_model[CHANNEL_NO]."'
-                            , '".$_model[MENU_NM]."'
-                            , '".$_model[SYSTEM_GB]."'
-                            , '".$_model[DIVIDER_FL]."'
-                            , '".$_model[DEPTH]."'
-                            , '".$_model[LINK_FL]."'
+                            '".$_model['MENU_ID']."'
+                            , '".$_model['MENU_URL']."'
+                            , '".$_model['CHANNEL_NO']."'
+                            , '".$_model['MENU_NM']."'
+                            , '".$_model['SYSTEM_GB']."'
+                            , '".$_model['DIVIDER_FL']."'
+                            , '".$_model['DEPTH']."'
+                            , '".$_model['LINK_FL']."'
                             , 'ORANGE'
-                            , '".$_model[MENU_ORD]."'
-                            , '".$_model[MENU_DESC]."'
-                            , '".$_model[TAIL_DESC]."'
-                            , '".$_model[ETC]."'
+                            , '".$_model['MENU_ORD']."'
+                            , '".$_model['MENU_DESC']."'
+                            , '".$_model['TAIL_DESC']."'
+                            , '".$_model['ETC']."'
                         )";
 
                 $_d->sql_query($sql);
@@ -336,19 +336,19 @@
                     $insert_path = null;
 
                     try {
-                        if (count($_model[FILES]) > 0) {
-                            $files = $_model[FILES];
+                        if (count($_model['FILES']) > 0) {
+                            $files = $_model['FILES'];
                             if (!file_exists($source_path) && !is_dir($source_path)) {
                                 @mkdir($source_path);
                             }
 
-                            for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                            for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                                 $file = $files[$i];
 
-                                if (file_exists($upload_path.$file[name])) {
+                                if (file_exists($upload_path.$file['name'])) {
                                     $uid = uniqid();
-                                    rename($upload_path.$file[name], $source_path.$uid);
-                                    $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                                    rename($upload_path.$file['name'], $source_path.$uid);
+                                    $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
                                 }
                             }
                         }
@@ -367,13 +367,13 @@
                                 ,COMM_MG_NM
                                 ,EN_SMS_FL
                             ) VALUES (
-                                '".$_model[MENU_ID]."'
-                                , '".$_model[MENU_NM]."'
-                                , '".$_model[MENU_NM]."'
-                                , '".$_model[COMM][COMM_GB]."'
-                                , '".$_model[COMM][COMM_MG_ID]."'
-                                , '".$_model[COMM][COMM_MG_NM]."'
-                                , '".$_model[COMM][EN_SMS_FL]."'
+                                '".$_model['MENU_ID']."'
+                                , '".$_model['MENU_NM']."'
+                                , '".$_model['MENU_NM']."'
+                                , '".$_model['COMM']['COMM_GB']."'
+                                , '".$_model['COMM']['COMM_MG_ID']."'
+                                , '".$_model['COMM']['COMM_MG_NM']."'
+                                , '".$_model['COMM']['EN_SMS_FL']."'
                             )";
 
                     $_d->sql_query($sql);
@@ -384,13 +384,13 @@
                         $msg = $_d->mysql_error;
                     }
 
-                    if (count($_model[FILES]) > 0) {
-                        $files = $_model[FILES];
+                    if (count($_model['FILES']) > 0) {
+                        $files = $_model['FILES'];
 
-                        for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                        for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                             $file = $files[$i];
                             MtUtil::_d("------------>>>>> file : ".$file['name']);
-                            MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                            MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i]['path']);
 
                             $sql = "INSERT INTO COM_FILE
                                     (
@@ -407,15 +407,15 @@
                                         ,TARGET_NO
                                         ,TARGET_GB
                                     ) VALUES (
-                                        '".$file[name]."'
-                                        , '".$insert_path[$i][uid]."'
-                                        , '".$insert_path[$i][path]."'
-                                        , '".$file[type]."'
-                                        , '".$file[size]."'
+                                        '".$file['name']."'
+                                        , '".$insert_path[$i]['uid']."'
+                                        , '".$insert_path[$i]['path']."'
+                                        , '".$file['type']."'
+                                        , '".$file['size']."'
                                         , '0'
                                         , SYSDATE()
                                         , 'C'
-                                        , '".strtoupper($file[kind])."'
+                                        , '".strtoupper($file['kind'])."'
                                         , '".$i."'
                                         , '".$target_no."'
                                         , '".$target_gb."'
@@ -444,23 +444,23 @@
                 $source_path = '../../..'.$file_path;
                 $insert_path = array();
 
-                $body_str = $_model[BODY];
+                $body_str = $_model['BODY'];
 
                 try {
-                    if (count($_model[FILES]) > 0) {
-                        $files = $_model[FILES];
+                    if (count($_model['FILES']) > 0) {
+                        $files = $_model['FILES'];
                         if (!file_exists($source_path) && !is_dir($source_path)) {
                             @mkdir($source_path);
                         }
 
-                        for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                        for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                             $file = $files[$i];
 
-                            if (file_exists($upload_path.$file[name])) {
+                            if (file_exists($upload_path.$file['name'])) {
                                 $uid = uniqid();
-                                rename($upload_path.$file[name], $source_path.$uid);
+                                rename($upload_path.$file['name'], $source_path.$uid);
 
-                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
                             }
                         }
                     }
@@ -489,18 +489,18 @@
                             ROW_ORD,
                             SYSTEM_GB
                         ) VALUES (
-                            '".$_model[MENU_ID]."'
-                            , '".$_model[MENU_URL]."'
-                            , '".$_model[SUB_MENU]."'
-                            , '".$_model[POSITION]."'
-                            , '".$_model[TITLE]."'
-                            , '".$_model[SUB_MENU_GB]."'
-                            , '".$_model[SUB_MENU_URL]."'
-                            , '".$_model[API]."'
-                            , '".$_model[CSS]."'
-                            , '".$_model[COLUMN_ORD]."'
-                            , '".$_model[ROW_ORD]."'
-                            , '".$_model[SYSTEM_GB]."'
+                            '".$_model['MENU_ID']."'
+                            , '".$_model['MENU_URL']."'
+                            , '".$_model['SUB_MENU']."'
+                            , '".$_model['POSITION']."'
+                            , '".$_model['TITLE']."'
+                            , '".$_model['SUB_MENU_GB']."'
+                            , '".$_model['SUB_MENU_URL']."'
+                            , '".$_model['API']."'
+                            , '".$_model['CSS']."'
+                            , '".$_model['COLUMN_ORD']."'
+                            , '".$_model['ROW_ORD']."'
+                            , '".$_model['SYSTEM_GB']."'
                         )";
 
                 $_d->sql_query($sql);
@@ -511,13 +511,13 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
 
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                    for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                         $file = $files[$i];
                         MtUtil::_d("------------>>>>> file : ".$file['name']);
-                        MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                        MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i]['path']);
 
                         $sql = "INSERT INTO COM_FILE
                                 (
@@ -534,15 +534,15 @@
                                     ,TARGET_NO
                                     ,TARGET_GB
                                 ) VALUES (
-                                    '".$file[name]."'
-                                    , '".$insert_path[$i][uid]."'
-                                    , '".$insert_path[$i][path]."'
-                                    , '".$file[type]."'
-                                    , '".$file[size]."'
+                                    '".$file['name']."'
+                                    , '".$insert_path[$i]['uid']."'
+                                    , '".$insert_path[$i]['path']."'
+                                    , '".$file['type']."'
+                                    , '".$file['size']."'
                                     , '0'
                                     , SYSDATE()
                                     , 'C'
-                                    , '".strtoupper($file[kind])."'
+                                    , '".strtoupper($file['kind'])."'
                                     , '".$i."'
                                     , '".$no."'
                                     , 'SUB_MENU'
@@ -579,22 +579,22 @@
 
                 $_d->sql_beginTransaction();
 
-//                $etc_str = $_model[ETC];
+//                $etc_str = $_model['ETC'];
                 $etc_str = null;
-                $categories = $_model[CATEGORY];
+                $categories = $_model['CATEGORY'];
 
-                for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
+                for ($i = 0 ; $i < count($_model['CATEGORY']); $i++) {
                     $category = $categories[$i];
 
-                    $etc_str .= $category[NO];
-                    if (sizeof($_model[CATEGORY]) - 1 != $i) $etc_str .= ",";
+                    $etc_str .= $category['NO'];
+                    if (sizeof($_model['CATEGORY']) - 1 != $i) $etc_str .= ",";
                 }
 
                 $sql = "UPDATE COM_MENU
                         SET
-                            MENU_NM = '".$_model[MENU_NM]."'
-                            ,DEPTH = '".$_model[DEPTH]."'
-                            ,MENU_ORD = '".$_model[MENU_ORD]."'
+                            MENU_NM = '".$_model['MENU_NM']."'
+                            ,DEPTH = '".$_model['DEPTH']."'
+                            ,MENU_ORD = '".$_model['MENU_ORD']."'
                             ,ETC = '".$etc_str."'
                         WHERE
                             NO = '".$_key."'
@@ -607,22 +607,22 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if ($_model[CHANNEL_NO] == "2") {
+                if ($_model['CHANNEL_NO'] == "2") {
                     $target_no = null;
                     $target_gb = null;
 
                     $file_path = null;
 
                     if ($_model['COMM']['COMM_GB'] == "CLINIC") {
-                        $sql = "SELECT NO FROM COM_USER WHERE USER_ID = '".$_model[COMM][COMM_MG_ID]."'";
+                        $sql = "SELECT NO FROM COM_USER WHERE USER_ID = '".$_model['COMM']['COMM_MG_ID']."'";
                         $user = $_d->sql_fetch($sql,true);
 
                         $target_gb = "USER";
                         $target_no = $user['NO'];
-                        $file_path = '/storage/user/'.$_model[COMM][COMM_MG_ID].'/';
+                        $file_path = '/storage/user/'.$_model['COMM']['COMM_MG_ID'].'/';
                     } else {
                         $target_gb = "COMMUNITY";
-                        $target_no = $_model[COMM][NO];
+                        $target_no = $_model['COMM']['NO'];
                         $file_path = '/storage/admin/';
                     }
 
@@ -631,25 +631,25 @@
                     $insert_path = null;
 
                     try {
-                        if (count($_model[FILES]) > 0) {
-                            $files = $_model[FILES];
+                        if (count($_model['FILES']) > 0) {
+                            $files = $_model['FILES'];
                             if (!file_exists($source_path) && !is_dir($source_path)) {
                                 @mkdir($source_path);
                             }
 
-                            for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                            for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                                 $file = $files[$i];
 
-                                if (isset($file[name]) && file_exists($upload_path.$file[name])) {
+                                if (isset($file['name']) && file_exists($upload_path.$file['name'])) {
                                     $uid = uniqid();
-                                    rename($upload_path.$file[name], $source_path.$uid);
-                                    $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                                    rename($upload_path.$file['name'], $source_path.$uid);
+                                    $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
 
-                                    MtUtil::_d($i."------------>>>>> imgUrl : ".$file[name]);
+                                    MtUtil::_d($i."------------>>>>> imgUrl : ".$file['name']);
                                     MtUtil::_d($i."------------>>>>> imgUrl : ".'http://localhost'.$source_path.$uid);
                                 } else {
                                     $insert_path[$i] = array(path => '', uid => '', kind => '');
-                                    MtUtil::_d($i."------------>>>>> imgUrl : ".$file[name]);
+                                    MtUtil::_d($i."------------>>>>> imgUrl : ".$file['name']);
                                 }
                             }
                         }
@@ -660,14 +660,14 @@
 
                     $sql = "UPDATE ANGE_COMM
                             SET
-                                COMM_NM = '".$_model[MENU_NM]."',
-                                SHORT_NM = '".$_model[MENU_NM]."',
-                                COMM_GB = '".$_model[COMM][COMM_GB]."',
-                                COMM_MG_ID = '".$_model[COMM][COMM_MG_ID]."',
-                                COMM_MG_NM = '".$_model[COMM][COMM_MG_NM]."',
-                                EN_SMS_FL = '".$_model[COMM][EN_SMS_FL]."'
+                                COMM_NM = '".$_model['MENU_NM']."',
+                                SHORT_NM = '".$_model['MENU_NM']."',
+                                COMM_GB = '".$_model['COMM']['COMM_GB']."',
+                                COMM_MG_ID = '".$_model['COMM']['COMM_MG_ID']."',
+                                COMM_MG_NM = '".$_model['COMM']['COMM_MG_NM']."',
+                                EN_SMS_FL = '".$_model['COMM']['EN_SMS_FL']."'
                             WHERE
-                                NO = '".$_model[COMM][NO]."'
+                                NO = '".$_model['COMM']['NO']."'
                             ";
 
                     $_d->sql_query($sql);
@@ -692,35 +692,35 @@
                     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                         $is_delete = true;
 
-                        if (count($_model[FILES]) > 0) {
-                            $files = $_model[FILES];
+                        if (count($_model['FILES']) > 0) {
+                            $files = $_model['FILES'];
                             for ($i = 0 ; $i < count($files); $i++) {
-                                if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
+                                if ($row['FILE_NM'] == $files[$i]['name'] && $row['FILE_SIZE'] == $files[$i]['size']) {
                                     $is_delete = false;
                                 }
                             }
                         }
 
                         if ($is_delete) {
-                            MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                            $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
+                            MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
+                            $sql = "DELETE FROM COM_FILE WHERE NO = ".$row['NO'];
 
                             $_d->sql_query($sql);
 
-                            if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                                unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                            if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                                unlink('../../..'.$row['PATH'].$row['FILE_ID']);
                             }
                         }
                     }
 
-                    if (count($_model[FILES]) > 0) {
-                        $files = $_model[FILES];
+                    if (count($_model['FILES']) > 0) {
+                        $files = $_model['FILES'];
 
                         for ($i = 0 ; $i < count($files); $i++) {
                             $file = $files[$i];
                             MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                            if ($insert_path[$i][uid] != "") {
+                            if ($insert_path[$i]['uid'] != "") {
                                 $sql = "INSERT INTO COM_FILE
                                         (
                                             FILE_NM
@@ -736,15 +736,15 @@
                                             ,TARGET_NO
                                             ,TARGET_GB
                                         ) VALUES (
-                                            '".$file[name]."'
-                                            , '".$insert_path[$i][uid]."'
-                                            , '".$insert_path[$i][path]."'
-                                            , '".$file[type]."'
-                                            , '".$file[size]."'
+                                            '".$file['name']."'
+                                            , '".$insert_path[$i]['uid']."'
+                                            , '".$insert_path[$i]['path']."'
+                                            , '".$file['type']."'
+                                            , '".$file['size']."'
                                             , '0'
                                             , SYSDATE()
                                             , 'C'
-                                            , '".strtoupper($file[kind])."'
+                                            , '".strtoupper($file['kind'])."'
                                             , '".$i."'
                                             , '".$target_no."'
                                             , '".$target_gb."'
@@ -775,21 +775,21 @@
                 $insert_path = null;
 
                 try {
-                    if (count($_model[FILES]) > 0) {
-                        $files = $_model[FILES];
+                    if (count($_model['FILES']) > 0) {
+                        $files = $_model['FILES'];
                         if (!file_exists($source_path) && !is_dir($source_path)) {
                             @mkdir($source_path);
                         }
 
-                        for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                        for ($i = 0 ; $i < count($_model['FILES']); $i++) {
                             $file = $files[$i];
 
-                            if (file_exists($upload_path.$file[name])) {
+                            if (file_exists($upload_path.$file['name'])) {
                                 $uid = uniqid();
-                                rename($upload_path.$file[name], $source_path.$uid);
-                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                                rename($upload_path.$file['name'], $source_path.$uid);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
 
-                                MtUtil::_d("------------>>>>> mediumUrl : ".$file[name]);
+                                MtUtil::_d("------------>>>>> mediumUrl : ".$file['name']);
                                 MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.$uid);
                             } else {
                                 $insert_path[$i] = array(path => '', uid => '', kind => '');
@@ -808,18 +808,18 @@
 
                 $sql = "UPDATE COM_SUB_MENU
                         SET
-                            MENU_ID = '".$_model[MENU_ID]."',
-                            MENU_URL = '".$_model[MENU_URL]."',
-                            SUB_MENU = '".$_model[SUB_MENU]."',
-                            POSITION = '".$_model[POSITION]."',
-                            TITLE = '".$_model[TITLE]."',
-                            SUB_MENU_GB = '".$_model[SUB_MENU_GB]."',
-                            SUB_MENU_URL = '".$_model[SUB_MENU_URL]."',
-                            API = '".$_model[API]."',
-                            CSS = '".$_model[CSS]."',
-                            COLUMN_ORD = '".$_model[COLUMN_ORD]."',
-                            ROW_ORD = '".$_model[ROW_ORD]."',
-                            SYSTEM_GB = '".$_model[SYSTEM_GB]."'
+                            MENU_ID = '".$_model['MENU_ID']."',
+                            MENU_URL = '".$_model['MENU_URL']."',
+                            SUB_MENU = '".$_model['SUB_MENU']."',
+                            POSITION = '".$_model['POSITION']."',
+                            TITLE = '".$_model['TITLE']."',
+                            SUB_MENU_GB = '".$_model['SUB_MENU_GB']."',
+                            SUB_MENU_URL = '".$_model['SUB_MENU_URL']."',
+                            API = '".$_model['API']."',
+                            CSS = '".$_model['CSS']."',
+                            COLUMN_ORD = '".$_model['COLUMN_ORD']."',
+                            ROW_ORD = '".$_model['ROW_ORD']."',
+                            SYSTEM_GB = '".$_model['SYSTEM_GB']."'
                         WHERE
                             NO = ".$_key."
                         ";
@@ -845,35 +845,35 @@
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                     $is_delete = true;
 
-                    if (count($_model[FILES]) > 0) {
-                        $files = $_model[FILES];
+                    if (count($_model['FILES']) > 0) {
+                        $files = $_model['FILES'];
                         for ($i = 0 ; $i < count($files); $i++) {
-                            if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
+                            if ($row['FILE_NM'] == $files[$i]['name'] && $row['FILE_SIZE'] == $files[$i]['size']) {
                                 $is_delete = false;
                             }
                         }
                     }
 
                     if ($is_delete) {
-                        MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                        $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
+                        MtUtil::_d("------------>>>>> DELETE NO : ".$row['NO']);
+                        $sql = "DELETE FROM COM_FILE WHERE NO = ".$row['NO'];
 
                         $_d->sql_query($sql);
 
-                        if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                            unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                        if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                            unlink('../../..'.$row['PATH'].$row['FILE_ID']);
                         }
                     }
                 }
 
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model['FILES']) > 0) {
+                    $files = $_model['FILES'];
 
                     for ($i = 0 ; $i < count($files); $i++) {
                         $file = $files[$i];
                         MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                        if ($insert_path[$i][uid] != "") {
+                        if ($insert_path[$i]['uid'] != "") {
                             $sql = "INSERT INTO COM_FILE
                                     (
                                         FILE_NM
@@ -889,15 +889,15 @@
                                         ,TARGET_NO
                                         ,TARGET_GB
                                     ) VALUES (
-                                        '".$file[name]."'
-                                        , '".$insert_path[$i][uid]."'
-                                        , '".$insert_path[$i][path]."'
-                                        , '".$file[type]."'
-                                        , '".$file[size]."'
+                                        '".$file['name']."'
+                                        , '".$insert_path[$i]['uid']."'
+                                        , '".$insert_path[$i]['path']."'
+                                        , '".$file['type']."'
+                                        , '".$file['size']."'
                                         , '0'
                                         , SYSDATE()
                                         , 'C'
-                                        , '".strtoupper($file[kind])."'
+                                        , '".strtoupper($file['kind'])."'
                                         , '".$i."'
                                         , '".$_key."'
                                         , 'SUB_MENU'
@@ -955,12 +955,12 @@
 
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row['NO'];
 
                     $_d->sql_query($sql);
 
-                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                    if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                        unlink('../../..'.$row['PATH'].$row['FILE_ID']);
                     }
                 }
 
@@ -998,12 +998,12 @@
 
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row['NO'];
 
                     $_d->sql_query($sql);
 
-                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                    if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                        unlink('../../..'.$row['PATH'].$row['FILE_ID']);
                     }
                 }
 

@@ -450,13 +450,34 @@
                                         <span class="table_blue">*</span>
                                     </span>
 
-                                    <span class="col-xs-10 basicinfo input">
+                                    <span class="col-xs-3 basicinfo input">
                                         <div class="form-group" style="margin:0 5px; line-height:32px;">
                                             <input id="married" ng-model="user.MARRIED_FL" type="radio" value="Y" style="float: left; margin:10px 0 0 15px;">
                                             <span style="float:left; margin-left:5px;">기혼</span>
 
                                             <input ng-model="user.MARRIED_FL" type="radio" value="N" style="float: left; margin:10px 0 0 15px;">
                                             <span style="float:left; margin-left:5px;">미혼</span>
+                                        </div>
+                                    </span>
+
+                                    <span class="col-xs-2 basicinfo subtitle" style="text-align: right;">
+                                        <span style="display:block;">결혼기념일</span>
+                                    </span>
+                                    <span class="col-xs-5 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <div class="form-inline" style="margin:0 5px">
+                                                <select ng-model="user.W_YEAR" ng-options="v for v in year" class= "form-control" style="cursor: default; width:100px;" ng-disabled="disabledPregnent">
+                                                    <option value="">년</option>
+                                                </select>
+
+                                                <select ng-model="user.W_MONTH" ng-options="v for v in month" class= "form-control" style="cursor: default; width:70px;" ng-disabled="disabledPregnent">
+                                                    <option value="">월</option>
+                                                </select>
+
+                                                <select ng-model="user.W_DAY" ng-options="v for v in day" class= "form-control" style="cursor: default; width:70px;" ng-disabled="disabledPregnent">
+                                                    <option value="">일</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </span>
                                 </div>  <!-- /.form_basicinfo -->

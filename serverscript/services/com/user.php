@@ -17,14 +17,14 @@
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/services/passwordHash.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -43,13 +43,13 @@
                 session_start();
 
                 $session_cnt = is_array($_SESSION['uid']) ? count($_SESSION['uid']) : 0;
-                MtUtil::_d("################################### [count] ".count($_SESSION['uid']));
-                MtUtil::_d("################################### [count] ".count($_SESSION['count']));
-                MtUtil::_d("################################### [count] ".count($_SESSION));
-                MtUtil::_d("################################### [count] ".is_array($_SESSION['count']));
-                MtUtil::_d("################################### [count] ".is_array($_SESSION));
-                MtUtil::_d("################################### [count] ".$_SESSION['count']);
-                MtUtil::_d("################################### [count] ".$_SESSION['uid']);
+                MtUtil::_d("################################### ['count'] ".count($_SESSION['uid']));
+                MtUtil::_d("################################### ['count'] ".count($_SESSION['count']));
+                MtUtil::_d("################################### ['count'] ".count($_SESSION));
+                MtUtil::_d("################################### ['count'] ".is_array($_SESSION['count']));
+                MtUtil::_d("################################### ['count'] ".is_array($_SESSION));
+                MtUtil::_d("################################### ['count'] ".$_SESSION['count']);
+                MtUtil::_d("################################### ['count'] ".$_SESSION['uid']);
                 $_d->dataEnd2($session_cnt);
             } else if ($_type == 'forgotid') {
                 $sql = "SELECT
@@ -58,8 +58,8 @@
                             COM_USER
                         WHERE
                             USER_ST != 'S'
-                            AND USER_NM = '".$_search[USER_NM]."'
-                            AND PHONE_2 = '".$_search[PHONE_2]."'
+                            AND USER_NM = '".$_search['USER_NM']."'
+                            AND PHONE_2 = '".$_search['PHONE_2']."'
                         ";
 
                 $data  = $_d->sql_fetch($sql);
@@ -76,8 +76,8 @@
                             COM_USER
                         WHERE
                             USER_ST != 'S'
-                            AND USER_ID = '".$_search[USER_ID]."'
-                            AND PHONE_2 = '".$_search[PHONE_2]."'
+                            AND USER_ID = '".$_search['USER_ID']."'
+                            AND PHONE_2 = '".$_search['PHONE_2']."'
                         ";
 
                 $data  = $_d->sql_fetch($sql);
@@ -136,8 +136,8 @@
             } else if ($_type == 'item') {
                 $search_where = "";
 
-                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                    $search_where .= "AND R.SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
+                if (isset($_search['SYSTEM_GB']) && $_search['SYSTEM_GB'] != "") {
+                    $search_where .= "AND R.SYSTEM_GB  = '".$_search['SYSTEM_GB']."' ";
                 }
 
                 $sql = "SELECT
@@ -145,7 +145,7 @@
                             U.REG_DT, U.FINAL_LOGIN_DT, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_YMD, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_YMD,
                             U.INTRO, U.NOTE, U.MARRIED_FL, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CONTACT_NM,  U.CARE_CENTER, U.CENTER_VISIT_YMD, U.CENTER_OUT_YMD,
                             U.EN_ANGE_EMAIL_FL, U.EN_ANGE_SMS_FL, U.EN_ALARM_EMAIL_FL, U.EN_ALARM_SMS_FL, U.EN_STORE_EMAIL_FL, U.EN_STORE_SMS_FL, U.SUPPORT_NO,
-                            UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."') AS ROLE_NM, U.CERT_GB
+                            UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID AND SYSTEM_GB  = '".$_search['SYSTEM_GB']."') AS ROLE_NM, U.CERT_GB
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -168,7 +168,7 @@
 
                 $data['ROLE'] = $_d->sql_fetch($sql);
 
-                if (isset($_search[DETAIL])) {
+                if (isset($_search['DETAIL'])) {
                     $sql = "SELECT
                                 SUM_POINT, USE_POINT, REMAIN_POINT
                             FROM
@@ -223,13 +223,13 @@
                 $search_where = "";
                 $sort_order = "";
 
-                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                    $search_where .= "AND R.SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
+                if (isset($_search['SYSTEM_GB']) && $_search['SYSTEM_GB'] != "") {
+                    $search_where .= "AND R.SYSTEM_GB  = '".$_search['SYSTEM_GB']."' ";
                 }
 
-                if ((isset($_search[CONDITION]) && $_search[CONDITION] != "") && (isset($_search[KEYWORD]) && $_search[KEYWORD] != "")) {
-                    if ($_search[CONDITION][value] == "USER_NM" || $_search[CONDITION][value] == "USER_ID" || $_search[CONDITION][value] == "NICK_NM") {
-                        $arr_keywords = explode(",", $_search[KEYWORD]);
+                if ((isset($_search['CONDITION']) && $_search['CONDITION'] != "") && (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "")) {
+                    if ($_search['CONDITION']['value'] == "USER_NM" || $_search['CONDITION']['value'] == "USER_ID" || $_search['CONDITION']['value'] == "NICK_NM") {
+                        $arr_keywords = explode(",", $_search['KEYWORD']);
                         $in_condition = "";
                         for ($i=0; $i< sizeof($arr_keywords); $i++) {
                             $in_condition .= "'".trim($arr_keywords[$i])."'";
@@ -239,35 +239,35 @@
 //                            $in_condition .= trim($e).",";
 //                        }
 
-                        $search_where .= "AND U.".$_search[CONDITION][value]." IN (".$in_condition.") ";
-                    } else if ($_search[CONDITION][value] == "PHONE") {
-                        $search_where .= "AND ( U.PHONE_1 LIKE '%".$_search[KEYWORD]."%' OR U.PHONE_2 LIKE '%".$_search[KEYWORD]."%' ) ";
+                        $search_where .= "AND U.".$_search['CONDITION']['value']." IN (".$in_condition.") ";
+                    } else if ($_search['CONDITION']['value'] == "PHONE") {
+                        $search_where .= "AND ( U.PHONE_1 LIKE '%".$_search['KEYWORD']."%' OR U.PHONE_2 LIKE '%".$_search['KEYWORD']."%' ) ";
                     } else {
-                        $search_where .= "AND U.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                        $search_where .= "AND U.".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%' ";
                     }
                 }
-                if (isset($_search[TYPE]) && $_search[TYPE] != "") {
+                if (isset($_search['TYPE']) && $_search['TYPE'] != "") {
 
                     $in_type = "";
-                    for ($i=0; $i< count($_search[TYPE]); $i++) {
-                        $in_type .= "'".$_search[TYPE][$i]."'";
-                        if (count($_search[TYPE]) - 1 != $i) $in_type .= ",";
+                    for ($i=0; $i< count($_search['TYPE']); $i++) {
+                        $in_type .= "'".$_search['TYPE'][$i]."'";
+                        if (count($_search['TYPE']) - 1 != $i) $in_type .= ",";
                     }
 
                     $search_where .= "AND U.USER_GB IN (".$in_type.") ";
                 }
-                if (isset($_search[STATUS]) && $_search[STATUS] != "" && $_search[STATUS][value] != "A") {
-                    $search_where .= "AND U.USER_ST  = '".$_search[STATUS][value]."' ";
+                if (isset($_search['STATUS']) && $_search['STATUS'] != "" && $_search['STATUS']['value'] != "A") {
+                    $search_where .= "AND U.USER_ST  = '".$_search['STATUS']['value']."' ";
                 }
 
-                if (isset($_search[JOIN_PATH]) && $_search[JOIN_PATH] != "") {
-                    $search_where .= "AND U.JOIN_PATH  = '".$_search[JOIN_PATH]."' ";
+                if (isset($_search['JOIN_PATH']) && $_search['JOIN_PATH'] != "") {
+                    $search_where .= "AND U.JOIN_PATH  = '".$_search['JOIN_PATH']."' ";
                 }
-                if (isset($_search[ROLE]) && $_search[ROLE] != "") {
-                    $search_where .= "AND R.ROLE_ID  = '".$_search[ROLE][ROLE_ID]."' ";
+                if (isset($_search['ROLE']) && $_search['ROLE'] != "") {
+                    $search_where .= "AND R.ROLE_ID  = '".$_search['ROLE']['ROLE_ID']."' ";
                 }
-                if (isset($_search[ROLE_ID]) && $_search[ROLE_ID] != "") {
-                    $arr_roles = explode(",", $_search[ROLE_ID]);
+                if (isset($_search['ROLE_ID']) && $_search['ROLE_ID'] != "") {
+                    $arr_roles = explode(",", $_search['ROLE_ID']);
                     $in_role = "";
                     for ($i=0; $i< sizeof($arr_roles); $i++) {
                         $in_role .= "'".trim($arr_roles[$i])."'";
@@ -276,12 +276,12 @@
 
                     $search_where .= "AND R.ROLE_ID  IN (".$in_role.") ";
                 }
-                if (!isset($_search[CONDITION]) && isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND U.USER_NM LIKE '%".$_search[KEYWORD]."%' ";
+                if (!isset($_search['CONDITION']) && isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                    $search_where .= "AND U.USER_NM LIKE '%".$_search['KEYWORD']."%' ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
                 $sql = "SELECT
@@ -462,16 +462,16 @@
                 $search_where = "";
                 $sort_order = "";
 
-                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                    $search_where .= "AND R.SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
+                if (isset($_search['SYSTEM_GB']) && $_search['SYSTEM_GB'] != "") {
+                    $search_where .= "AND R.SYSTEM_GB  = '".$_search['SYSTEM_GB']."' ";
                 }
 
-                if (isset($_search[START_DT]) && $_search[START_DT] != "") {
-                    $search_where .= "AND CU.REG_DT BETWEEN '".$_search[START_DT]."-01' AND DATE_ADD('".$_search[START_DT]."-01', interval ".$_search[PERIOD]." month)  ";
+                if (isset($_search['START_DT']) && $_search['START_DT'] != "") {
+                    $search_where .= "AND CU.REG_DT BETWEEN '".$_search['START_DT']."-01' AND DATE_ADD('".$_search['START_DT']."-01', interval ".$_search['PERIOD']." month)  ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
                 $sql = "# N : NORMAL, P : POOR, D : DORMANCY, S : SECESSION, W : WAITING
@@ -519,7 +519,7 @@
                                     CU.USER_ID = UR.USER_ID
                                   AND UR.ROLE_ID = CR.ROLE_ID
                                   AND CR.SYSTEM_GB = 'ANGE'
-                                    AND CU.REG_DT <= DATE_ADD('".$row[REG_YM]."-01', interval 1 month)
+                                    AND CU.REG_DT <= DATE_ADD('".$row['REG_YM']."-01', interval 1 month)
                             ) AS DATA
                             ";
 
@@ -541,25 +541,25 @@
 
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
             if ($_type == 'item') {
                 $upload_path = '../../../upload/files/';
-                $file_path = '/storage/user/'.$_model[USER_ID].'/';
+                $file_path = '/storage/user/'.$_model['USER_ID'].'/';
                 $source_path = '../../..'.$file_path;
                 $insert_path = null;
 
                 try {
-                    if (count($_model[FILE]) > 0) {
-                        $file = $_model[FILE];
+                    if (count($_model['FILE']) > 0) {
+                        $file = $_model['FILE'];
                         if (!file_exists($source_path) && !is_dir($source_path)) {
                             @mkdir($source_path);
                         }
 
-                        if (file_exists($upload_path.$file[name])) {
+                        if (file_exists($upload_path.$file['name'])) {
                             $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                            rename($upload_path.$file['name'], $source_path.$uid);
+                            $insert_path = array(path => $file_path, uid => $uid, kind => $file['kind']);
                         }
                     }
                 } catch(Exception $e) {
@@ -574,10 +574,10 @@
 
                 $password = "";
 
-                if (isset($_model[PASSWORD]) && $_model[PASSWORD] != "") {
-                    $password = $_model[PASSWORD];
+                if (isset($_model['PASSWORD']) && $_model['PASSWORD'] != "") {
+                    $password = $_model['PASSWORD'];
                 } else {
-                    $password = $_model[USER_ID];
+                    $password = $_model['USER_ID'];
                 }
     //            $iterations = 1000;
     //
@@ -591,11 +591,11 @@
 
                 $user_gb = "";
 
-                if (isset($_model[USER_GB]) && $_model[USER_GB] != "") {
-                    if (is_array($_model[USER_GB])) {
-                        $user_gb = $_model[USER_GB][value];
+                if (isset($_model['USER_GB']) && $_model['USER_GB'] != "") {
+                    if (is_array($_model['USER_GB'])) {
+                        $user_gb = $_model['USER_GB']['value'];
                     } else {
-                        $user_gb = $_model[USER_GB];
+                        $user_gb = $_model['USER_GB'];
                     }
                 }
 
@@ -641,45 +641,45 @@
                             CERT_HASH,
                             SUPPORT_NO
                         ) VALUES (
-                            '".$_model[USER_ID]."',
-                            '".$_model[USER_NM]."',
-                            '".$_model[NICK_NM]."',
+                            '".$_model['USER_ID']."',
+                            '".$_model['USER_NM']."',
+                            '".$_model['NICK_NM']."',
                             '".$hash."',
-                            '".$_model[LUNAR_FL]."',
-                            '".$_model[BIRTH]."',
-                            '".$_model[ZIP_CODE]."',
-                            '".$_model[ADDR]."',
-                            '".$_model[ADDR_DETAIL]."',
-                            '".$_model[PHONE_1]."',
-                            '".$_model[PHONE_2]."',
+                            '".$_model['LUNAR_FL']."',
+                            '".$_model['BIRTH']."',
+                            '".$_model['ZIP_CODE']."',
+                            '".$_model['ADDR']."',
+                            '".$_model['ADDR_DETAIL']."',
+                            '".$_model['PHONE_1']."',
+                            '".$_model['PHONE_2']."',
                             '".$user_gb."',
-                            '".((isset($_model[CERT_GB]) && $_model[CERT_GB] == "EMAIL") ? "W" : "N")."',
-                            '".$_model[EMAIL]."',
-                            '".$_model[SEX_GB]."',
-                            '".$_model[INTRO]."',
-                            '".$_model[NOTE]."',
-                            '".$_model[MARRIED_FL]."',
-                            '".$_model[PREGNENT_FL]."',
-                            '".$_model[BABY_BIRTH_DT]."',
-                            '".$_model[BLOG_FL]."',
-                            '".$_model[JOIN_PATH]."',
-                            '".$_model[CONTACT_ID]."',
-                            '".$_model[CONTACT_NM]."',
-                            '".$_model[CARE_CENTER]."',
-                            '".$_model[CENTER_VISIT_YMD]."',
-                            '".$_model[CENTER_OUT_YMD]."',
-                            '".$_model[EN_FL]."',
-                            '".( $_model[EN_ANGE_EMAIL_FL] == "true" ? "Y" : "N" )."',
-                            '".( $_model[EN_ANGE_SMS_FL] == "true" ? "Y" : "N" )."',
-                            '".( $_model[EN_ALARM_EMAIL_FL] == "true" ? "Y" : "N" )."',
-                            '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : "N" )."',
-                            '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : "N" )."',
-                            '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : "N" )."',
+                            '".((isset($_model['CERT_GB']) && $_model['CERT_GB'] == "EMAIL") ? "W" : "N")."',
+                            '".$_model['EMAIL']."',
+                            '".$_model['SEX_GB']."',
+                            '".$_model['INTRO']."',
+                            '".$_model['NOTE']."',
+                            '".$_model['MARRIED_FL']."',
+                            '".$_model['PREGNENT_FL']."',
+                            '".$_model['BABY_BIRTH_DT']."',
+                            '".$_model['BLOG_FL']."',
+                            '".$_model['JOIN_PATH']."',
+                            '".$_model['CONTACT_ID']."',
+                            '".$_model['CONTACT_NM']."',
+                            '".$_model['CARE_CENTER']."',
+                            '".$_model['CENTER_VISIT_YMD']."',
+                            '".$_model['CENTER_OUT_YMD']."',
+                            '".$_model['EN_FL']."',
+                            '".( $_model['EN_ANGE_EMAIL_FL'] == "true" ? "Y" : "N" )."',
+                            '".( $_model['EN_ANGE_SMS_FL'] == "true" ? "Y" : "N" )."',
+                            '".( $_model['EN_ALARM_EMAIL_FL'] == "true" ? "Y" : "N" )."',
+                            '".( $_model['EN_ALARM_SMS_FL'] == "true" ? "Y" : "N" )."',
+                            '".( $_model['EN_STORE_EMAIL_FL'] == "true" ? "Y" : "N" )."',
+                            '".( $_model['EN_STORE_SMS_FL'] == "true" ? "Y" : "N" )."',
                             SYSDATE(),
-                            '".$_model[CERT_GB]."',
-                            ".((isset($_model[CERT_GB]) && $_model[CERT_GB] == "EMAIL") ? "null" : "SYSDATE()").",
+                            '".$_model['CERT_GB']."',
+                            ".((isset($_model['CERT_GB']) && $_model['CERT_GB'] == "EMAIL") ? "null" : "SYSDATE()").",
                             'ange',
-                            '".$_model[SUPPORT_NO]."'
+                            '".$_model['SUPPORT_NO']."'
                         )";
 
                 $_d->sql_query($sql);
@@ -690,15 +690,15 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if (isset($_model[ROLE]) && $_model[ROLE] != "") {
+                if (isset($_model['ROLE']) && $_model['ROLE'] != "") {
                     $sql = "INSERT INTO USER_ROLE
                         (
                             ROLE_ID
                             ,USER_ID
                             ,REG_DT
                         ) VALUES (
-                            '".$_model[ROLE][ROLE_ID]."'
-                            ,'".$_model[USER_ID]."'
+                            '".$_model['ROLE']['ROLE_ID']."'
+                            ,'".$_model['USER_ID']."'
                             ,SYSDATE()
                         )";
 
@@ -716,7 +716,7 @@
                             ,REG_DT
                         ) VALUES (
                             'MEMBER'
-                            ,'".$_model[USER_ID]."'
+                            ,'".$_model['USER_ID']."'
                             ,SYSDATE()
                         )";
 
@@ -728,8 +728,8 @@
                     }
                 }
 
-                if (isset($_model[FILE]) && $_model[FILE] != "") {
-                    $file = $_model[FILE];
+                if (isset($_model['FILE']) && $_model['FILE'] != "") {
+                    $file = $_model['FILE'];
 
                     $sql = "INSERT INTO COM_FILE
                             (
@@ -746,15 +746,15 @@
                                 ,TARGET_NO
                                 ,TARGET_GB
                             ) VALUES (
-                                '".$file[name]."'
-                                , '".$insert_path[uid]."'
-                                , '".$insert_path[path]."'
-                                , '".$file[type]."'
-                                , '".$file[size]."'
+                                '".$file['name']."'
+                                , '".$insert_path['uid']."'
+                                , '".$insert_path['path']."'
+                                , '".$file['type']."'
+                                , '".$file['size']."'
                                 , '0'
                                 , SYSDATE()
                                 , 'C'
-                                , '".strtoupper($file[kind])."'
+                                , '".strtoupper($file['kind'])."'
                                 , '".$i."'
                                 , '".$no."'
                                 , 'USER'
@@ -768,9 +768,9 @@
                     }
                 }
 
-                if (isset($_model[BABY]) && $_model[BABY] != "") {
-                    foreach ($_model[BABY] as $e) {
-                        if (isset($e[BABY_NM]) && $e[BABY_NM] != "") {
+                if (isset($_model['BABY']) && $_model['BABY'] != "") {
+                    foreach ($_model['BABY'] as $e) {
+                        if (isset($e['BABY_NM']) && $e['BABY_NM'] != "") {
                             $sql = "INSERT INTO ANGE_USER_BABY
                                     (
                                         USER_ID
@@ -778,10 +778,10 @@
                                         ,BABY_BIRTH
                                         ,BABY_SEX_GB
                                     ) VALUES (
-                                        '".$_model[USER_ID]."'
-                                        ,'".$e[BABY_NM]."'
-                                        ,'".$e[BABY_YEAR].(strlen($e[BABY_MONTH]) == 1 ? "0".$e[BABY_MONTH] : $e[BABY_MONTH]).(strlen($e[BABY_DAY]) == 1 ? "0".$e[BABY_DAY] : $e[BABY_DAY])."'
-                                        ,'".$e[BABY_SEX_GB]."'
+                                        '".$_model['USER_ID']."'
+                                        ,'".$e['BABY_NM']."'
+                                        ,'".$e['BABY_YEAR'].(strlen($e['BABY_MONTH']) == 1 ? "0".$e['BABY_MONTH'] : $e['BABY_MONTH']).(strlen($e['BABY_DAY']) == 1 ? "0".$e['BABY_DAY'] : $e['BABY_DAY'])."'
+                                        ,'".$e['BABY_SEX_GB']."'
                                     )";
 
                             $_d->sql_query($sql);
@@ -794,8 +794,8 @@
                     }
                 }
 
-                if (isset($_model[BLOG]) && $_model[BLOG] != "") {
-                    if (isset($_model[BLOG][BLOG_URL]) && $_model[BLOG][BLOG_URL] != "") {
+                if (isset($_model['BLOG']) && $_model['BLOG'] != "") {
+                    if (isset($_model['BLOG']['BLOG_URL']) && $_model['BLOG']['BLOG_URL'] != "") {
                         $sql = "INSERT INTO ANGE_USER_BLOG
                                 (
                                     USER_ID
@@ -808,15 +808,15 @@
                                     ,VISIT_CNT
                                     ,SNS
                                 ) VALUES (
-                                    '".$_model[USER_ID]."'
-                                    ,'".$_model[BLOG][BLOG_GB]."'
-                                    ,'".$_model[BLOG][BLOG_URL]."'
-                                    ,'".$_model[BLOG][PHASE]."'
-                                    ,'".$_model[BLOG][THEME]."'
-                                    ,'".$_model[BLOG][NEIGHBOR_CNT]."'
-                                    ,'".$_model[BLOG][POST_CNT]."'
-                                    ,'".$_model[BLOG][VISIT_CNT]."'
-                                    ,'".$_model[BLOG][SNS]."'
+                                    '".$_model['USER_ID']."'
+                                    ,'".$_model['BLOG']['BLOG_GB']."'
+                                    ,'".$_model['BLOG']['BLOG_URL']."'
+                                    ,'".$_model['BLOG']['PHASE']."'
+                                    ,'".$_model['BLOG']['THEME']."'
+                                    ,'".$_model['BLOG']['NEIGHBOR_CNT']."'
+                                    ,'".$_model['BLOG']['POST_CNT']."'
+                                    ,'".$_model['BLOG']['VISIT_CNT']."'
+                                    ,'".$_model['BLOG']['SNS']."'
                                 )";
 
                         $_d->sql_query($sql);
@@ -832,15 +832,15 @@
                     $_d->sql_rollback();
                     $_d->failEnd("등록실패입니다:".$msg);
                 } else {
-                    if(isset($_model[CERT_GB]) && $_model[CERT_GB] == 'EMAIL') {
+                    if(isset($_model['CERT_GB']) && $_model['CERT_GB'] == 'EMAIL') {
 //                        $to = __SMTP_USR__;
                         $from_email = __SMTP_USR__;
                         $from_user = __SMTP_USR_NM__;
-                        $to = $_model[EMAIL];
-                        $to_user = $_model[USER_NM];
+                        $to = $_model['EMAIL'];
+                        $to_user = $_model['USER_NM'];
                         $headers = "From: hacker9100@gmail.com";
                         $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
-//                        $message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=ange'>이메일 인증</a>";
+//                        $message = "안녕하세요. ".$_model['USER_NM']." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model['USER_ID']."&_hash=ange'>이메일 인증</a>";
                         $message = "<head>
                                     <title>@ange_member</title>
                                     <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
@@ -860,7 +860,7 @@
                                             <td>
                                                 <img src='".BASE_URL."/imgs/ange/mail/@ange_mailconfirm_03-2.jpg' alt='' width='676' height='183' usemap='#Map' border='0'>
                                                 <map name='Map'>
-                                                    <area shape='rect' coords='180,80,495,142' href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=ange'>
+                                                    <area shape='rect' coords='180,80,495,142' href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model['USER_ID']."&_hash=ange'>
                                                 </map>
                                              </td>
                                         </tr>
@@ -887,8 +887,8 @@
                             ,NOTE
                             ,REG_DT
                         ) VALUES (
-                            '".$_model[USER_ID]."'
-                            ,'".$_model[NOTE]."'
+                            '".$_model['USER_ID']."'
+                            ,'".$_model['NOTE']."'
                             ,SYSDATE()
                         )";
 
@@ -903,11 +903,11 @@
 //                $to = __SMTP_USR__;
                 $from_email = __SMTP_USR__;
                 $from_user = __SMTP_USR_NM__;
-                $to = $_model[EMAIL];
-                $to_user = $_model[USER_NM];
+                $to = $_model['EMAIL'];
+                $to_user = $_model['USER_NM'];
                 $headers = "From: hacker9100@gmail.com";
                 $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
-//                $message = "안녕하세요. ".$_model[USER_NM]."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=ange'>이메일 인증</a>";
+//                $message = "안녕하세요. ".$_model['USER_NM']."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model['USER_ID']."&_hash=ange'>이메일 인증</a>";
                 $message = "<head>
                             <title>@ange_member</title>
                             <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
@@ -927,7 +927,7 @@
                                     <td>
                                         <img src='".BASE_URL."/imgs/ange/mail/@ange_mailconfirm_03-2.jpg' alt='' width='676' height='183' usemap='#Map' border='0'>
                                         <map name='Map'>
-                                            <area shape='rect' coords='180,80,495,142' href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=ange'>
+                                            <area shape='rect' coords='180,80,495,142' href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model['USER_ID']."&_hash=ange'>
                                         </map>
                                      </td>
                                 </tr>
@@ -962,16 +962,16 @@
                 $insert_path = null;
 
                 try {
-                    if (count($_model[FILE]) > 0) {
-                        $file = $_model[FILE];
+                    if (count($_model['FILE']) > 0) {
+                        $file = $_model['FILE'];
                         if (!file_exists($source_path) && !is_dir($source_path)) {
                             @mkdir($source_path);
                         }
 
-                        if (file_exists($upload_path.$file[name])) {
+                        if (file_exists($upload_path.$file['name'])) {
                             $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                            rename($upload_path.$file['name'], $source_path.$uid);
+                            $insert_path = array(path => $file_path, uid => $uid, kind => $file['kind']);
                         } else {
                             $insert_path = array(path => '', uid => '', kind => '');
                         }
@@ -985,12 +985,12 @@
                 $msg = "";
 
     //            $FORM = json_decode(file_get_contents("php://input"),true);
-    //            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+    //            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
                 $update_password = "";
 
-                if (isset($_model[PASSWORD]) && $_model[PASSWORD] != "") {
-                    $password = $_model[PASSWORD];
+                if (isset($_model['PASSWORD']) && $_model['PASSWORD'] != "") {
+                    $password = $_model['PASSWORD'];
                     $hash = create_hash($password);
 
                     $update_password = "PASSWORD = '".$hash."',";
@@ -998,11 +998,11 @@
 
                 $update_gb = "";
 
-                if (isset($_model[USER_GB]) && $_model[USER_GB] != "") {
-                    if (is_array($_model[USER_GB])) {
-                        $update_gb = "USER_GB = '".$_model[USER_GB][value]."',";
+                if (isset($_model['USER_GB']) && $_model['USER_GB'] != "") {
+                    if (is_array($_model['USER_GB'])) {
+                        $update_gb = "USER_GB = '".$_model['USER_GB']['value']."',";
                     } else {
-                        $update_gb = "USER_GB = '".$_model[USER_GB]."',";
+                        $update_gb = "USER_GB = '".$_model['USER_GB']."',";
                     }
                 }
 
@@ -1010,40 +1010,40 @@
 
                 $sql = "UPDATE COM_USER
                         SET
-                            USER_NM = '".$_model[USER_NM]."',
-                            NICK_NM = '".$_model[NICK_NM]."',
+                            USER_NM = '".$_model['USER_NM']."',
+                            NICK_NM = '".$_model['NICK_NM']."',
                             ".$update_password."
-                            LUNAR_FL = '".$_model[LUNAR_FL]."',
-                            BIRTH = '".$_model[BIRTH]."',
-                            ZIP_CODE = '".$_model[ZIP_CODE]."',
-                            ADDR = '".$_model[ADDR]."',
-                            ADDR_DETAIL = '".$_model[ADDR_DETAIL]."',
-                            PHONE_1 = '".$_model[PHONE_1]."',
-                            PHONE_2 = '".$_model[PHONE_2]."',
+                            LUNAR_FL = '".$_model['LUNAR_FL']."',
+                            BIRTH = '".$_model['BIRTH']."',
+                            ZIP_CODE = '".$_model['ZIP_CODE']."',
+                            ADDR = '".$_model['ADDR']."',
+                            ADDR_DETAIL = '".$_model['ADDR_DETAIL']."',
+                            PHONE_1 = '".$_model['PHONE_1']."',
+                            PHONE_2 = '".$_model['PHONE_2']."',
                             ".$update_gb."
-                            EMAIL = '".$_model[EMAIL]."',
-                            SEX_GB = '".$_model[SEX_GB]."',
-                            INTRO = '".$_model[INTRO]."',
-                            NOTE = '".$_model[NOTE]."',
-                            MARRIED_FL = '".$_model[MARRIED_FL]."',
-                            PREGNENT_FL = '".$_model[PREGNENT_FL]."',
-                            BABY_BIRTH_DT = '".$_model[BABY_BIRTH_DT]."',
-                            BLOG_FL = '".$_model[BLOG_FL]."',
-                            JOIN_PATH = '".$_model[JOIN_PATH]."',
-                            CONTACT_ID = '".$_model[CONTACT_ID]."',
-                            CONTACT_NM = '".$_model[CONTACT_NM]."',
-                            CARE_CENTER = '".$_model[CARE_CENTER]."',
-                            CENTER_VISIT_YMD = '".$_model[CENTER_VISIT_YMD]."',
-                            CENTER_OUT_YMD = '".$_model[CENTER_OUT_YMD]."',
-                            EN_FL = '".$_model[EN_FL]."',
-                            EN_ANGE_EMAIL_FL = '".( $_model[EN_ANGE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                            EN_ANGE_SMS_FL = '".( $_model[EN_ANGE_SMS_FL] == "true" ? "Y" : 'N' )."',
-                            EN_ALARM_EMAIL_FL = '".( $_model[EN_ALARM_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                            EN_ALARM_SMS_FL = '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : 'N' )."',
-                            EN_STORE_EMAIL_FL = '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                            EN_STORE_SMS_FL = '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."',
+                            EMAIL = '".$_model['EMAIL']."',
+                            SEX_GB = '".$_model['SEX_GB']."',
+                            INTRO = '".$_model['INTRO']."',
+                            NOTE = '".$_model['NOTE']."',
+                            MARRIED_FL = '".$_model['MARRIED_FL']."',
+                            PREGNENT_FL = '".$_model['PREGNENT_FL']."',
+                            BABY_BIRTH_DT = '".$_model['BABY_BIRTH_DT']."',
+                            BLOG_FL = '".$_model['BLOG_FL']."',
+                            JOIN_PATH = '".$_model['JOIN_PATH']."',
+                            CONTACT_ID = '".$_model['CONTACT_ID']."',
+                            CONTACT_NM = '".$_model['CONTACT_NM']."',
+                            CARE_CENTER = '".$_model['CARE_CENTER']."',
+                            CENTER_VISIT_YMD = '".$_model['CENTER_VISIT_YMD']."',
+                            CENTER_OUT_YMD = '".$_model['CENTER_OUT_YMD']."',
+                            EN_FL = '".$_model['EN_FL']."',
+                            EN_ANGE_EMAIL_FL = '".( $_model['EN_ANGE_EMAIL_FL'] == "true" ? "Y" : 'N' )."',
+                            EN_ANGE_SMS_FL = '".( $_model['EN_ANGE_SMS_FL'] == "true" ? "Y" : 'N' )."',
+                            EN_ALARM_EMAIL_FL = '".( $_model['EN_ALARM_EMAIL_FL'] == "true" ? "Y" : 'N' )."',
+                            EN_ALARM_SMS_FL = '".( $_model['EN_ALARM_SMS_FL'] == "true" ? "Y" : 'N' )."',
+                            EN_STORE_EMAIL_FL = '".( $_model['EN_STORE_EMAIL_FL'] == "true" ? "Y" : 'N' )."',
+                            EN_STORE_SMS_FL = '".( $_model['EN_STORE_SMS_FL'] == "true" ? "Y" : 'N' )."',
                             UPDATE_DT = SYSDATE(),
-                            SUPPORT_NO = '".$_model[SUPPORT_NO]."'
+                            SUPPORT_NO = '".$_model['SUPPORT_NO']."'
                         WHERE
                             USER_ID = '".$_key."'
                         ";
@@ -1055,7 +1055,7 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if (count($_model[FILE]) > 0) {
+                if (count($_model['FILE']) > 0) {
 
                     $sql = "SELECT NO FROM COM_USER WHERE USER_ID = '".$_key."'";
                     $user = $_d->sql_fetch($sql,true);
@@ -1077,28 +1077,28 @@
                     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                         $is_delete = true;
 
-                        if (count($_model[FILE]) > 0) {
-                            $file = $_model[FILE];
-                            if ($row[FILE_NM] == $file[name] && $row[FILE_SIZE] == $file[size]) {
+                        if (count($_model['FILE']) > 0) {
+                            $file = $_model['FILE'];
+                            if ($row['FILE_NM'] == $file['name'] && $row['FILE_SIZE'] == $file['size']) {
                                 $is_delete = false;
                             }
                         }
 
                         if ($is_delete) {
-                            $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
+                            $sql = "DELETE FROM COM_FILE WHERE NO = ".$row['NO'];
 
                             $_d->sql_query($sql);
 
-                            if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                                unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                            if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                                unlink('../../..'.$row['PATH'].$row['FILE_ID']);
                             }
                         }
                     }
 
-                    $file = $_model[FILE];
+                    $file = $_model['FILE'];
                     MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                    if ($insert_path[uid] != "") {
+                    if ($insert_path['uid'] != "") {
                         $sql = "INSERT INTO COM_FILE
                                 (
                                     FILE_NM
@@ -1114,15 +1114,15 @@
                                     ,TARGET_NO
                                     ,TARGET_GB
                                 ) VALUES (
-                                    '".$file[name]."'
-                                    , '".$insert_path[uid]."'
-                                    , '".$insert_path[path]."'
-                                    , '".$file[type]."'
-                                    , '".$file[size]."'
+                                    '".$file['name']."'
+                                    , '".$insert_path['uid']."'
+                                    , '".$insert_path['path']."'
+                                    , '".$file['type']."'
+                                    , '".$file['size']."'
                                     , '0'
                                     , SYSDATE()
                                     , 'C'
-                                    , '".strtoupper($file[kind])."'
+                                    , '".strtoupper($file['kind'])."'
                                     , '".$i."'
                                     , '".$target_no."'
                                     , 'USER'
@@ -1137,13 +1137,13 @@
                     }
                 }
 
-                if (isset($_model[BABY]) && $_model[BABY] != "") {
-                    $sql = "DELETE FROM ANGE_USER_BABY WHERE USER_ID = '".$_model[USER_ID]."'";
+                if (isset($_model['BABY']) && $_model['BABY'] != "") {
+                    $sql = "DELETE FROM ANGE_USER_BABY WHERE USER_ID = '".$_model['USER_ID']."'";
 
                     $_d->sql_query($sql);
 
-                    foreach ($_model[BABY] as $e) {
-                        if (isset($e[BABY_NM]) && $e[BABY_NM] != "") {
+                    foreach ($_model['BABY'] as $e) {
+                        if (isset($e['BABY_NM']) && $e['BABY_NM'] != "") {
                             $sql = "INSERT INTO ANGE_USER_BABY
                                     (
                                         USER_ID
@@ -1151,10 +1151,10 @@
                                         ,BABY_BIRTH
                                         ,BABY_SEX_GB
                                     ) VALUES (
-                                        '".$_model[USER_ID]."'
-                                        ,'".$e[BABY_NM]."'
-                                        ,'".$e[BABY_YEAR].(strlen($e[BABY_MONTH]) == 1 ? "0".$e[BABY_MONTH] : $e[BABY_MONTH]).(strlen($e[BABY_DAY]) == 1 ? "0".$e[BABY_DAY] : $e[BABY_DAY])."'
-                                        ,'".$e[BABY_SEX_GB]."'
+                                        '".$_model['USER_ID']."'
+                                        ,'".$e['BABY_NM']."'
+                                        ,'".$e['BABY_YEAR'].(strlen($e['BABY_MONTH']) == 1 ? "0".$e['BABY_MONTH'] : $e['BABY_MONTH']).(strlen($e['BABY_DAY']) == 1 ? "0".$e['BABY_DAY'] : $e['BABY_DAY'])."'
+                                        ,'".$e['BABY_SEX_GB']."'
                                     )";
 
                             $_d->sql_query($sql);
@@ -1171,8 +1171,8 @@
 
                 $data = $_d->sql_fetch($sql);
 
-                if ($data['COUNT'] == 0 && isset($_model[BLOG]) && $_model[BLOG] != "") {
-                    if (isset($_model[BLOG][BLOG_URL]) && $_model[BLOG][BLOG_URL] != "") {
+                if ($data['COUNT'] == 0 && isset($_model['BLOG']) && $_model['BLOG'] != "") {
+                    if (isset($_model['BLOG']['BLOG_URL']) && $_model['BLOG']['BLOG_URL'] != "") {
                         $sql = "INSERT INTO ANGE_USER_BLOG
                             (
                                 USER_ID
@@ -1186,14 +1186,14 @@
                                 ,SNS
                             ) VALUES (
                                 '".$_key."'
-                                ,'".$_model[BLOG][BLOG_GB]."'
-                                ,'".$_model[BLOG][BLOG_URL]."'
-                                ,'".$_model[BLOG][PHASE]."'
-                                ,'".$_model[BLOG][THEME]."'
-                                ,'".$_model[BLOG][NEIGHBOR_CNT]."'
-                                ,'".$_model[BLOG][POST_CNT]."'
-                                ,'".$_model[BLOG][VISIT_CNT]."'
-                                ,'".$_model[BLOG][SNS]."'
+                                ,'".$_model['BLOG']['BLOG_GB']."'
+                                ,'".$_model['BLOG']['BLOG_URL']."'
+                                ,'".$_model['BLOG']['PHASE']."'
+                                ,'".$_model['BLOG']['THEME']."'
+                                ,'".$_model['BLOG']['NEIGHBOR_CNT']."'
+                                ,'".$_model['BLOG']['POST_CNT']."'
+                                ,'".$_model['BLOG']['VISIT_CNT']."'
+                                ,'".$_model['BLOG']['SNS']."'
                             )";
 
                         $_d->sql_query($sql);
@@ -1206,13 +1206,13 @@
                 } else {
                     $sql = "UPDATE ANGE_USER_BLOG
                         SET
-                            BLOG_URL = '".$_model[BLOG][BLOG_URL]."'
-                            ,PHASE = '".$_model[BLOG][PHASE]."'
-                            ,THEME = '".$_model[BLOG][THEME]."'
-                            ,NEIGHBOR_CNT = '".$_model[BLOG][NEIGHBOR_CNT]."'
-                            ,POST_CNT = '".$_model[BLOG][POST_CNT]."'
-                            ,VISIT_CNT = '".$_model[BLOG][VISIT_CNT]."'
-                            ,SNS = '".$_model[BLOG][SNS]."'
+                            BLOG_URL = '".$_model['BLOG']['BLOG_URL']."'
+                            ,PHASE = '".$_model['BLOG']['PHASE']."'
+                            ,THEME = '".$_model['BLOG']['THEME']."'
+                            ,NEIGHBOR_CNT = '".$_model['BLOG']['NEIGHBOR_CNT']."'
+                            ,POST_CNT = '".$_model['BLOG']['POST_CNT']."'
+                            ,VISIT_CNT = '".$_model['BLOG']['VISIT_CNT']."'
+                            ,SNS = '".$_model['BLOG']['SNS']."'
                         WHERE
                             USER_ID = '".$_key."'
                         ";
@@ -1225,14 +1225,14 @@
                     }
                 }
 
-                if (isset($_model[ROLE_ID]) && $_model[ROLE_ID] != "") {
+                if (isset($_model['ROLE_ID']) && $_model['ROLE_ID'] != "") {
                     $sql = "UPDATE USER_ROLE UR, COM_ROLE R
                             SET
-                                UR.ROLE_ID = '".$_model[ROLE_ID]."'
+                                UR.ROLE_ID = '".$_model['ROLE_ID']."'
                             WHERE
                                 UR.ROLE_ID = R.ROLE_ID
                                 AND UR.USER_ID = '".$_key."'
-                                AND R.SYSTEM_GB = '".$_model[SYSTEM_GB]."'
+                                AND R.SYSTEM_GB = '".$_model['SYSTEM_GB']."'
                             ";
 
                     $_d->sql_query($sql);
@@ -1241,15 +1241,15 @@
                         $err++;
                         $msg = $_d->mysql_error;
                     }
-                } else if (isset($_model[ROLE]) && $_model[ROLE] != "") {
+                } else if (isset($_model['ROLE']) && $_model['ROLE'] != "") {
                     $sql = "UPDATE USER_ROLE UR, COM_ROLE R
                             SET
-                                UR.ROLE_ID = '".$_model[ROLE][ROLE_ID]."',
+                                UR.ROLE_ID = '".$_model['ROLE']['ROLE_ID']."',
                                 UR.REG_DT = SYSDATE()
                             WHERE
                                 UR.ROLE_ID = R.ROLE_ID
                                 AND UR.USER_ID = '".$_key."'
-                                AND R.SYSTEM_GB = '".$_model[SYSTEM_GB]."'
+                                AND R.SYSTEM_GB = '".$_model['SYSTEM_GB']."'
                             ";
 
                     $_d->sql_query($sql);
@@ -1270,7 +1270,7 @@
             } else if ($_type == "status") {
                 $sql = "UPDATE COM_USER
                             SET
-                                USER_ST = '".$_model[USER_ST]."'
+                                USER_ST = '".$_model['USER_ST']."'
                             WHERE
                                 USER_ID = '".$_key."'
                             ";
@@ -1286,7 +1286,7 @@
             } else if ($_type == "type") {
                 $sql = "UPDATE COM_USER
                             SET
-                                USER_GB = '".$_model[USER_GB]."'
+                                USER_GB = '".$_model['USER_GB']."'
                             WHERE
                                 USER_ID = '".$_key."'
                             ";
@@ -1307,7 +1307,7 @@
 
                 $sql = "UPDATE USER_ROLE U, COM_ROLE R
                         SET
-                            U.ROLE_ID = '".$_model[ROLE_ID]."'
+                            U.ROLE_ID = '".$_model['ROLE_ID']."'
                         WHERE
                             U.USER_ID = '".$_key."'
                             AND U.ROLE_ID = R.ROLE_ID
@@ -1321,10 +1321,10 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if ($_model[ROLE_ID] == "SUPPORTERS") {
+                if ($_model['ROLE_ID'] == "SUPPORTERS") {
                     $sql = "UPDATE COM_USER
                             SET
-                                SUPPORT_NO = '".$_model[SUPPORT_NO]."'
+                                SUPPORT_NO = '".$_model['SUPPORT_NO']."'
                             WHERE
                                 USER_ID = '".$_key."'
                             ";
@@ -1352,52 +1352,52 @@
 
                 $_d->sql_beginTransaction();
 
-                if ($_model[CHECKED] == "C") {
-                    if (isset($_model[USER_ID_LIST])) {
+                if ($_model['CHECKED'] == "C") {
+                    if (isset($_model['USER_ID_LIST'])) {
                         $in_str = "";
-                        $in_size = sizeof($_model[USER_ID_LIST]);
+                        $in_size = sizeof($_model['USER_ID_LIST']);
                         for ($i=0; $i< $in_size; $i++) {
-                            $in_str .= "'".trim($_model[USER_ID_LIST][$i])."'";
+                            $in_str .= "'".trim($_model['USER_ID_LIST'][$i])."'";
                             if ($in_size - 1 != $i) $in_str .= ",";
                         }
 
                         $update_where = "AND USER_ID IN (".$in_str.") ";
                     }
                 } else {
-                    if ((isset($_model[CONDITION]) && $_model[CONDITION] != "") && (isset($_model[KEYWORD]) && $_model[KEYWORD] != "")) {
-                        if ($_model[CONDITION][value] == "USER_NM" || $_model[CONDITION][value] == "USER_ID" || $_model[CONDITION][value] == "NICK_NM") {
-                            $arr_keywords = explode(",", $_model[KEYWORD]);
+                    if ((isset($_model['CONDITION']) && $_model['CONDITION'] != "") && (isset($_model['KEYWORD']) && $_model['KEYWORD'] != "")) {
+                        if ($_model['CONDITION']['value'] == "USER_NM" || $_model['CONDITION']['value'] == "USER_ID" || $_model['CONDITION']['value'] == "NICK_NM") {
+                            $arr_keywords = explode(",", $_model['KEYWORD']);
                             $in_condition = "";
                             for ($i=0; $i< sizeof($arr_keywords); $i++) {
                                 $in_condition .= "'".trim($arr_keywords[$i])."'";
                                 if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
                             }
 
-                            $update_where .= "AND ".$_model[CONDITION][value]." IN (".$in_condition.") ";
-                        } else if ($_model[CONDITION][value] == "PHONE") {
-                            $update_where .= "AND ( PHONE_1 LIKE '%".$_model[KEYWORD]."%' OR PHONE_2 LIKE '%".$_model[KEYWORD]."%' ) ";
+                            $update_where .= "AND ".$_model['CONDITION']['value']." IN (".$in_condition.") ";
+                        } else if ($_model['CONDITION']['value'] == "PHONE") {
+                            $update_where .= "AND ( PHONE_1 LIKE '%".$_model['KEYWORD']."%' OR PHONE_2 LIKE '%".$_model['KEYWORD']."%' ) ";
                         } else {
-                            $update_where .= "AND ".$_model[CONDITION][value]." LIKE '%".$_model[KEYWORD]."%' ";
+                            $update_where .= "AND ".$_model['CONDITION']['value']." LIKE '%".$_model['KEYWORD']."%' ";
                         }
                     }
-                    if (isset($_model[TYPE]) && $_model[TYPE] != "") {
+                    if (isset($_model['TYPE']) && $_model['TYPE'] != "") {
 
                         $in_type = "";
-                        for ($i=0; $i< count($_model[TYPE]); $i++) {
-                            $in_type .= "'".$_model[TYPE][$i]."'";
-                            if (count($_model[TYPE]) - 1 != $i) $in_type .= ",";
+                        for ($i=0; $i< count($_model['TYPE']); $i++) {
+                            $in_type .= "'".$_model['TYPE'][$i]."'";
+                            if (count($_model['TYPE']) - 1 != $i) $in_type .= ",";
                         }
 
                         $update_where .= "AND USER_GB IN (".$in_type.") ";
                     }
-                    if (isset($_model[STATUS]) && $_model[STATUS] != "" && $_model[STATUS][value] != "A") {
-                        $update_where .= "AND USER_ST  = '".$_model[STATUS][value]."' ";
+                    if (isset($_model['STATUS']) && $_model['STATUS'] != "" && $_model['STATUS']['value'] != "A") {
+                        $update_where .= "AND USER_ST  = '".$_model['STATUS']['value']."' ";
                     }
                 }
 
                 $sql = "UPDATE COM_USER
                         SET
-                            USER_ST = '".$_model[USER_ST]."'
+                            USER_ST = '".$_model['USER_ST']."'
                         WHERE
                             1 = 1
                             ".$update_where."
@@ -1539,8 +1539,8 @@
 
                 $update_password = "";
 
-                if (isset($_model[PASSWORD]) && $_model[PASSWORD] != "") {
-                    $password = $_model[PASSWORD];
+                if (isset($_model['PASSWORD']) && $_model['PASSWORD'] != "") {
+                    $password = $_model['PASSWORD'];
                     $hash = create_hash($password);
                 } else {
                     $_d->failEnd("수정실패입니다:".$msg);
