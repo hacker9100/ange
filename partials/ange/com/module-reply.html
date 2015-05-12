@@ -11,16 +11,25 @@
                 <dt ng-show="comm_no != 8" ng-click="click_toggleReplyConfig(replyItem.NO)" style="cursor:pointer;">{{replyItem.NICK_NM}}</dt>
                 <dt ng-show="comm_no == 8">*{{replyItem.NICK_NM | limitTo : 1}}*</dt>
 
-                <div id="reply_menu_{{replyItem.NO}}" style="display: none; border:1px solid #ccc; border-bottom:2px solid #ccc; padding:3px 10px 8px 10px; position:absolute; top:4px; font-size:0.86em; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; background-color:#fff;">
+                <div id="reply_menu_{{replyItem.NO}}" class="common_profiles">
 
-                    <div data-ng-click="click_toggleReplyConfig()" class="ange_customBtn_0" style="border-bottom:1px solid #ddd; width:100%; font-size:1.21em; padding:4px 0; height:26px;">
+                    <div data-ng-click="click_toggleReplyConfig()" class="ange_customBtn_0" style="background-color:#f1a81a; border-bottom:1px solid #ddd; width:100%; font-size:1.21em; padding:6px 8px; height:28px; cursor:pointer;" title="닫기">
+                        <div style="float:left; font-size:0.78em; color:#111;">{{replyItem.NICK_NM}}</div>
                         <i class="glyphicon glyphicon-remove-circle" class="text-right" style="float:right;"></i>
                     </div>
 
-                    <img ng-if="!replyItem.profileImg" class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}">
-                    <img ng-if="replyItem.profileImg" class="profile_pic" ng-style="{'background-image' : 'url('+replyItem.profileImg+')'}"> {{replyItem.NICK_NM}}
+                    <div class="no-margin" style="text-align:center; width:50px; height:50px; float:left; margin-left:12px;">
+                        <img ng-if="!replyItem.profileImg" class="clearfix common_profiles_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}">
+                        <img ng-if="replyItem.profileImg" class="clearfix common_profiles_pic" ng-style="{'background-image' : 'url('+replyItem.profileImg+')'}">
+                        <!--<div style="line-height:20px; margin-bottom:8px;">{{replyItem.NICK_NM + replyItem.NICK_NM}}</div>-->
+                    </div>
 
-                    <a class="util2" ng-click="click_sendMessage(replyItem)">메시지</a>
+                    <div ng-click="click_sendMessage(replyItem)" class="ange_darkgray common_profiles_quicklink">
+                        <span class="glyphicon glyphicon-envelope" style="font-size:1.4em;"></span>
+                        <br />
+                        메시지
+                    </div>
+                    <!--<a class="util2" ng-click="click_sendMessage(replyItem)">메시지</a>-->
                 </div>
 
                 <dd><div class="people_view_replys_date">{{replyItem.REG_DT}}</div></dd>
