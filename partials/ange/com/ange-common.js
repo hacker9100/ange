@@ -992,22 +992,26 @@ define([
             } else if (type == 'BANNER') {
                 item.MILEAGE_GB = '11';
                 item.MILEAGE_NO = '34';
+            } else if (type == 'POLL') {
+                item.MILEAGE_GB = '7';
+                item.MILEAGE_NO = '14';
             } else if (type == 'BOARD') {
                 item.MILEAGE_GB = '1';
 
+                // 1: 앙쥬맘 수다방, 2: 예비맘 출산맘, 3: 육아방, 4, 돌잔치 톡톡톡, 5: 책수다, 6: 힘내라 워킹맘, 7: 임신 준비방
                 if (gb == '1') {            // 시시콜콜수다방
                     item.MILEAGE_NO = '17';
                 } else if (gb == '2') {     // 예비맘이야기
                     item.MILEAGE_NO = '54';
                 } else if (gb == '3') {     // 좌충우돌 육아방
                     item.MILEAGE_NO = '57';
-                } else if (gb == '4') {     // 힘내라워킹방
+                } else if (gb == '6') {     // 힘내라워킹방
                     item.MILEAGE_NO = '59';
-                } else if (gb == '5') {     // 임신준비방
+                } else if (gb == '7') {     // 임신준비방
                     item.MILEAGE_NO = '114';
-                } else if (gb == '6') {     // 톡톡톡
+                } else if (gb == '4') {     // 돌잔치 톡톡톡
                     item.MILEAGE_NO = '86';
-                } else if (gb == '7') {     // 책수다
+                } else if (gb == '5') {     // 책수다
                     item.MILEAGE_NO = '125';
                 } else if (gb == '61') {    // 온라인 토론
                     item.MILEAGE_NO = '12';

@@ -4806,6 +4806,8 @@ define([
 
                         $scope.insertItem('ange/poll', 'answear', $scope.item, false) //$scope.queue
                             .then(function(){
+                                $scope.addMileage('POLL', null);
+
                                 dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                                 $location.url('/people/poll/list');
                             })

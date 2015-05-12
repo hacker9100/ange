@@ -66,15 +66,14 @@ define([
 
         // 댓글 리스트
         $scope.getReplyList = function () {
-
             $scope.replySearch.TARGET_NO = $scope.TARGET_NO;
             $scope.replySearch.TARGET_GB = $scope.TARGET_GB;
 
             $scope.getItem('com/reply', 'item', {}, $scope.replySearch, true)
                 .then(function(data){
-
                     if(data.COMMENT == null){
                         $scope.replySearch.TOTAL_COUNT = 0;
+                        $scope.replyList = [];
                     }else{
                         $scope.replySearch.TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
                     }

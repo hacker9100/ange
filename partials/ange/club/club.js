@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('clubboard-edit', ['$scope', '$rootScope', '$stateParams', '$location', '$filter', 'dialogs', 'UPLOAD', '$http', function ($scope, $rootScope, $stateParams, $location, $filter, dialogs, UPLOAD, $http) {
+    controllers.controller('clubboard-edit', ['$scope', '$rootScope', '$stateParams', '$location', '$filter', '$q', 'dialogs', 'UPLOAD', '$http', function ($scope, $rootScope, $stateParams, $location, $filter, $q, dialogs, UPLOAD, $http) {
 
         $scope.checked = true;
         // 게시판 초기화
@@ -141,28 +141,36 @@ define([
         // 초기화
 
         $scope.init = function() {
+            var deferred = $q.defer();
+
             $scope.item.COMM_NO = 71;
 
             $scope.search.COMM_NO = 71;
             $scope.search.COMM_GB = 'CLUB';
             $scope.search.ALL = true;
 
-            $scope.getList('com/webboard', 'category', {}, $scope.search, true)
-                .then(function(data){
-                    $scope.categorylist = data;
-                    $scope.item.CATEGORY_NO = data[0].NO;
-                })
-                ['catch'](function(error){$scope.categorylist = ""});
+            $q.all([
 
-            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
-                .then(function(data){
-                    var comm_mg_nm = data[0].COMM_MG_NM;
-                    $scope.COMM_MG_NM = comm_mg_nm;
+                    $scope.getList('com/webboard', 'category', {}, $scope.search, true)
+                        .then(function(data){
+                            $scope.categorylist = data;
+                            $scope.item.CATEGORY_NO = data[0].NO;
+                        }),
+                    $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+                        .then(function(data){
+                            var comm_mg_nm = data[0].COMM_MG_NM;
+                            $scope.COMM_MG_NM = comm_mg_nm;
 
-                })
-                ['catch'](function(error){});
+                        })
+                ])
+                .then( function(results) {
+                    deferred.resolve();
+                },function(error) {
+                    $scope.categorylist = "";
+                    deferred.reject(error);
+                });
 
-
+            return deferred.promise;
         };
 
         // CK Editor

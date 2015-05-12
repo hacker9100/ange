@@ -39,7 +39,7 @@
 											<!--<span class="table_icon_new">N</span>-->
 
 											<div class="people_photo_info">
-												<span class="ange_darkgray">{{item.NICK_NM}}</span> | {{item.REG_DT}}
+												<span ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" class="ange_darkgray">{{item.NICK_NM}} |</span> {{item.REG_DT}}
 											</div>
 										</div><!-- /.col-xs-10-->
 

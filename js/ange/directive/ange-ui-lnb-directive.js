@@ -308,37 +308,19 @@ define(['./directives'], function (directives) {
                         }
                     }
 
-                    if(url == '/infodesk/myqna/list'){ // 고객센터 내 질문과 답변
+                    if((url == '/infodesk/myqna/list') || (url == '/infodesk/drop/request') || (url == '/store/cart/list')){ // 고객센터 내 질문과 답변
                         if($scope.uid == null || $scope.uid == ''){
-                            dialogs.notify('알림', '로그인 후 이용 가능합니다.', {size: 'md'});
+//                            dialogs.notify('알림', '로그인 후 이용 가능합니다.', {size: 'md'});
+                            $scope.openLogin(null, 'md')
                             return;
                         }else{
                             $location.url(url);
                         }
                     }
 
-                    if(url == '/infodesk/signon'){ // 회원 가입
+                    if((url == '/infodesk/signon') || (url == '/infodesk/forgot/request')){ // 회원 가입
                         if($scope.session != null){
-                            dialogs.notify('알림', '로그인된 사용자는 회원가입을 할수 없습니다.', {size: 'md'});
-                            return;
-                        }else{
-                            $location.url(url);
-                        }
-                    }
-
-                    if(url == '/infodesk/drop/request'){ // 회원 탈퇴
-                        if($scope.session == null){
-                            dialogs.notify('알림', '로그인 후 이용 가능합니다.', {size: 'md'});
-                            return;
-                        }else{
-                            $location.url(url);
-                        }
-                    }
-
-                    if(url == '/store/cart/list'){
-
-                        if($scope.uid == null || $scope.uid == ''){
-                            dialogs.notify('알림', '로그인 후 이용 가능합니다.', {size: 'md'});
+                            dialogs.notify('알림', '로그인된 사용자는 이용할 수 없습니다.', {size: 'md'});
                             return;
                         }else{
                             $location.url(url);

@@ -880,9 +880,9 @@ switch ($_method) {
 
             if ($_model['ORDER_ST'] == '3') {
                 $update = ",DELIVERY_DT = SYSDATE() ";
-            } else if ($_model['ORDER_ST'] == '5') {
+            } else if ($_model['ORDER_ST'] == '4') {
                 $update = ",COMPLETE_DT = SYSDATE() ";
-            } else if ($_model['ORDER_ST'] == '6' || $_model['ORDER_ST'] == '7') {
+            } else if ($_model['ORDER_ST'] == '5' || $_model['ORDER_ST'] == '6') {
                 $update = ",CANCEL_DT = SYSDATE() ";
             }
 
@@ -900,6 +900,38 @@ switch ($_method) {
             if($_d->mysql_errno > 0) {
                 $err++;
                 $msg = $_d->mysql_error;
+            }
+
+            if ($_model['ORDER_GB'] == 'MILEAGE' && $_model['ORDER_ST'] == '5') {
+                $sql = "INSERT INTO ANGE_USER_MILEAGE
+                        (
+                            USER_ID,
+                            EARN_DT,
+                            MILEAGE_NO,
+                            EARN_GB,
+                            PLACE_GB,
+                            POINT,
+                            REASON
+                        ) VALUES (
+                            '".$_model['USER_ID']."'
+                            , SYSDATE()
+                            , '993'
+                            , '993'
+                            , '마일리지몰'
+                            , '".$_model['SUM_PRICE']."'
+                            , '마일리지몰 상품 환불'
+                        )";
+
+                $_d->sql_query($sql);
+
+                $sql = "UPDATE COM_USER
+                        SET
+                            USE_POINT = USE_POINT - ".$_model['SUM_PRICE'].",
+                            REMAIN_POINT = REMAIN_POINT + ".$_model['SUM_PRICE']."
+                        WHERE
+                            USER_ID = '".$_model['USER_ID']."'
+                        ";
+                $_d->sql_query($sql);
             }
 
             if ($_d->mysql_errno > 0) {

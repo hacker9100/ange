@@ -52,7 +52,7 @@ switch ($_method) {
                         NO, PRODUCT_NM, PRODUCT_GB, COMPANY_NO, COMPANY_NM, URL, BODY, PRICE, STOCK_FL, SUM_IN_CNT, SUM_OUT_CNT, NOTE, DELIVERY_PRICE,
                         DELIVERY_ST, DIRECT_PRICE, ORDER_YN,(SELECT SUM(AMOUNT) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_AMOUNT,
                         (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, PARENT_NO, SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT,
-                        IF(SUM_IN_CNT - SUM_OUT_CNT > 0, 'N', 'Y') AS SOLD_OUT, START_YMD, CLOSE_YMD
+                        IF(SUM_IN_CNT - SUM_OUT_CNT <= 0 OR STOCK_FL = 'Y', 'Y', 'N') AS SOLD_OUT, START_YMD, CLOSE_YMD
                     FROM
                         ANGE_PRODUCT AP
                     WHERE
@@ -162,7 +162,7 @@ switch ($_method) {
             }
 
             if (isset($_search['SOLD_OUT']) && $_search['SOLD_OUT'] == "N") {
-                $search_where .= "AND SUM_IN_CNT - SUM_OUT_CNT > 0 ";
+                $search_where .= "AND SUM_IN_CNT - SUM_OUT_CNT > 0 AND STOCK_FL <> 'Y'  ";
             }
 
             for ($i = 0; $i < count($_search['CATEGORY']); $i++) {
@@ -187,7 +187,7 @@ switch ($_method) {
                         SELECT NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, PERIOD, ORDER_YN, DIRECT_PRICE,
                             (SELECT SUM(AMOUNT) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_AMOUNT,
                             (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, COMPANY_NM,
-                            IF(SUM_IN_CNT - SUM_OUT_CNT > 0, 'N', 'Y') AS SOLD_OUT, START_YMD, CLOSE_YMD
+                            IF(SUM_IN_CNT - SUM_OUT_CNT <= 0 OR STOCK_FL = 'Y', 'Y', 'N') AS SOLD_OUT, START_YMD, CLOSE_YMD
                         FROM
                             ANGE_PRODUCT AP
                         WHERE
@@ -397,6 +397,7 @@ switch ($_method) {
                         COMPANY_NM,
                         BODY,
                         URL,
+                        STOCK_FL,
                         PRICE,
                         DIRECT_PRICE,
                         SUM_IN_CNT,
@@ -414,6 +415,7 @@ switch ($_method) {
                         '".$_model['COMPANY_NM']."',
                         '".$_model['BODY']."',
                         '".$_model['URL']."',
+                        '".( $_model['STOCK_FL'] == "true" ? "Y" : "N" )."',
                         '".$_model['PRICE']."',
                         '".$_model['DIRECT_PRICE']."',
                         '".$_model['SUM_IN_CNT']."',
@@ -686,6 +688,7 @@ switch ($_method) {
                         COMPANY_NM = '".$_model['COMPANY_NM']."',
                         BODY = '".$_model['BODY']."',
                         URL = '".$_model['URL']."',
+                        STOCK_FL = '".( $_model['STOCK_FL'] == "true" ? "Y" : "N" )."',
                         PRICE = ".($_model['PRICE'] == '' ? 0 : $_model['PRICE']).",
                         DIRECT_PRICE = ".($_model['DIRECT_PRICE'] == '' ? 0 : $_model['DIRECT_PRICE']).",
                         SUM_IN_CNT = ".$_model['SUM_IN_CNT'].",

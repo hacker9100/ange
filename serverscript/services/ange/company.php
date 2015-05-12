@@ -315,6 +315,7 @@ switch ($_method) {
                         "<br>기업명 : ".$_model['COMPANY_NM'].
                         "<br>담당자 : ".$_model['COMPANY_NM'].
                         "<br>홈페이지 : ".$_model['URL'].
+                        "<br>이메일 : ".$_model['EMAIL'].
                         "<br>유선전화 : ".$_model['PHONE_1'].
                         "<br>휴대폰 : ".$_model['PHONE_2'].
                         "<br>내용 : ".str_replace("\n", "<br />", $_model['NOTE']);

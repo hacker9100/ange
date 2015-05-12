@@ -467,20 +467,28 @@ define([
             return true;
         }
 
+        var isSave = false;
+
         // 샘플팩 신청
         $scope.click_saveSamplepackComp = function (){
+
+            if (!isSave) return;
+
+            isSave = true;
 
             $scope.search.REG_UID = $rootScope.uid;
             $scope.search.ada_idx = $scope.item.TARGET_NO;
             //$scope.search.TARGET_GB = $scope.item.target_gb;
 
             if(CheckForm(document.getElementById("samplepackvalidation")) == false){
+                isSave = false;
                 return;
             }
 
             if($scope.season_gb == 'SAMPLE2'){
 
                 if($scope.item.ada_count_request > 200){
+                    isSave = false;
 
                     dialogs.notify('알림', '샘플팩 신청이 마감되었습니다.', {size: 'md'});
                     $location.url('/moms/samplepack/intro');
@@ -488,6 +496,8 @@ define([
                 }
 
                 if($scope.checked == 'N'){
+                    isSave = false;
+
                     dialogs.notify('알림', '신청 자격을 확인해주세요.', {size: 'md'});
                     return;
                 }
@@ -495,6 +505,8 @@ define([
                 var mileage_point = $rootScope.mileage;
 
                 if(mileage_point < 2000){
+                    isSave = false;
+
                     alert('보유 마일리지가 부족하여 신청이 불가능 합니다');
                     return;
                 }
@@ -512,8 +524,8 @@ define([
 
                         console.log('$scope.item.ada_que_type == '+$scope.item.ada_que_type);
 
+                        // 문답일때
                         if($scope.item.ada_que_type == 'question'){
-                         // 문답일때
                             $rootScope.jsontext2 = new Array();
 
                             var poll_length = $('.poll_question_no').length;
@@ -551,8 +563,10 @@ define([
                                     } else if($stateParams.menu == 'eventperformance') {
                                         $location.url('/moms/eventperformance/list');
                                     }
+
+                                    isSave = false;
                                 })
-                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'}); isSave = false;});
 
                         }else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
 
@@ -566,8 +580,10 @@ define([
                                     dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
 
                                     $location.url('/moms/samplepack/intro');
+
+                                    isSave = false;
                                 })
-                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'}); isSave = false;});
 
                         } else if($scope.item.ada_que_type == 'join'){ // 신청이나 응모일때
 
@@ -575,6 +591,8 @@ define([
                             if($("#credit_agreement_Y").is(":checked")){
                                 $scope.item.CREDIT_FL = 'Y';
                             }else{
+                                isSave = false;
+
                                 alert('제 3자 정보제공에 동의 하셔야 상품 발송이 가능합니다.');
                                 return;
                             }
@@ -589,6 +607,8 @@ define([
                             $scope.item.PREGNANT_WEEKS = 0;
 
                             if($scope.item.BLOG == undefined){
+                                isSave = false;
+
                                 alert('블로그 주소를 입력하세요');
                                 return;
                             }
@@ -641,22 +661,30 @@ define([
                                     dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
 
                                     $location.url('/moms/samplepack/intro');
+
+                                    isSave = false;
                                 })
-                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'}); isSave = false;});
 
                         }else if($scope.item.ada_que_type == 'upload'){
 
                             if($scope.item.YEAR == undefined){
+                                isSave = false;
+
                                 alert('출산예정일 연도를 선택하세요');
                                 return;
                             }
 
                             if($scope.item.MONTH == undefined){
+                                isSave = false;
+
                                 alert('출산예정일 월을 선택하세요');
                                 return;
                             }
 
                             if($scope.item.DAY == undefined){
+                                isSave = false;
+
                                 alert('출산예정일 일을 선택하세요');
                                 return;
                             }
@@ -672,6 +700,8 @@ define([
                             }
 
                             if($scope.item.REASON == undefined || $scope.item.REASON == ""){
+                                isSave = false;
+
                                 alert('태동느낌을 작성하세요');
                                 return;
                             }
@@ -688,6 +718,8 @@ define([
                             console.log($scope.file1);
 
                             if ($scope.file1 == undefined) {
+                                isSave = false;
+
                                 dialogs.notify('알림', '이미지를 등록해야합니다.', {size: 'md'});
                                 return;
                             }
@@ -744,17 +776,21 @@ define([
                                     dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
 
                                     $location.url('/moms/samplepack/intro');
+
+                                    isSave = false;
                                 })
-                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'}); isSave = false;});
                         }
 
                     }else{
+                        isSave = false;
+
                         dialogs.notify('알림', '이미 샘플팩 신청을 했습니다.', {size: 'md'});
                         $location.url('/moms/samplepack/intro');
                     }
 
             })
-            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'}); isSave = false;});
 
 
         }

@@ -317,7 +317,6 @@ define([
                         if (data == null) {
                             $scope.insertItem('ange/album', 'album', $scope.item, true)
                                 .then(function(data){
-                                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                                     $scope.item.ACTION = 'CREATE';
                                     $modalInstance.close($scope.item);
                                 })

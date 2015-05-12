@@ -93,7 +93,7 @@ define([
                     .then(function(data){
                         $timeout(function() {
                             $scope.item = data;
-                            $scope.item.STOCK_FL == 'Y' ? $scope.item.STOCK_FL = true : $scope.item.STOCK_FL = false;
+                            $scope.item.STOCK_FL = $scope.item.STOCK_FL == 'Y' ? true : false;
 
                             for (var i in $scope.product_gb) {
                                 if ($scope.product_gb[i].value == $scope.item.PRODUCT_GB) {
@@ -132,6 +132,31 @@ define([
 
         // 상품 저장 버튼 클릭
         $scope.click_saveProduct = function () {
+            if ($scope.item.PRODUCT_NM == '') {
+                dialogs.notify('알림', '상품명을 입력하세요.', {size: 'md'});
+                return;
+            }
+
+            if ($scope.item.COMPANY_NM == '') {
+                dialogs.notify('알림', '판매사를 입력하세요.', {size: 'md'});
+                return;
+            }
+
+            if ($scope.item.PRICE == '') {
+                dialogs.notify('알림', '포인트(금액)을 입력하세요.', {size: 'md'});
+                return;
+            }
+
+            if ($scope.item.PRODUCT_GB.value != 'MILEAGE' && $scope.item.START_YMD == '') {
+                dialogs.notify('알림', '시작일을 입력하세요.', {size: 'md'});
+                return;
+            }
+
+            if ($scope.item.PRODUCT_GB.value != 'MILEAGE' && $scope.item.CLOSE_YMD == '') {
+                dialogs.notify('알림', '종료일을 입력하세요.', {size: 'md'});
+                return;
+            }
+
             $scope.item.FILES = $scope.queue;
 
             var ckMain = false;

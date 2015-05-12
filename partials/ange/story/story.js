@@ -299,6 +299,7 @@ define([
             $scope.TARGET_NO = data.NO;
             $scope.getContent();
             $scope.addHitCnt();
+            $scope.getReplyList();
 
             $scope.click_top();
         };

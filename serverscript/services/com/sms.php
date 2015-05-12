@@ -159,6 +159,7 @@
                             COM_USER
                         WHERE
                             1 = 1
+                            AND EN_ANGE_SMS_FL = 'Y'
                             ".$search_where."
                         ";
 
