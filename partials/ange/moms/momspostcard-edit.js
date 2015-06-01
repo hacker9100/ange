@@ -556,7 +556,7 @@ define([
 
                                     $location.url('/moms/home');
                                 })
-                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         } else if($scope.item.ada_que_type == 'join'){ // 신청이나 응모일때
 
@@ -634,7 +634,7 @@ define([
 
                                     $location.url('/moms/home');
                                 })
-                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         }else if($scope.item.ada_que_type == 'upload'){
 
                             // 문답일때

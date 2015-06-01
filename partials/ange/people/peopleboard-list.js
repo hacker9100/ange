@@ -48,11 +48,6 @@ define([
 
         $scope.todayDate = today;
 
-        //$scope.uid = $rootScope.uid;
-
-        // 서포터즈 게시판 권한 체크
-
-
         /********** 초기화 **********/
             // 초기화
         $scope.init = function() {
@@ -67,12 +62,7 @@ define([
                 }
             }
 
-            console.log($scope.menu.COMM_NO);
-
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
-//            $scope.search.BOARD_GB = 'BOARD';
-//            $scope.search.SYSTEM_GB = 'ANGE';
-//            $scope.search.BOARD_ST = 'D';
 
             $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){
@@ -119,9 +109,6 @@ define([
 
         // 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
-/*            $scope.search.SORT = 'NOTICE_FL';
-            $scope.search.ORDER = 'DESC'*/
-
             if($stateParams.menu == 'supporter'){
 
                 if($rootScope.role != 'ANGE_ADMIN'){
@@ -225,17 +212,5 @@ define([
             .then($scope.init)
             .then($scope.getPeopleBoardList)
             ['catch']($scope.reportProblems);
-
-
-//        $scope.init();
-//        $scope.getPeopleBoardList();
-
-/*        $scope.test = function(session){
-            console.log(session);
-        }
-
-        $scope.test();*/
-
-        //console.log($scope.$parent.sessionInfo);
     }]);
 });

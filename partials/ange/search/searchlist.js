@@ -203,6 +203,6 @@ define([
             .then($scope.getPeopleBoardList)
             .then($scope.getPeoplePhotoList)
             .then($scope.getPeopleClinicList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
     }]);
 });

@@ -953,10 +953,26 @@ define([
                             $scope.addMileage('BANNER', null);
                         }
 
-                        if (item.ada_url.indexOf('://')>0) {
-                            $window.open(data, 'width=1200,height=800');
+                        if (item.ada_type == 'exp' || item.ada_type == 'event') {
+                            var model = {};
+                            model.ada_idx = item;
+                            model.MENU = $scope.path[1];
+                            model.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
+                            $scope.insertItem('ad/banner', 'click', model, false)
+                                .then(function(data){
+                                    if (item.ada_type == 'exp') {
+                                        $location.url('/moms/experienceprocess/view/' + item.ada_idx);
+                                    } else {
+                                        $location.url('/moms/eventprocess/view/' + item.ada_idx);
+                                    }
+                                })
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         } else {
-                            $window.open(data, '_self');
+                            if (item.ada_url.indexOf('://')>0) {
+                                $window.open(data, 'width=1200,height=800');
+                            } else {
+                                $window.open(data, '_self');
+                            }
                         }
                     });
             }

@@ -49,11 +49,9 @@ define([
 //                return;
 //            }
 
-            if($rootScope.user_gb == 'CLUB'){
+            if($rootScope.user_info.USER_GB == 'CLUB' || $rootScope.user_info.USER_GB == 'CLINIC'){
                 $location.url('/club/home');
             }else if($rootScope.role == 'ANGE_ADMIN'){
-                $location.url('/club/home');
-            }else if($rootScope.user_gb == 'CLINIC'){
                 $location.url('/club/home');
             }else{
                 dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
@@ -358,37 +356,6 @@ define([
 
         $scope.getTopBanner();
 
-/*        // 세션 체크
-        $scope.sessionCheck = function(session) {
-            if (session.USER_ID == undefined) {
-//                $location.path("/signin");
-//                throw( new String('세션이 만료되었습니다.') );
-//            throw( new Error("세션이 만료되었습니다.") );
-            } else if (session.USER_ID == '') {
-//                $location.path("/signin");
-//                throw( new String('로그인 후 사용가능합니다.') );
-            } else {
-                $rootScope.session = session;
-
-
-
-                $rootScope.authenticated = true;
-                $rootScope.uid = session.USER_ID;
-
-                //console.log($rootScope.uid);
-
-                $rootScope.name = session.USER_NM;
-                $rootScope.role = session.ROLE_ID;
-                $rootScope.menu_role = session.MENU_ROLE;
-                $rootScope.email = session.EMAIL;
-            }
-
-            //console.log($rootScope.uid);
-
-            return;
-
-        };*/
-
         $scope.click_mainLogo = function() {
 
         };
@@ -414,11 +381,5 @@ define([
         }
 
         setInterval($scope.refresh,3000) ;
-
-//        $scope.getSession()
-//            .then($scope.sessionCheck)
-//            ['catch']($scope.reportProblems);
-
-
 	}]);
 });

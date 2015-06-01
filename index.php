@@ -141,13 +141,10 @@ MtUtil::_d("### [END]");
 
     <link rel="stylesheet" type="text/css" href="lib/slick-carousel/slick.css" />
 
-    <link rel="stylesheet" type="text/css" href="css/ng-table/ange-ng-table.css" />
     <link rel="stylesheet" type="text/css" href="/css/ange/ange_ng-scrollbar.css" />
     <!--<link rel="stylesheet" type="text/css" href="css/dialog/dialogs.min.css" />-->
 
     <!-- file-upload -->
-    <!-- blueimp Gallery styles -->
-    <link rel="stylesheet" href="css/file-upload/blueimp-gallery.css">
     <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
     <link rel="stylesheet" href="css/file-upload/jquery.fileupload.css">
     <link rel="stylesheet" href="css/file-upload/jquery.fileupload-ui.css">
@@ -201,7 +198,7 @@ MtUtil::_d("### [END]");
 
     <!--[if lt IE 10]>
     <script type="text/javascript">
-        location.href = "/ange/browserinstall.html";
+//        location.href = "/ange/browserinstall.html";
     </script>
     <![endif]-->
 
@@ -226,7 +223,7 @@ MtUtil::_d("### [END]");
     <!-- 카카오 스토리 공유 서비스 추가 -->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <!-- 클립보드 추가 -->
-    <script src="lib/ng-clip/ZeroClipboard.min.js"></script>
+    <script src="lib/ng-clip/ZeroClipboard.js"></script>
 
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -253,10 +250,10 @@ MtUtil::_d("### [END]");
 //            Kakao.init('d3adadb46723eb3879569ddd4f43bf33');
         }
 
-        function externalOrder(ret, val) {
+        function externalOrder(ret, cno, bank, account) {
             var scope = angular.element($("#outer")).scope();
             scope.$apply(function(){
-                scope.returnPayment(ret, val);
+                scope.returnPayment(ret, cno, bank, account);
             })
         }
     </script>

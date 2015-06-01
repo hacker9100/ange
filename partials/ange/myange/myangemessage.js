@@ -446,10 +446,5 @@ define([
             .then($scope.init)
             .then($scope.getMessageList)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.getMessageList();
-        /*$scope.viewCheckFl();*/
-
     }]);
 });

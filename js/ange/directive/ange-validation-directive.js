@@ -7,6 +7,12 @@
 define(['./directives'], function (directives) {
     'use strict';
 
+    directives.directive('focus', function() {
+        return function(scope, element){
+            element[0].focus();
+        };
+    });
+
     directives.directive('passwordCheck', function() {
         return {
             require: 'ngModel',
@@ -49,5 +55,27 @@ define(['./directives'], function (directives) {
                 });
             }
         }
+    });
+
+    directives.directive('numbersOnly', function($window) {
+        return {
+            require : 'ngModel',
+            link : function (scope, element, attr, ngModelCtrl){
+                function fromUser(text) {
+                    if(text) {
+                        var transformedInput = text.replace(/[^0-9]/g, '');
+
+                        if(transformedInput !== text){
+                            ngModelCtrl.$setViewValue(transformedInput);
+                            ngModelCtrl.$render();
+                        }
+
+                        return transformedInput;
+                    }
+                    return undefined;
+                }
+                ngModelCtrl.$parsers.push(fromUser);
+            }
+        };
     });
 });

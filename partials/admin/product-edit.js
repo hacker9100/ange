@@ -122,7 +122,7 @@ define([
 
                             var files = data.FILES;
                             for (var i in files) {
-                                $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE","vsersion":6,"kind":files[i].FILE_GB});
+                                $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"deleteUrl":"//"+$location.host()+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE","vsersion":6,"kind":files[i].FILE_GB});
                             }
                         }, 500);
                     })
@@ -157,6 +157,11 @@ define([
                 return;
             }
 
+            if ($scope.item.SUM_IN_CNT == '') {
+                dialogs.notify('알림', '재고수량을 입력하세요.', {size: 'md'});
+                return;
+            }
+
             $scope.item.FILES = $scope.queue;
 
             var ckMain = false;
@@ -186,13 +191,15 @@ define([
             $scope.item.START_YMD = $filter('date')($scope.item.START_YMD, 'yyyy-MM-dd');
             $scope.item.CLOSE_YMD = $filter('date')($scope.item.CLOSE_YMD, 'yyyy-MM-dd');
 
+            var product_gb = $scope.item.PRODUCT_GB.value == 'AUCTION' ? 1 : $scope.item.PRODUCT_GB.value == 'CUMMERCE' ? 2 : 0;
+
             if ($stateParams.id == 0) {
                 $scope.insertItem('ange/product', 'item', $scope.item, false)
-                    .then(function(){$location.url('/product/list');})
+                    .then(function(){$location.url('/product/list/'+product_gb);})
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('ange/product', 'item', $stateParams.id, $scope.item, false)
-                    .then(function(){$location.url('/product/list');})
+                    .then(function(){$location.url('/product/list/'+product_gb);})
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };

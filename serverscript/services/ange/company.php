@@ -295,10 +295,8 @@ switch ($_method) {
             } else if ($_model['AFFILIATE_GB'] == "ONLINE") {
                 $aff_gb = "온라인 광고 및 제휴 문의";
             } else if ($_model['AFFILIATE_GB'] == "EVENT") {
-                $to = "ange@ange.co.kr";
                 $aff_gb = "체험단 및 이벤트/공동구매 문의";
             } else if ($_model['AFFILIATE_GB'] == "STORE") {
-                $to = "ange@ange.co.kr";
                 $aff_gb = "스토어 판매 관련 문의";
             }
 
@@ -313,7 +311,7 @@ switch ($_method) {
             $message = "안녕하세요. ".$_model['COMPANY_NM']."의 제휴&광고문의 내용입니다.".
                         "<br>광고구분 : ".$aff_gb.
                         "<br>기업명 : ".$_model['COMPANY_NM'].
-                        "<br>담당자 : ".$_model['COMPANY_NM'].
+                        "<br>담당자 : ".$_model['CHARGE_NM'].
                         "<br>홈페이지 : ".$_model['URL'].
                         "<br>이메일 : ".$_model['EMAIL'].
                         "<br>유선전화 : ".$_model['PHONE_1'].

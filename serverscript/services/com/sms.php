@@ -54,7 +54,7 @@
                         values
                         (
                             sysdate(),
-                            '['앙쥬'] 본인인증을 위해 ['".$_model['CERT_NO']."']를 입력해 주세요',
+                            '[앙쥬] 본인인증을 위해 [".$_model['CERT_NO']."]를 입력해 주세요',
                             '023334650',
                             '0',
                             'N',
@@ -217,7 +217,7 @@
                                 '".$no."',
                                 '".($i+$j)."',
                                 1,
-                                '".str_replace("-", "", trim($arr_phone['$j']))."',
+                                '".str_replace("-", "", trim($arr_phone[$j]))."',
                                 '".$_model['WORD1']."',
                                 '".$_model['WORD2']."',
                                 '".$_model['WORD3']."',

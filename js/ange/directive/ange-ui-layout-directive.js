@@ -1,10 +1,166 @@
 /**
  * Author : Sung-hwan Kim
- * Date   : 2014-12-30
- * Description : uiLnb 로드
+ * Date   : 2014-12-29
+ * Description : angeLayout 로드
  */
 define(['./directives'], function (directives) {
     'use strict';
+
+    directives.directive('angeLayout', ['$controller', function($controller) {
+        return {
+            restrict: 'EA',
+//            scope: true,
+            replace: true,
+            compile: function(element, attrs){
+                var menu = element.scope().location.split('/');
+
+                if (menu.length > 2) {
+                    if (menu[2] == '' || menu[2] == '') {
+                        if (menu[3] == 'list') {
+                            menu[2] = '';
+                        } else {
+                            menu[2] = '';
+                        }
+                    }
+                }
+//                element.append('<div ng-include src=" \'/partials/cms/'+menu[1]+'_'+menu[2]+'.html\' "></div>');
+                element.append('<ange-body></ange-body>');
+            }
+        }
+    }]);
+
+    directives.directive('angeBody', ['$controller', function($controller) {
+        return {
+            restrict: 'EA',
+//            scope: true,
+//            replace: true,
+//            controller: "@",
+//            name: "controllerName",
+            templateUrl: function(element, attr) {
+                var path = element.scope().location.split('/');
+                var ange_menu = element.scope().ange_menu;
+                var menu = null;
+                var url = '';
+
+                for (var i=0; i<ange_menu.length; i++) {
+                    if (ange_menu[i].MENU_ID.indexOf(path[2]) > -1) {
+                        menu = ange_menu[i];
+                    }
+                }
+
+                switch(path.length) {
+                    case 2 :
+                        url = path[1];
+                        break;
+                    case 3 :
+                        url = path[1] + '/' + path[1] + path[2];
+                        break;
+                    default :
+                        // 앙쥬스토리
+                        if (path[1] == 'story') {
+                            path[2] = 'content';
+
+//                            if (path[2] != 'magazine') {
+//                                path[2] = 'content';
+//                            }
+                            // 앙쥬피플
+                        } if (path[1] == 'people') {
+                        if (menu.COMM_GB != null) {
+
+                            //path[2] = angular.lowercase(menu.COMM_GB);
+                            if(path[2] == 'discusstitle'){ // 온라인토론 타이틀 리스트
+                                path[2] == 'discusstitle';
+                            }else if(path[2] == 'discuss'){
+                                path[2] == 'discuss';
+                            }else{
+                                path[2] = angular.lowercase(menu.COMM_GB);
+                            }
+                        }
+
+//                            if (path[2] == 'angeroom' || path[2] == 'momstalk' || path[2] == 'babycare' || path[2] == 'firstbirthtalk' || path[2] == 'booktalk'){
+//                                path[2] = 'board';
+//                            } else if (path[2] == 'angemodel' || path[2] == 'recipearcade' || path[2] == 'peopletaste'){
+//                                path[2] = 'photo';
+//                            } else if (path[2] == 'childdevelop' || path[2] == 'chlidoriental' || path[2] == 'obstetrics' || path[2] == 'momshealth' || path[2] == 'financial'){
+//                                path[2] = 'clinic';
+//                            }
+                        //                        }else if (path[2] == 'poll'){
+                        //                            path[2] = 'poll';
+                        // 앙쥬맘스
+                    } else if (path[2] == 'experienceprocess' || path[2] == 'experiencepast') {
+                        path[2] = 'experience';
+                    } else if (path[2] == 'eventprocess' || path[2] == 'eventperformance') {
+                        path[2] = 'event';
+                    } else if (path[2] == 'experiencewinner' || path[2] == 'eventwinner' || path[2] == 'supporterboard' || path[2] == 'postwinner') {
+                        path[2] = 'board';
+                    } else if (path[2] == 'experiencereview' || path[2] == 'productreview' || path[2] == 'angereview' || path[2] == 'samplereview' || path[2] == 'samplepackreview' || path[2] == 'eventreview' || path[2] == 'bookreview' || path[2] == 'dolreview' || path[2] == 'storereview') {
+                        path[2] = 'review';
+                    } else if (path[2] == 'ranknow' || path[2] == 'rankbest') {
+                        path[2] = 'rank';
+                        // 앙쥬스토어
+                    } else if (path[2] == 'mileagemall' || path[2] == 'cummerce') {
+                        path[2] = 'mall';
+                    }
+                    // 고객센터
+                    else if (path[2] == 'notice' || path[2] == 'system' || path[2] == 'faq') {
+                        path[2] = 'board';
+                    }else if(path[2] == 'qna' || path[2] == 'myqna'){
+                        path[2] = 'board';
+                    }
+
+                        url = path[1] + '/' + path[1] + path[2] + '-' + path[3];
+                        break;
+                }
+
+                return '/partials/ange/'+url+'.html';
+            },
+//            controller: function(element, attr) {
+//                return attr.menu+'_'+attr.type;
+//            },
+//            controller: function($scope, $location) {
+//                angular.extend(this, $controller('cms-common', {$scope: $scope}));
+//
+//                /********** 초기화 **********/
+//                // 초기화
+//                $scope.PAGE_NO = 0;
+//                $scope.PAGE_SIZE = 5;
+//
+//                /********** 이벤트 **********/
+//                // 목록 이동
+//                $scope.click_showList = function () {
+//                    $location.url('/'+$scope.api+'/list');
+//                };
+//
+//                // 선택
+//                $scope.click_showView = function (key) {
+//                    $location.url('/'+$scope.api+'/view/'+key);
+//                };
+//
+//                // 포틀릿 조회
+//                $scope.getPortlet = function (api) {
+//                    $scope.getList(api, {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {}, true)
+//                        .then(function(data){$scope.list = data})
+//                        .catch(function(error){$scope.list = [];  alert(error)});
+//                };
+//            },
+            link: function (scope, element, attr) {
+//                alert("1");
+            }
+        }
+    }]);
+
+    directives.directive('uiAds', ['$controller', function($controller) {
+        return {
+            restrict: 'EA',
+//            scope: true,
+//            replace: true,
+//            controller: "@",
+//            name: "controllerName",
+            templateUrl: function(element, attr) {
+                return '/partials/ange/com/ui-ads.html';
+            }
+        }
+    }]);
 
     directives.directive('uiLnb', ['$controller', 'UPLOAD', function($controller, UPLOAD) {
         return {
@@ -35,8 +191,8 @@ define(['./directives'], function (directives) {
                     }
 
                     templet += '<div ng-if="'+ (path[1] != 'main') + '" id="lnb" class="lnb">' +
-                                '   <div class="localmenu_wrap">' +
-                                '       <div ng-include=" \'/partials/ange/com/lnb-filter.html\' "></div>';
+                        '   <div class="localmenu_wrap">' +
+                        '       <div ng-include=" \'/partials/ange/com/lnb-filter.html\' "></div>';
 
                     for (var j in scope.menu_info) {
 
@@ -83,8 +239,8 @@ define(['./directives'], function (directives) {
                     }
 
                     templet += '       <div ng-include=" \'/partials/ange/com/lnb-handle.html\' "></div>' +
-                            '   </div>' +
-                            '</div>';
+                        '   </div>' +
+                        '</div>';
 
 
                     //모바일 메뉴구성
@@ -193,9 +349,9 @@ define(['./directives'], function (directives) {
                     templet += menu_big;
 
                     templet += '</ul>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>';
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
 
                     templet += '    <div ng-show="depth2 != \'\'" class="localmenu_mobile_col smenu">';
                     templet += '        <div class="btn-group" role="group" aria-label="Depth-2">';
@@ -226,10 +382,10 @@ define(['./directives'], function (directives) {
             controller: ['$scope', '$location', 'dialogs', function($scope, $location, dialogs) {
 
                 /********** 초기화 **********/
-                // 카테고리 데이터
+                    // 카테고리 데이터
 //                $scope.category = [];
 
-                // 초기화
+                    // 초기화
                 $scope.init = function() {
 //                    $scope.getList('cms/category', 'list', {}, {}, false).then(function(data){
 //
@@ -390,6 +546,21 @@ define(['./directives'], function (directives) {
                 /********** 화면 초기화 **********/
                 $scope.init();
             }]
+        }
+    }]);
+
+    directives.directive('moduleReply', ['$controller', function($controller) {
+        return {
+            restrict: 'EA',
+//            scope: true,
+//            replace: true,
+//            controller: "@",
+//            name: "controllerName",
+            templateUrl: '/partials/ange/com/module-reply.html',
+            controller: 'module-reply',
+            link: function (scope, element, attr) {
+//                alert("1");
+            }
         }
     }]);
 });

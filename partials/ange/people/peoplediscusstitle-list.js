@@ -125,16 +125,11 @@ define([
             $scope.getPeopleBoardList();
         }
 
-
         /********** 화면 초기화 **********/
-
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getPeopleBoardList)
             ['catch']($scope.reportProblems);
-
-        console.log($rootScope.uid);
-
     }]);
 });

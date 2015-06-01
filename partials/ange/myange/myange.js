@@ -1133,23 +1133,6 @@ define([
             $scope.search.ORDER = 'DESC';
 
             $scope.isLoding = true;
-            /*
-             $scope.getList('ange/album', 'item', $scope.NO, $scope.search, true)
-             .then(function(data){
-             for(var i in data) {
-             data[i].FILE = CONSTANT.BASE_URL + data[i].PATH + 'thumbnail/' + data[i].FILE_ID;
-
-             $scope.list.push(data[i]);
-             }
-
-             firstImage();
-
-             $scope.isLoding = false;
-
-             $scope.SEARCH_COUNT = data[0].TOTAL_COUNT;
-             })
-             ['catch'](function(error){$scope.list = ""; $scope.SEARCH_COUNT = 0; $scope.isLoding = false;});
-             */
         };
 
         /********** 화면 초기화 **********/
@@ -1161,31 +1144,6 @@ define([
 
     }]);
 
-    controllers.controller('myangebaby', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
-
-        // 초기화
-        $scope.init = function(session) {
-            $scope.community = "아기정보";
-        };
-
-        /********** 이벤트 **********/
-        // 게시판 목록 이동
-//        $scope.click_showPeopleBoardList = function () {
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/list');
-//            }
-//        };
-
-        /********** 화면 초기화 **********/
-        /*        $scope.getSession()
-         .then($scope.sessionCheck)
-         .then($scope.init)
-         .then($scope.getCmsBoard)
-         ['catch']($scope.reportProblems);*/
-        $scope.init();
-
-    }]);
-
     controllers.controller('myangecalendar', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
         $scope.talkCheck = false;
@@ -1193,9 +1151,13 @@ define([
         // 초기화
         $scope.init = function(session) {
 
+            var now = new Date();
+            var nowYear = now.getFullYear();
+            var nowMonth = now.getMonth() + 1;
+
             // $scope.search.year 가 null 일때 당해 입력
             // $scope.search.month 가 null 일때 당월 입력
-            $scope.search = {"year":"2015","month":"4"};
+            $scope.search = {"year":nowYear,"month":nowMonth};
 
             $scope.community = "캘린더";
             $scope.monthtable = "<b>Hi</b>";
@@ -1311,8 +1273,6 @@ define([
         };
 
         $scope.init();
-
-
     }]);
 
     controllers.controller('myangecoupon', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD', 'CONSTANT',function ($scope, $rootScope,$stateParams, $location, dialogs, UPLOAD,CONSTANT) {
@@ -1373,10 +1333,7 @@ define([
                     }
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-
-
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         $scope.PAGE_NO = 1;
@@ -1488,13 +1445,9 @@ define([
                 $scope.item.COUPON_CD = '';
                 return;
             }
-
-
-
         }
 
         $scope.click_saveMomsBecomeCoupon = function (){
-
 
             if($scope.BABY_BIRTH_YEAR == '' && $scope.BABY_BIRTH_MONTH == '' && $scope.BABY_BIRTH_DAY == ''){
                 dialogs.notify('알림', '회원정보에서 아이 생일을 추가해주세요.', {size: 'md'});
@@ -1660,16 +1613,11 @@ define([
 
         }
 
-//        $scope.init();
-//        $scope.getCouponList();
-
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getCouponList)
             ['catch']($scope.reportProblems);
-
-
     }]);
 
     controllers.controller('myangegroup', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
@@ -1754,13 +1702,7 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        /*        $scope.getSession()
-         .then($scope.sessionCheck)
-         .then($scope.init)
-         .then($scope.getCmsBoard)
-         ['catch']($scope.reportProblems);*/
         $scope.init();
-
     }]);
 
     controllers.controller('myangemate', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
@@ -2223,11 +2165,6 @@ define([
             .then($scope.init)
             .then($scope.getMessageList)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.getMessageList();
-        /*$scope.viewCheckFl();*/
-
     }]);
 
     controllers.controller('myangemileage', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT) {
@@ -2374,9 +2311,6 @@ define([
             .then($scope.init)
             .then($scope.getPeopleBoardList)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.getPeopleBoardList();
     }]);
 
     controllers.controller('myangeorderlist', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
@@ -2505,7 +2439,7 @@ define([
 
                     $scope.cummercelist = data;
                 })
-                ['catch'](function(error){alert(0); $scope.cummercelist = ""; $scope.CUMMERCE_TOTAL_COUNT = 0});
+                ['catch'](function(error){$scope.cummercelist = ""; $scope.CUMMERCE_TOTAL_COUNT = 0});
         };
 
         // 게시판 목록 조회
@@ -2781,6 +2715,11 @@ define([
 
         // 주문취소
         $scope.click_cancel = function (item){
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
 
             var dialog = dialogs.confirm('알림', '주문취소를 하시겠습니까.', {size: 'md'});
 
@@ -2793,7 +2732,7 @@ define([
                     $scope.cancelOrder();
                 } else if ($scope.item.ORDER_GB == 'CUMMERCE') {
                     $scope.frameName = 'pay';
-                    $scope.frameUrl = '/easypay70_plugin_php_window/web/normal/mgr.php?mgr_txtype=40&org_cno='+$scope.item.ORDER_NO+'&req_id=hong';
+                    $scope.frameUrl = '/easypay70_plugin_php_window/web/normal/mgr.php?mgr_txtype=40&org_cno='+$scope.item.ORDER_NO+'&req_id='+$rootScope.uid;
                 }
 
             }, function(btn) {
@@ -2805,7 +2744,9 @@ define([
         $scope.cancelOrder = function(item) {
             $scope.updateItem('ange/order', 'item', $scope.item.NO, $scope.item, false)
                 .then(function(data){
+                    $rootScope.mileage = data.mileage;
                     dialogs.notify('알림', '주문취소 되었습니다.', {size: 'md'});
+
                     //$scope.getPeopleBoardList();
 
                     $scope.getMileageList();
@@ -2839,13 +2780,6 @@ define([
             .then($scope.getCummerceList)
             .then($scope.getNamingList)
             ['catch']($scope.reportProblems);
-
-
-//        $scope.init();
-//        $scope.getMileageList();
-//        $scope.getCummerceList();
-//        $scope.getNamingList();
-
     }]);
 
     controllers.controller('myangeorderstatus', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
@@ -3121,11 +3055,6 @@ define([
             .then($scope.init)
             .then($scope.getCompList)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.getCompList();
-        /*$scope.viewCheckFl();*/
-
     }]);
 
     controllers.controller('myangescrap', ['$scope', '$stateParams', '$sce', '$rootScope', '$location', '$modal', '$timeout', 'dialogs', 'UPLOAD', function($scope, $stateParams, $sce, $rootScope, $location, $modal, $timeout, dialogs, UPLOAD) {
@@ -3282,17 +3211,11 @@ define([
 
         }
         /********** 화면 초기화 **********/
-        /*        $scope.getSession()
-         .then($scope.sessionCheck)
-         .then($scope.init)
-         .then($scope.getCmsBoard)
-         ['catch']($scope.reportProblems);*/
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getScarpList)
             ['catch']($scope.reportProblems);
-        $scope.init();
-        $scope.getScarpList();
-
     }]);
 
     controllers.controller('myangewriting', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
@@ -3675,13 +3598,6 @@ define([
             .then($scope.getPeopleBoardList)
             .then($scope.getPeoplePhotoList)
             .then($scope.getPeopleClinicList)
-            .catch($scope.reportProblems);
-
-//        $scope.init();
-//
-//        $scope.getPeopleBoardList();
-//        $scope.getPeoplePhotoList();
-//        $scope.getPeopleClinicList();
-
+            ['catch']($scope.reportProblems);
     }]);
 });

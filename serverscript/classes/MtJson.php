@@ -77,5 +77,16 @@ class MtJson extends MtData {
         echo json_encode($result);
         exit;
     }
+
+    function dataEnd3($result) {
+        ob_end_clean();
+
+        MtUtil::_d("### [END] [DATA]".$result);
+//        header('HTTP/1.1 200 OK');
+//        header('Content-Type:application/json');
+
+        echo $result;
+        exit;
+    }
 }
 ?>

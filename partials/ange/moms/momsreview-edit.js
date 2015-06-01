@@ -304,25 +304,6 @@ define([
 
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
 
-//                        if ($stateParams.menu == 'experiencereview') {
-//                            $location.url('/moms/experiencereview/list');
-//                        } else if ($stateParams.menu == 'productreview') {
-//                            $location.url('/moms/productreview/list');
-//                        } else if ($stateParams.menu == 'angereview') {
-//                            $location.url('/moms/angereview/list');
-//                        } else if ($stateParams.menu == 'samplereview') {
-//                            $location.url('/moms/samplereview/list');
-//                        } else if ($stateParams.menu == 'samplepackreview') {
-//                            $location.url('/moms/samplepackreview/list');
-//                        }else if ($stateParams.menu == 'eventreview') {
-//                            $location.url('/moms/eventreview/list');
-//                        }else if ($stateParams.menu == 'bookreview') {
-//                            $location.url('/moms/bookreview/list');
-//                        }else if ($stateParams.menu == 'dolreview') {
-//                            $location.url('/moms/dolreview/list');
-//                        }else if ($stateParams.menu == 'storereview') {
-//                            $location.url('/moms/storereview/list');
-//                        }
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
@@ -333,27 +314,6 @@ define([
                         dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
 
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
-
-//                        if ($stateParams.menu == 'experiencereview') {
-//                            $location.url('/moms/experiencereview/list');
-//                        } else if ($stateParams.menu == 'productreview') {
-//                            $location.url('/moms/productreview/list');
-//                        } else if ($stateParams.menu == 'angereview') {
-//                            $location.url('/moms/angereview/list');
-//                        } else if ($stateParams.menu == 'samplereview') {
-//                            $location.url('/moms/samplereview/list');
-//                        } else if ($stateParams.menu == 'samplepackreview') {
-//                            $location.url('/moms/samplepackreview/list');
-//                        }else if ($stateParams.menu == 'eventreview') {
-//                            $location.url('/moms/eventreview/list');
-//                        }else if ($stateParams.menu == 'bookreview') {
-//                            $location.url('/moms/bookreview/list');
-//                        }else if ($stateParams.menu == 'dolreview') {
-//                            $location.url('/moms/dolreview/list');
-//                        }else if ($stateParams.menu == 'storereview') {
-//                            $location.url('/moms/storereview/list');
-//                        }
-
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -365,8 +325,5 @@ define([
             .then($scope.init)
             .then($scope.getPeopleBoard)
             ['catch']($scope.reportProblems);
-//        $scope.init();
-//        $scope.getPeopleBoard();
-
     }]);
 });

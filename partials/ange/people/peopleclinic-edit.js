@@ -31,16 +31,6 @@ define([
 
         });
 
-
-//        // 파일 업로드 설정
-//        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
-//
-//        // 파일 업로드 완료 후 에디터에 중간 사이즈 이미지 추가
-//        $scope.addEditor = true;
-//
-//        /********** 초기화 **********/
-//            // 첨부파일 초기화
-//        $scope.queue = [];
         // 게시판 초기화
         $scope.item = {};
 
@@ -153,12 +143,6 @@ define([
         });
         $scope.ckeditor = '<p>Hello</p>';
 
-//        $scope.ckeditor = '<div><p>\n<p>aaa</div>'+
-//        '<div class= "form-group" id="dropzone" name="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">' +
-//        '이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />' +
-//        '(gif, jpg, png만 등록 가능)' +
-//        '</div>';
-
         /********** 이벤트 **********/
             // 게시판 목록 이동
         $scope.click_showPeopleClinicList = function () {
@@ -231,17 +215,7 @@ define([
 
                         $scope.addMileage($scope.item.BOARD_GB, $scope.menu.COMM_NO);
 
-                        if ($stateParams.menu == 'childdevelop') {
-                            $location.url('/people/childdevelop/list');
-                        } else if($stateParams.menu == 'chlidoriental') {
-                            $location.url('/people/chlidoriental/list');
-                        } else if($stateParams.menu == 'obstetrics') {
-                            $location.url('/people/obstetrics/list');
-                        } else if($stateParams.menu == 'momshealth') {
-                            $location.url('/people/momshealth/list');
-                        } else if($stateParams.menu == 'financial') {
-                            $location.url('/people/financial/list');
-                        }
+                        $location.url('/people/'+$stateParams.menu+'/list');
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
@@ -275,31 +249,17 @@ define([
 
                         dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
 
-                        if ($stateParams.menu == 'childdevelop') {
-                            $location.url('/people/childdevelop/list');
-                        } else if($stateParams.menu == 'chlidoriental') {
-                            $location.url('/people/chlidoriental/list');
-                        } else if($stateParams.menu == 'obstetrics') {
-                            $location.url('/people/obstetrics/list');
-                        } else if($stateParams.menu == 'momshealth') {
-                            $location.url('/people/momshealth/list');
-                        } else if($stateParams.menu == 'financial') {
-                            $location.url('/people/financial/list');
-                        }
+                        $location.url('/people/'+$stateParams.menu+'/list');
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
         /********** 화면 초기화 **********/
-        /*        $scope.getSession()
-         .then($scope.sessionCheck)
-         .then($scope.init)
-         .then($scope.getCmsBoard)
-         ['catch']($scope.reportProblems);*/
-        $scope.init();
-        $scope.getPeopleClinic();
-
-
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getPeopleClinic)
+            ['catch']($scope.reportProblems);
     }]);
 });

@@ -190,7 +190,7 @@ $r_refund_date     = $easyPay->_easypay_resdata[ "refund_date"     ];    //환�
 /* -------------------------------------------------------------------------- */
 if ( $res_cd == "0000" )
 {
-    $bDBProc = "false";     // DB처리 성공 시 "true", 실패 시 "false"
+    $bDBProc = "true";     // DB처리 성공 시 "true", 실패 시 "false"
     if ( $bDBProc != "true" )
     {
         // 승인요청이 실패 시 아래 실행
@@ -228,7 +228,7 @@ if ( $res_cd == "0000" )
 <meta name="robots" content="noindex, nofollow">
 <script type="text/javascript">
     function f_submit(){
-        window.top.externalOrder(true, "<?=$r_cno?>");
+        window.top.externalOrder(true, "<?=$r_cno?>", "<?=$r_bank_cd?>", "<?=$r_account_no?>");
         document.frm.submit();
     }
 </script>

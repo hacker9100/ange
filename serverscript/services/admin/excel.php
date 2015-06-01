@@ -178,7 +178,7 @@
 
         $sql = "SELECT
                     NO, PRODUCT_CNT, SUM_PRICE, RECEIPTOR_NM, RECEIPT_ADDR, RECEIPT_ADDR_DETAIL, RECEIPT_PHONE, PRODUCT_NO, USER_ID, DATE_FORMAT(ORDER_DT, '%Y-%m-%d') AS ORDER_YMD, PAY_GB, DATE_FORMAT(PAY_DT, '%Y-%m-%d') AS PAY_YMD,
-                    CASE ORDER_ST when 0 then '결제완료' when 1 then '주문접수' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE '환불/교환' end AS ORDER_ST_NM,
+                    CASE ORDER_ST when 0 then '입금대기' when 1 then '결제완료' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE '환불/교환' end AS ORDER_ST_NM,
                     PRODUCT_NM, PRODUCT_GB, PRICE, ORDER_GB, ORDER_ST, REQUEST_NOTE,
                     CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE '' END AS PROGRESS_ST_NM, PARENT_NO, PARENT_PRODUCT_NM, PRODUCT_CODE
                 FROM

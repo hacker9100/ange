@@ -1085,13 +1085,16 @@ define([
             scope: true,
 //            scope: { option: '=ngModel' },
 //            replace: true,
-            template: '<slick id="{{ option.id }}" init-onload="true" data="list" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false" style="padding:0px 6px; cursor:pointer;">' +
-                      '   <div ng-repeat="item in list" ><a ng-click="click_Banner(item)"><img ng-src="{{ item.MAIN_FILE }}"/></a></div>' +
-                      '</slick>'+
-                      '<div class="ads_indicators_wrap">' +
-                      '   <div ng-repeat="item in list" ng-click="click_slickGoTo($index)" ng-class=" $index == curIdx && option.id == curId ? \'ads_indicators now\' : \'ads_indicators\'">' +
-                      '   </div>' +
-                      '</div>',
+            templateUrl: function(element, attr) {
+                return '/partials/ange/main/portlet-slide-ads.html';
+            },
+//            template: '<slick id="{{ option.id }}" init-onload="true" data="list" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false" style="padding:0px 6px; cursor:pointer;">' +
+//                      '   <div ng-repeat="item in list" ><a ng-click="click_Banner(item)"><img ng-src="{{ item.MAIN_FILE }}"/></a></div>' +
+//                      '</slick>'+
+//                      '<div class="ads_indicators_wrap">' +
+//                      '   <div ng-repeat="item in list" ng-click="click_slickGoTo($index)" ng-class=" $index == curIdx && option.id == curId ? \'ads_indicators now\' : \'ads_indicators\'">' +
+//                      '   </div>' +
+//                      '</div>',
             controller: ['$scope', '$attrs', '$location', '$window', '$timeout', 'CONSTANT', function($scope, $attrs, $location, $window, $timeout, CONSTANT) {
 
                 /********** 초기화 **********/
@@ -1465,7 +1468,7 @@ define([
 
                             $scope.title = data[0].ada_title;
                         })
-                        .catch(function(error){});
+                        ['catch'](function(error){});
                 };
 
                 $scope.getImage();

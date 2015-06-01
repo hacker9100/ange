@@ -182,31 +182,6 @@ define([
         };
 
         /********** 이벤트 **********/
-            // 탭 클릭 이동
-//        $scope.click_selectTab = function (idx) {
-//            $scope.selectIdx = idx;
-//
-//            if ($stateParams.menu == 'mileagemall') {
-//                $scope.search.PRODUCT_GB = 'MILEAGE';
-//            } else if ($stateParams.menu == 'cummerce') {
-//                $scope.search.PRODUCT_GB = 'CUMMERCE';
-//            }
-//
-//            if(idx == 0){
-//                $scope.search.PRODUCT_TYPE = 'ALL';
-//                $scope.selectPhoto = 'ALL';
-//            }else{
-//                $scope.search.PRODUCT_TYPE = $scope.selectIdx;
-//            }
-//
-//            $scope.PAGE_NO = 1;
-//            $scope.PAGE_SIZE = 9;
-//            $scope.SEARCH_TOTAL_COUNT = 0;
-//
-//            $scope.list = [];
-//            $scope.click_showPeopleBoardList();
-//        };
-
         // 조회 화면 이동
         $scope.click_showViewPeoplePhoto = function (item) {
 //            if (item.SUM_IN_CNT <= item.SUM_OUT_CNT) {
@@ -234,15 +209,10 @@ define([
             $location.url('/moms/storereview/edit/0');
         }
 
-//        $scope.init();
-//        $scope.click_showPeopleBoardList();
-
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.click_showPeopleBoardList)
             ['catch']($scope.reportProblems);
-
-
     }]);
 });

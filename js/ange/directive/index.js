@@ -7,19 +7,12 @@
 define([
     './slick-directive',
     './ckeditor-directive',
-
     './checklist-directive',
     './dropdown-select-directive',
 
-    './ange-layout-directive',
-    './ange-body-directive',
-    './ange-ui-lnb-directive',
-    './ange-portlet-directive',
-    './ange-module-reply-directive',
-
-    './focus-directive',
-    './validation-directive',
-    './numbersonly-directive'//,
+    './ange-ui-layout-directive',
+    './ange-ui-portlet-directive',
+    './ange-validation-directive'
 ], function (){
 
 });

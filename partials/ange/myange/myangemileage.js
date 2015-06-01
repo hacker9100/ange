@@ -155,8 +155,5 @@ define([
             .then($scope.init)
             .then($scope.getPeopleBoardList)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.getPeopleBoardList();
     }]);
 });

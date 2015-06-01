@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('publish-edit', ['$scope', '$stateParams', '$modal', '$location', 'ngTableParams', function ($scope, $stateParams, $modal, $location, ngTableParams) {
+    controllers.controller('publish-edit', ['$scope', '$stateParams', '$modal', '$location', 'ngTableParams', 'dialogs', function ($scope, $stateParams, $modal, $location, ngTableParams, dialogs) {
 
         /********** 모달 팝업 **********/
         $scope.openModal = function (content, status, size) {
@@ -43,12 +43,15 @@ define([
         /********** 초기화 **********/
         // 검색
         var search = {};
+        $scope.search = {};
 
         // 초기화
         $scope.init = function() {
             var PROJECT = {NO: $stateParams.id};
             search = {PROJECT: PROJECT};
             $location.search('_search', search);
+
+            $scope.search = search;
         };
 
         /********** 이벤트 **********/
@@ -77,7 +80,7 @@ define([
 
                     $scope.getList('cms/task', 'list', {}, $scope.search, true)
                         .then(function(data){
-                            params.total(data[0].TOTAL_COUNT);
+//                            params.total(data[0].TOTAL_COUNT);
                             $defer.resolve(data);
 
 //                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
@@ -143,13 +146,19 @@ define([
             $scope.openModal(null, null, 'lg');
         };
 
+        $scope.saveItem = function() {
+            $scope.insertItem('cms/epub', 'item', $scope.tableParams.data, false)
+                .then(function(){/*$location.url('/publish/list');*/})
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
+
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.permissionCheck)
+            .then($scope.init)
+            .then($scope.getTaskList)
             ['catch']($scope.reportProblems);
-
-        $scope.getTaskList();
 
     }]);
 

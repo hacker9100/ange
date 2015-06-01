@@ -51,14 +51,6 @@ define([
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'CLINIC';
 
-//            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
-//                .then(function(data){
-//                    var comm_mg_nm = data[0].COMM_MG_NM;
-//                    $scope.COMM_MG_NM = comm_mg_nm;
-//
-//                })
-//                ['catch'](function(error){});
-
             $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){
                     $scope.COMM_MG_NM = data.COMM_MG_NM;
@@ -67,7 +59,6 @@ define([
                     for(var i in file) {
                         if (file[i].FILE_GB == 'MANAGER'){
                             $scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
-//                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
                         }
                         console.log($scope.main_img);
                     }
@@ -107,18 +98,6 @@ define([
                 $scope.openCounselModal(item, 'lg');
             }else{
                 $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/'+item.NO);
-
-//                if ($stateParams.menu == 'childdevelop') {
-//                    $location.url('/people/childdevelop/edit/'+item.NO);
-//                } else if($stateParams.menu == 'chlidoriental') {
-//                    $location.url('/people/chlidoriental/edit/'+item.NO);
-//                } else if($stateParams.menu == 'obstetrics') {
-//                    $location.url('/people/obstetrics/edit/'+item.NO);
-//                } else if($stateParams.menu == 'momshealth') {
-//                    $location.url('/people/momshealth/edit/'+item.NO);
-//                } else if($stateParams.menu == 'financial') {
-//                    $location.url('/people/financial/edit/'+item.NO);
-//                }
             }
 
         };
@@ -157,18 +136,6 @@ define([
                                     $modalInstance.close();
 
                                     $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/'+item.NO);
-
-//                                    if ($stateParams.menu == 'childdevelop') {
-//                                        $location.url('/people/childdevelop/edit/'+item.NO);
-//                                    } else if($stateParams.menu == 'chlidoriental') {
-//                                        $location.url('/people/chlidoriental/edit/'+item.NO);
-//                                    } else if($stateParams.menu == 'obstetrics') {
-//                                        $location.url('/people/obstetrics/edit/'+item.NO);
-//                                    } else if($stateParams.menu == 'momshealth') {
-//                                        $location.url('/people/momshealth/edit/'+item.NO);
-//                                    } else if($stateParams.menu == 'financial') {
-//                                        $location.url('/people/financial/edit/'+item.NO);
-//                                    }
                                 } else {
                                     dialogs.notify('알림', '비밀번호가 일치하지 않습니다', {size: 'md'});
                                     return;
@@ -266,66 +233,18 @@ define([
             $scope.reply.SYSTEM_GB = 'ANGE';
             $scope.reply.COMM_NO = $scope.menu.COMM_NO;
 
-//            if ($stateParams.menu == 'childdevelop') {
-//                $scope.reply.COMM_NO = '09';
-//            } else if($stateParams.menu == 'chlidoriental') {
-//                $scope.reply.COMM_NO = '10';
-//            } else if($stateParams.menu == 'obstetrics') {
-//                $scope.reply.COMM_NO = '11';
-//            } else if($stateParams.menu == 'momshealth') {
-//                $scope.reply.COMM_NO = '12';
-//            } else if($stateParams.menu == 'financial') {
-//                $scope.reply.COMM_NO = '13';
-//            }
-
             $scope.insertItem('com/webboard', 'item', $scope.reply, false)
                 .then(function(){
 
                     dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 
-/*                    if ($stateParams.menu == 'childdevelop') {
-                        $location.url('/people/childdevelop/view/'+$scope.item.NO);
-                    } else if($stateParams.menu == 'chlidoriental') {
-                        $location.url('/people/chlidoriental/view/'+$scope.item.NO);
-                    } else if($stateParams.menu == 'obstetrics') {
-                        $location.url('/people/obstetrics/view/'+$scope.item.NO);
-                    } else if($stateParams.menu == 'momshealth') {
-                        $location.url('/people/momshealth/view/'+$scope.item.NO);
-                    } else if($stateParams.menu == 'financial') {
-                        $location.url('/people/financial/view/'+$scope.item.NO);
-                    }*/
-
                     $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list/');
-
-//                    if ($stateParams.menu == 'childdevelop') {
-//                        $location.url('/people/childdevelop/list');
-//                    } else if($stateParams.menu == 'chlidoriental') {
-//                        $location.url('/people/chlidoriental/list');
-//                    } else if($stateParams.menu == 'obstetrics') {
-//                        $location.url('/people/obstetrics/list');
-//                    } else if($stateParams.menu == 'momshealth') {
-//                        $location.url('/people/momshealth/list');
-//                    } else if($stateParams.menu == 'financial') {
-//                        $location.url('/people/financial/list');
-//                    }
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 이전글
         $scope.getPreBoard = function (){
-//            if ($stateParams.menu == 'childdevelop') {
-//                $scope.search['COMM_NO'] = '09';
-//            } else if($stateParams.menu == 'chlidoriental') {
-//                $scope.search['COMM_NO'] = '10';
-//            } else if($stateParams.menu == 'obstetrics') {
-//                $scope.search['COMM_NO'] = '11';
-//            } else if($stateParams.menu == 'momshealth') {
-//                $scope.search['COMM_NO'] = '12';
-//            } else if($stateParams.menu == 'financial') {
-//                $scope.search['COMM_NO'] = '13';
-//            }
-
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.KEY = $stateParams.id;
 
@@ -340,19 +259,6 @@ define([
 
         // 다음글
         $scope.getNextBoard = function (){
-
-//            if ($stateParams.menu == 'childdevelop') {
-//                $scope.search['COMM_NO'] = '09';
-//            } else if($stateParams.menu == 'chlidoriental') {
-//                $scope.search['COMM_NO'] = '10';
-//            } else if($stateParams.menu == 'obstetrics') {
-//                $scope.search['COMM_NO'] = '11';
-//            } else if($stateParams.menu == 'momshealth') {
-//                $scope.search['COMM_NO'] = '12';
-//            } else if($stateParams.menu == 'financial') {
-//                $scope.search['COMM_NO'] = '13';
-//            }
-
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.KEY = $stateParams.id;
 
@@ -366,7 +272,7 @@ define([
         }
 
         // 조회 화면 이동
-// 조회 화면 이동(비밀글)
+        // 조회 화면 이동(비밀글)
         $scope.click_showViewPeopleBoard = function (key, regid, password_fl) {
 
             console.log(regid);
@@ -394,18 +300,6 @@ define([
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
 
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
-
-//                        if ($stateParams.menu == 'childdevelop') {
-//                            $location.url('/people/childdevelop/list');
-//                        } else if($stateParams.menu == 'chlidoriental') {
-//                            $location.url('/people/chlidoriental/list');
-//                        } else if($stateParams.menu == 'obstetrics') {
-//                            $location.url('/people/obstetrics/list');
-//                        } else if($stateParams.menu == 'momshealth') {
-//                            $location.url('/people/momshealth/list');
-//                        } else if($stateParams.menu == 'financial') {
-//                            $location.url('/people/financial/list');
-//                        }
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
@@ -442,14 +336,6 @@ define([
                     }
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-            /*            $scope.updateItem('com/webboard', 'likeCntitem', item.NO, {}, false)
-             .then(function(){
-
-             dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
-             $scope.getPeopleBoard();
-             })
-             ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
         };
 
         // 스크랩
@@ -529,14 +415,5 @@ define([
          .then($scope.getPreBoard)
          .then($scope.getNextBoard)
          ['catch']($scope.reportProblems);
-        //$scope.addHitCnt();
-
-//        $scope.init();
-//        $scope.likeFl();
-//        $scope.getPeopleClinic();
-//        $scope.getPreBoard();
-//        $scope.getNextBoard();
-
-
     }]);
 });

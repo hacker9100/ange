@@ -123,7 +123,6 @@ define([
                 $scope.item.queue = [];
 //                $scope.checkFile.splice(0, $scope.checkFile.length);
             }
-//            console.log($scope.checkFile)
         };
 
         var state;
@@ -160,7 +159,6 @@ define([
         // 첨부파일 초기화
         $scope.queue = [];
 
-
         // 첨부파일 체크박스 리스트 초기화
         $scope.item.queue = [];
 
@@ -178,12 +176,6 @@ define([
             $scope.isReady = true;
         });
         $scope.ckeditor = '<p>Hello</p>';
-
-//        $scope.ckeditor = '<div><p>\n<p>aaa</div>'+
-//        '<div class= "form-group" id="dropzone" name="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">' +
-//        '이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />' +
-//        '(gif, jpg, png만 등록 가능)' +
-//        '</div>';
 
         /********** 이벤트 **********/
             // 게시판 목록 이동
@@ -322,21 +314,10 @@ define([
         };
 
         /********** 화면 초기화 **********/
-/*        $scope.getSession()
-            .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.getCmsBoard)
-            ['catch']($scope.reportProblems);*/
-
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getPeopleBoard)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.getPeopleBoard();
-
-
     }]);
 });

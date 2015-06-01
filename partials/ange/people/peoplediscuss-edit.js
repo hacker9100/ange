@@ -80,15 +80,7 @@ define([
             if ($stateParams.id == 0) {
                 $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){
-
-//                        $scope.item.REMAIN_POINT = 10;
-//                        $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
-//                            .then(function(){
-//                            })
-//                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-
                         $scope.addMileage('BOARD', $scope.menu.COMM_NO);
 
                         //$location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
@@ -99,13 +91,6 @@ define([
             } else {
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){
-
-//                        $scope.item.REMAIN_POINT = 10;
-//                        $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
-//                            .then(function(){
-//                            })
-//                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
                         dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
 
                         //$location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
@@ -123,12 +108,5 @@ define([
             .then($scope.init)
             .then($scope.getPeopleBoard)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.getPeopleBoard();
-
-        console.log($rootScope.uid);
-
-
     }]);
 });

@@ -196,60 +196,27 @@ switch ($_method) {
             $_d->failEnd("상품명을 작성 하세요");
         }*/
 
-        $upload_path = '../../../upload/files/';
-        $file_path = '/storage/product/';
-        $source_path = '../../..'.$file_path;
-        $insert_path = array();
+        $_d->sql_beginTransaction();
+        if (isset($_model['CART']) && $_model['CART'] != "") {
+            foreach ($_model['CART'] as $e) {
 
-            $body_str = $_model['BODY'];
-
-            try {
-                if (count($_model['FILES']) > 0) {
-                    $files = $_model['FILES'];
-                    if (!file_exists($source_path) && !is_dir($source_path)) {
-                        @mkdir($source_path);
-                        @mkdir($source_path.'thumbnail/');
-                        @mkdir($source_path.'medium/');
-                    }
-
-                    for ($i = 0 ; $i < count($_model['FILES']); $i++) {
-                        $file = $files[$i];
-
-                        if (file_exists($upload_path.$file['name'])) {
-                            $uid = uniqid();
-                            rename($upload_path.$file['name'], $source_path.$uid);
-                            rename($upload_path.'thumbnail/'.$file['name'], $source_path.'thumbnail/'.$uid);
-
-                            if ($file['version'] == 6 ) {
-                                $body_str = str_replace($file['url'], BASE_URL.$file_path.$uid, $body_str);
-                            } else {
-                                rename($upload_path.'medium/'.$file['name'], $source_path.'medium/'.$uid);
-                                $body_str = str_replace($file['mediumUrl'], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-                            }
-
-                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file['kind']);
-
-                            MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i]['path']);
-
-
-                        }
-                    }
+                if( trim($e['PRODUCT_CNT']) == "" || $e['PRODUCT_CNT'] == 0){
+                    $_d->failEnd("수량을 선택 하세요");
                 }
 
-                $_model['BODY'] = $body_str;
-            } catch(Exception $e) {
-                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
-                break;
-            }
+                $sql = "SELECT COUNT(*) AS COUNT FROM ANGE_CART WHERE PRODUCT_NO = {$e['PRODUCT_NO']} AND USER_ID = '{$_SESSION['uid']}'";
 
-            $_d->sql_beginTransaction();
-            if (isset($_model['CART']) && $_model['CART'] != "") {
-                foreach ($_model['CART'] as $e) {
+                $check = $_d->sql_fetch($sql);
 
-                    if( trim($e['PRODUCT_CNT']) == "" || $e['PRODUCT_CNT'] == 0){
-                        $_d->failEnd("수량을 선택 하세요");
-                    }
+                if ($check['COUNT'] > 0) {
+                    $sql = "UPDATE ANGE_CART
+                            SET
+                                PRODUCT_CNT = PRODUCT_CNT + {$e['PRODUCT_CNT']}
+                            WHERE
+                                PRODUCT_NO = {$e['PRODUCT_NO']} AND USER_ID = '{$_SESSION['uid']}'";
 
+                    $_d->sql_query($sql);
+                } else {
                     $sql = "INSERT INTO ANGE_CART
                             (
                                 USER_ID,
@@ -264,6 +231,8 @@ switch ($_method) {
                             )";
 
                     $_d->sql_query($sql);
+                }
+
 
                     // 상품 재고 수정 SUM_IN_CNT(재고량) SUM_OUT_CNT(주문량)
 //                    $sql = "UPDATE ANGE_PRODUCT
@@ -294,25 +263,25 @@ switch ($_method) {
 //                        }
 //                    }
 
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
                 }
             }
+        }
 
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
+        if($_d->mysql_errno > 0) {
+            $err++;
+            $msg = $_d->mysql_error;
+        }
 
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$msg);
-            }else{
-                $_d->sql_commit();
-                $_d->succEnd($no);
-            }
+        if($err > 0){
+            $_d->sql_rollback();
+            $_d->failEnd("등록실패입니다:".$msg);
+        }else{
+            $_d->sql_commit();
+            $_d->succEnd($no);
+        }
 
         break;
 

@@ -22,15 +22,7 @@ define([
                 var filename = data[0].name;
                 var extend = filename.slice(filename.indexOf(".") + 1).toLowerCase(); //파일 확장자를 잘라내고, 비교를 위해 소문자로 변경.
 
-                //console.log(extend);
-
                 if(extend != "jpg" && extend != "png" &&  extend != "gif" &&  extend != "bmp"){ //확장자를 확인.
-                    //$scope.file = "";
-                    //$scope.file = {};
-                    //$scope.queue = [];
-
-                    console.log(data[0]);
-
                     $scope.file1 = {};
 
                     alert('이미지 파일(jpg, png, gif, bmp)만 등록 가능합니다.');
@@ -879,16 +871,10 @@ define([
         };
 
         $scope.getBanner();
-
-//        $scope.init();
-//        $scope.click_sampleSeasonList();
-
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.click_sampleSeasonList)
             ['catch']($scope.reportProblems);
-
-
     }]);
 });

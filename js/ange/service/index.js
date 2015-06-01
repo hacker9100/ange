@@ -5,9 +5,5 @@
  * Description : 사용할 모든 service를 로드
  */
 define([
-//    './contentFectory',
-//    './contentsService',
-
-    // 공통
     './data-service'
 ], function () {});

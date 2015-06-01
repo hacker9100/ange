@@ -47,20 +47,10 @@ define([
 
         $scope.todayDate = today;
 
-        //$scope.uid = $rootScope.uid;
-
         // 초기화
         $scope.init = function(session) {
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
 
-//            $scope.search.BOARD_GB = "WINNER";
-//            if ($stateParams.menu == 'experiencewinner') {
-//                $scope.search.EVENT_GB = "EVENT";
-//            } else if ($stateParams.menu == 'eventwinner') {
-//                $scope.search.EVENT_GB = "EVENT";
-//            } else if ($stateParams.menu == 'postwinner') {
-//                $scope.search.EVENT_GB = "POSTCARD";
-//            }
             var getParam = function(key){
                 var _parammap = {};
                 document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {

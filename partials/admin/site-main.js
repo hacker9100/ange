@@ -365,7 +365,7 @@ define([
         $scope.getMenuList0 = function () {
             $scope.getList('com/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, true)
                 .then(function(data){
-                    console.log(JSON.stringify(data))
+//                    console.log(JSON.stringify(data));
                     $scope.list0 = data;
                     $scope.click_selectTab(0);
 //                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
@@ -377,7 +377,7 @@ define([
         $scope.getMenuList1 = function () {
             $scope.getList('com/menu', 'menu', {}, {SYSTEM_GB: 'ANGE', CHANNEL_NO: '1'}, true)
                 .then(function(data){
-
+                    console.log(JSON.stringify(data));
                     for (var i in data) {
                         if (data[i].ETC == null || data[i].ETC == '') {
                             data[i].CATEGORY = [];

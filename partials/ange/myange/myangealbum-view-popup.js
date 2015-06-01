@@ -29,23 +29,6 @@ define([
             $scope.search.ORDER = 'DESC';
 
             $scope.isLoding = true;
-/*
-            $scope.getList('ange/album', 'item', $scope.NO, $scope.search, true)
-                .then(function(data){
-                    for(var i in data) {
-                        data[i].FILE = CONSTANT.BASE_URL + data[i].PATH + 'thumbnail/' + data[i].FILE_ID;
-
-                        $scope.list.push(data[i]);
-                    }
-
-                    firstImage();
-
-                    $scope.isLoding = false;
-
-                    $scope.SEARCH_COUNT = data[0].TOTAL_COUNT;
-                })
-                ['catch'](function(error){$scope.list = ""; $scope.SEARCH_COUNT = 0; $scope.isLoding = false;});
-*/
         };
 
         /********** 화면 초기화 **********/

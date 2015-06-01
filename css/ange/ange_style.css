@@ -2674,6 +2674,10 @@ img.blank_wrap {
 }
 
 @media screen and (max-width: 767px) {
+    .people_share {
+        display: none;
+    }
+
     .people_share_mobile {
         display: block;
     }

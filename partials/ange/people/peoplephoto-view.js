@@ -42,17 +42,6 @@ define([
 
                 })
                 ['catch'](function(error){});
-
-//            if ($stateParams.menu == 'angemodel') {
-//                $scope.community = "앙쥬모델 선발대회";
-//                $scope.community_show = "angemodel";
-//            } else if($stateParams.menu == 'recipearcade') {
-//                $scope.community = "레시피 아케이드";
-//                $scope.community_show = "recipearcade";
-//            } else if($stateParams.menu == 'peopletaste') {
-//                $scope.community = "피플 맛집";
-//                $scope.community_show = "peopletaste";
-//            }
         };
 
         // 등록 버튼 클릭
@@ -121,14 +110,6 @@ define([
                     }
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-            /*            $scope.updateItem('com/webboard', 'likeCntitem', item.NO, {}, false)
-             .then(function(){
-
-             dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
-             $scope.getPeopleBoard();
-             })
-             ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
         };
 
         /********** 이벤트 **********/
@@ -326,12 +307,5 @@ define([
          .then($scope.getPreBoard)
          .then($scope.getNextBoard)
          ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.likeFl();
-////        $scope.addHitCnt();
-//        $scope.getPeopleBoard();
-//        $scope.getPreBoard();
-//        $scope.getPreBoard();
     }]);
 });

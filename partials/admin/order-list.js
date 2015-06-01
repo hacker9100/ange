@@ -38,7 +38,7 @@ define([
         $scope.init = function() {
             $scope.condition = [{name: "아이디", value: "USER_ID", index: 1}, {name: "주문일", value: "PAY_DT", index: 2}];
             $scope.order_gb = [{name: "마일리지", value: "MILEAGE", index: 0}, {name: "커머스", value: "CUMMERCE", index: 1}, {name: "네이밍", value: "NAMING", index: 2}];
-            $scope.order_st = [{name: "결제완료", value: "0", index: 0}, {name: "주문접수", value: "1", index: 1}, {name: "상품준비중", value: "2", index: 2}, {name: "배송중", value: "3", index: 3}, {name: "배송완료", value: "4", index: 4}, {name: "주문취소", value: "5", index: 5}, {name: "환불/교환", value: "6", index: 6}];
+            $scope.order_st = [{name: "입금대기", value: "0", index: 0}, {name: "결제완료", value: "1", index: 1}, {name: "상품준비중", value: "2", index: 2}, {name: "배송중", value: "3", index: 3}, {name: "배송완료", value: "4", index: 4}, {name: "주문취소", value: "5", index: 5}, {name: "환불/교환", value: "6", index: 6}];
 
             $scope.sort = [{name: "주문일", value: "ORDER_DT", index: 0}, {name: "결제일", value: "PAY_DT", index: 1}];
             $scope.order = [{name: "내림차순", value: "DESC", index: 0}, {name: "오름차순", value: "ASC", index: 1}];

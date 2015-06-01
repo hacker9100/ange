@@ -33,7 +33,7 @@ require.config({
 //        'angular': '../../lib/angular/angular', // angularjs를 사용한다.
 //        'angular-resource': '../../lib/angular/angular-resource', // restful방식으로 http 통신을 통한 서비스를 한다.
 //        'angular-sanitize': '../../lib/angular/angular-sanitize', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
-        'angular': '../../lib/angular/angular.min', // angularjs를 사용한다.
+        'angular': '../../lib/angular-1.2.1/angular.min', // angularjs를 사용한다.
         'angular-resource': '../../lib/angular-1.2.1/angular-resource.min', // restful방식으로 http 통신을 통한 서비스를 한다.
         'angular-sanitize': '../../lib/angular-1.2.1/angular-sanitize.min', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
         'angular-ui-router': '../../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
@@ -44,10 +44,10 @@ require.config({
 ////        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
         'lodash' : '../../lib/dropdown-multiselect/lodash.min',
 
-        'slick-carousel': '../../lib/slick-carousel/slick', //
+        'slick-carousel': '../../lib/slick-carousel/slick.min', //
 
         // ng-table 모듈
-        'ng-table': '../../lib/ng-table/ange-ng-table',
+        'ng-table': '../../lib/ng-table/ng-table.min',
 
         // modal 모듈
         'dialog-translation': '../../lib/dialog/dialogs-default-translations.min',
@@ -59,15 +59,12 @@ require.config({
 
         // fileupload 모듈
         'ui-widget': '../../lib/file-upload/vendor/jquery.ui.widget',
+//        'load-image': '../../lib/file-upload/load-image/load-image.min',
         'load-image': '../../lib/file-upload/load-image/load-image',
         'load-image-ios': '../../lib/file-upload/load-image/load-image-ios',
         'load-image-meta': '../../lib/file-upload/load-image/load-image-meta',
         'load-image-exif': '../../lib/file-upload/load-image/load-image-exif',
-//        'load-image-orientation': '../../lib/file-upload/load-image/load-image-orientation',
-//        'load-image-exif-map': '../../lib/file-upload/load-image/load-image-exif-map',
         'canvas-to-blob': '../../lib/file-upload/gallery/canvas-to-blob.min',
-//        'blueimp-helper': '../../lib/file-upload/gallery/blueimp-helper',
-//        'blueimp-gallery': '../../lib/file-upload/gallery/blueimp-gallery',
 //        'jquery-blueimp-gallery': '../../lib/file-upload/gallery/jquery.blueimp-gallery',
 //        'iframe-transport': '../../lib/file-upload/jquery.iframe-transport',
         'fileupload': '../../lib/file-upload/jquery.fileupload',
@@ -141,27 +138,6 @@ require.config({
         'ckeditor-jquery': {
             deps:['jquery','ckeditor-core']
         },
-//        'jquery-blueimp-gallery':{
-//            deps:['jquery','blueimp-gallery']
-//        },
-//        'jqImage':{
-//            deps:['jquery','load-image','load-image-meta','load-image-exif','load-image-ios','canvas-to-blob','fileupload-process']
-//        },
-//        'jqAudio':{
-//            deps:['jquery','load-image','fileupload-process']
-//        },
-//        'jqVideo':{
-//            deps:['jquery','load-image','fileupload-process']
-//        },
-//        'jqIframeTransport':{
-//            deps:['jquery']
-//        },
-//        'jqValidate':{
-//            deps:['jquery','fileupload-process']
-//        },
-//        'ngFileupload':{
-//            deps:['jquery','angular','jquery-blueimp-gallery','fileupload','fileupload-process','fileupload-image','fileupload-audio','fileupload-video','fileupload-validate']
-//        },
         'ng-google-chart': {
             deps:['jquery', 'angular']
         },

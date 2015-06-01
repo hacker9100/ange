@@ -136,7 +136,7 @@
                         $in_str = "";
                         $arr_category = explode(',', $row['ETC']);
                         for($j=0;$j< sizeof($arr_category);$j++){
-                            $in_str = $in_str."'".trim($arr_category['$j'])."'";
+                            $in_str = $in_str."'".trim($arr_category[$j])."'";
                             if (sizeof($arr_category) - 1 != $j) $in_str = $in_str.",";
                         }
 

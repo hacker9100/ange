@@ -289,10 +289,5 @@ define([
             .then($scope.click_showStoreAuctionList)
             .then($scope.click_showStorePastBoardList)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.click_showStoreAuctionList();
-//        $scope.click_showPeopleBoardList();
-
     }]);
 });

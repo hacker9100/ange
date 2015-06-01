@@ -13,21 +13,6 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('file', ['$scope', 'UPLOAD', function ($scope, UPLOAD) {
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
-//        $scope.newDir = 'test1/';
-/*
-        $scope.loadingFiles = true;
-//        $http.get(url+'?newDir='+$scope.newDir)
-        $http.get(url)
-            .then(
-            function (response) {
-                $scope.loadingFiles = false;
-                $scope.queue = response.data.files || [];
-            },
-            function () {
-                $scope.loadingFiles = false;
-            }
-        );
-*/
     }]);
 
     controllers.controller('file_destroy', ['$scope', '$http', function ($scope, $http) {
@@ -40,7 +25,6 @@ define([
             file.$destroy = function () {
                 state = 'pending';
                 return $http({
-//                    url: file.deleteUrl+'&newDir='+$scope.newDir,
                     url: file.deleteUrl,
                     method: file.deleteType
                 }).then(
@@ -68,16 +52,10 @@ define([
                 return state;
             };
             file.$editor = function () {
-//                alert(JSON.stringify(file))
-//                var img = '<img alt="" src="/upload/files/medium/'+file.name+'" />';
-
                 if (!angular.isUndefined(CKEDITOR)) {
                     var element = CKEDITOR.dom.element.createFromHtml( '<img alt="" src="'+file.mediumUrl+'" />' );
                     CKEDITOR.instances.editor1.insertElement( element );
                 }
-
-//                var img = '<img alt="" src="'+file.mediumUrl+'" />';
-//                $scope.item.BODY += img;
             };
         }
     }]);

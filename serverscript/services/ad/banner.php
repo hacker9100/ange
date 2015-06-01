@@ -252,122 +252,153 @@
             break;
 
         case "POST":
-            if ( trim($_model['SUBJECT']) == "" ) {
-                $_d->failEnd("제목을 작성 하세요");
-            }
-
-            $upload_path = '../../../upload/files/';
-            $file_path = '/storage/admin/';
-            $source_path = '../../..'.$file_path;
-            $insert_path = null;
-
-            try {
-                if (count($_model['FILE']) > 0) {
-                    $file = $_model['FILE'];
-                    if (!file_exists($source_path) && !is_dir($source_path)) {
-                        @mkdir($source_path);
-                    }
-
-                    if (file_exists($upload_path.$file['name'])) {
-                        $uid = uniqid();
-                        rename($upload_path.$file['name'], $source_path.$uid);
-                        $insert_path = array(path => $file_path, uid => $uid, kind => $file['kind']);
-
-                        MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path['path']);
-                    }
+            if ($_type == 'item') {
+                if ( trim($_model['SUBJECT']) == "" ) {
+                    $_d->failEnd("제목을 작성 하세요");
                 }
-            } catch(Exception $e) {
-                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
-                break;
-            }
 
-            $err = 0;
-            $msg = "";
+                $upload_path = '../../../upload/files/';
+                $file_path = '/storage/admin/';
+                $source_path = '../../..'.$file_path;
+                $insert_path = null;
 
-            $_d->sql_beginTransaction();
+                try {
+                    if (count($_model['FILE']) > 0) {
+                        $file = $_model['FILE'];
+                        if (!file_exists($source_path) && !is_dir($source_path)) {
+                            @mkdir($source_path);
+                        }
 
-            $sql = "INSERT INTO ANGE_BANNER
-                    (
-                        URL,
-                        SUBJECT,
-                        BANNER_GB,
-                        LOCATION_GB,
-                        BANNER_ST,
-                        BIND_NO
-                    ) VALUES (
-                        '".$_model['URL']."'
-                        ,'".$_model['SUBJECT']."'
-                        ,'".$_model['BANNER_GB']."'
-                        ,'".$_model['LOCATION_GB']."'
-                        ,'".$_model['BANNER_ST']."'
-                        ,'".$_model['BIND_NO']."'
-                    )";
+                        if (file_exists($upload_path.$file['name'])) {
+                            $uid = uniqid();
+                            rename($upload_path.$file['name'], $source_path.$uid);
+                            $insert_path = array(path => $file_path, uid => $uid, kind => $file['kind']);
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
+                            MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path['path']);
+                        }
+                    }
+                } catch(Exception $e) {
+                    $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                    break;
+                }
 
-            if ($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
+                $err = 0;
+                $msg = "";
 
-            if (isset($_model['FILE']) && $_model['FILE'] != "") {
-                $file = $_model['FILE'];
+                $_d->sql_beginTransaction();
 
-                MtUtil::_d("------------>>>>> file : ".$file['name']);
-
-                /*if($file[kind] != 'MAIN'){
-                    $_d->failEnd("대표이미지를 선택하세요.");
-                }*/
-
-                $sql = "INSERT INTO COM_FILE
+                $sql = "INSERT INTO ANGE_BANNER
                         (
-                            FILE_NM
-                            ,FILE_ID
-                            ,PATH
-                            ,FILE_EXT
-                            ,FILE_SIZE
-                            ,THUMB_FL
-                            ,REG_DT
-                            ,FILE_ST
-                            ,FILE_GB
-                            ,FILE_ORD
-                            ,TARGET_NO
-                            ,TARGET_GB
+                            URL,
+                            SUBJECT,
+                            BANNER_GB,
+                            LOCATION_GB,
+                            BANNER_ST,
+                            BIND_NO
                         ) VALUES (
-                            '".$file['name']."'
-                            , '".$insert_path['uid']."'
-                            , '".$insert_path['path']."'
-                            , '".$file['type']."'
-                            , '".$file['size']."'
-                            , '0'
-                            , SYSDATE()
-                            , 'C'
-                            , '".$file['kind']."'
-                            , '0'
-                            , '".$no."'
-                            , 'BANNER'
+                            '".$_model['URL']."'
+                            ,'".$_model['SUBJECT']."'
+                            ,'".$_model['BANNER_GB']."'
+                            ,'".$_model['LOCATION_GB']."'
+                            ,'".$_model['BANNER_ST']."'
+                            ,'".$_model['BIND_NO']."'
                         )";
 
                 $_d->sql_query($sql);
-                $file_no = $_d->mysql_insert_id;
+                $no = $_d->mysql_insert_id;
 
-                if($_d->mysql_errno > 0) {
+                if ($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
                 }
-            }
 
-            if ($err > 0) {
-                $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$msg);
-            } else {
-                $_d->sql_commit();
-                $_d->succEnd($no);
+                if (isset($_model['FILE']) && $_model['FILE'] != "") {
+                    $file = $_model['FILE'];
+
+                    MtUtil::_d("------------>>>>> file : ".$file['name']);
+
+                    /*if($file[kind] != 'MAIN'){
+                        $_d->failEnd("대표이미지를 선택하세요.");
+                    }*/
+
+                    $sql = "INSERT INTO COM_FILE
+                            (
+                                FILE_NM
+                                ,FILE_ID
+                                ,PATH
+                                ,FILE_EXT
+                                ,FILE_SIZE
+                                ,THUMB_FL
+                                ,REG_DT
+                                ,FILE_ST
+                                ,FILE_GB
+                                ,FILE_ORD
+                                ,TARGET_NO
+                                ,TARGET_GB
+                            ) VALUES (
+                                '".$file['name']."'
+                                , '".$insert_path['uid']."'
+                                , '".$insert_path['path']."'
+                                , '".$file['type']."'
+                                , '".$file['size']."'
+                                , '0'
+                                , SYSDATE()
+                                , 'C'
+                                , '".$file['kind']."'
+                                , '0'
+                                , '".$no."'
+                                , 'BANNER'
+                            )";
+
+                    $_d->sql_query($sql);
+                    $file_no = $_d->mysql_insert_id;
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
+
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("등록실패입니다:".$msg);
+                } else {
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
+            } else if ($_type == 'click') {
+                $sql = "INSERT INTO adm_history_banner
+                        (
+                            ada_idx,
+                            adu_guid,
+                            adu_id,
+                            adu_ip,
+                            adhb_type,
+                            adhb_menu,
+                            adhb_category,
+                            adhb_date_regi
+                        ) VALUES (
+                            '".$_model['ada_idx']."'
+                            ,'".$_SESSION['guid']."'
+                            ,'".$_SESSION['uid']."'
+                            ,'".$_SESSION['ip']."'
+                            ,'1'
+                            ,'".$_model['MENU']."'
+                            ,'".$_model['CATEGORY']."'
+                            ,SYSDATE()
+                        )";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("등록실패입니다:".$msg);
+                } else {
+                    $_d->succEnd($no);
+                }
             }
 
             break;
-
         case "PUT":
             if (!isset($_key) || $_key == '') {
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");

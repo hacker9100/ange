@@ -125,25 +125,7 @@ define([
         /********** 이벤트 **********/
             // 수정 버튼 클릭
         $scope.click_showPeopleBoardEdit = function (item) {
-            if ($stateParams.menu == 'experiencereview') {
-                $location.url('/moms/experiencereview/edit/'+item.NO);
-            } else if ($stateParams.menu == 'productreview') {
-                $location.url('/moms/productreview/edit/'+item.NO);
-            } else if ($stateParams.menu == 'angereview') {
-                $location.url('/moms/angereview/edit/'+item.NO);
-            } else if ($stateParams.menu == 'samplereview') {
-                $location.url('/moms/samplereview/edit/'+item.NO);
-            } else if ($stateParams.menu == 'samplepackreview') {
-                $location.url('/moms/samplepackreview/edit/'+item.NO);
-            }else if ($stateParams.menu == 'eventreview') {
-                $location.url('/moms/eventreview/edit/'+item.NO);
-            }else if ($stateParams.menu == 'storereview') {
-                $location.url('/moms/storereview/edit/'+item.NO);
-            }else if ($stateParams.menu == 'dolreview') {
-                $location.url('/moms/dolreview/edit/'+item.NO);
-            }else if ($stateParams.menu == 'bookreview') {
-                $location.url('/moms/bookreview/edit/'+item.NO);
-            }
+            $location.url('/moms/'+$stateParams.menu+'/edit/'+item.NO);
         };
 
         // 목록 버튼 클릭
@@ -163,34 +145,7 @@ define([
                 $rootScope.CONDITION = 'SUBJECT+BODY';
             }
 
-            if ($stateParams.menu == 'experiencereview') {
-                //$location.url('/moms/experiencereview/list');
-                $location.url('/moms/experiencereview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
-            } else if ($stateParams.menu == 'productreview') {
-                //$location.url('/moms/productreview/list');
-                $location.url('/moms/productreview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
-            } else if ($stateParams.menu == 'angereview') {
-                //$location.url('/moms/angereview/list');
-                $location.url('/moms/angereview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
-            } else if ($stateParams.menu == 'samplereview') {
-                //$location.url('/moms/samplereview/list');
-                $location.url('/moms/samplereview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
-            } else if ($stateParams.menu == 'samplepackreview') {
-                //$location.url('/moms/samplepackreview/list');
-                $location.url('/moms/samplepackreview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
-            }else if ($stateParams.menu == 'eventreview') {
-                //$location.url('/moms/eventreview/list');
-                $location.url('/moms/eventreview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
-            }else if ($stateParams.menu == 'bookreview') {
-                //$location.url('/moms/bookreview/list');
-                $location.url('/moms/bookreview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
-            }else if ($stateParams.menu == 'dolreview') {
-                //$location.url('/moms/dolreview/list');
-                $location.url('/moms/dolreview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
-            }else if ($stateParams.menu == 'storereview') {
-                //$location.url('/moms/dolreview/list');
-                $location.url('/moms/storereview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
-            }
+            $location.url('/moms/'+$stateParams.menu+'/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
         };
 
         $scope.addHitCnt = function () {
@@ -230,19 +185,6 @@ define([
         // 조회 화면 이동
         $scope.click_showViewPeopleBoard = function (key) {
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
-
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/view/'+key);
-//            } else if($stateParams.menu == 'momstalk') {
-//                $location.url('/people/momstalk/view/'+key);
-//            } else if($stateParams.menu == 'babycare') {
-//                $location.url('/people/babycare/view/'+key);
-//            } else if($stateParams.menu == 'firstbirthtalk') {
-//                $location.url('/people/firstbirthtalk/view/'+key);
-//            } else if($stateParams.menu == 'booktalk') {
-//                $location.url('/people/booktalk/view/'+key);
-//            }
-
         };
 
         // 댓글 리스트
@@ -428,19 +370,6 @@ define([
                     .then(function(){
 
                         dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
-//                        if ($stateParams.menu == 'experiencereview') {
-//                            $location.url('/moms/experiencereview/list');
-//                        } else if ($stateParams.menu == 'productreview') {
-//                            $location.url('/moms/productreview/list');
-//                        } else if ($stateParams.menu == 'angereview') {
-//                            $location.url('/moms/angereview/list');
-//                        } else if ($stateParams.menu == 'samplereview') {
-//                            $location.url('/moms/samplereview/list');
-//                        } else if ($stateParams.menu == 'samplepackreview') {
-//                            $location.url('/moms/samplepackreview/list');
-//                        }else if ($stateParams.menu == 'eventreview') {
-//                            $location.url('/moms/eventreview/list');
-//                        }
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
 
                     })
@@ -454,20 +383,6 @@ define([
             if($rootScope.uid != '' && $rootScope.uid != null){
 
                 $scope.search.NO = $stateParams.id;
-
-                /*if ($stateParams.menu == 'experiencereview') {
-                    $scope.search['TARGET_GB'] = 'EXPERIENCE';
-                } else if ($stateParams.menu == 'productreview') {
-                    $scope.search['TARGET_GB'] = 'PRODUCT';
-                } else if ($stateParams.menu == 'angereview') {
-                    $scope.search['TARGET_GB'] = 'ANGE';
-                } else if ($stateParams.menu == 'samplereview') {
-                    $scope.search['TARGET_GB'] = 'SAMPLE';
-                } else if ($stateParams.menu == 'samplepackreview') {
-                    $scope.search['TARGET_GB'] = 'SAMPLEPACK';
-                }else if ($stateParams.menu == 'eventreview') {
-                    $scope.search['TARGET_GB'] = 'EVENT';
-                }*/
 
                 $scope.search['TARGET_GB'] = 'REVIEW';
 
@@ -518,14 +433,6 @@ define([
                     }
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-            /*            $scope.updateItem('com/webboard', 'likeCntitem', item.NO, {}, false)
-             .then(function(){
-
-             dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
-             $scope.getPeopleBoard();
-             })
-             ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
         };
 
         // 스크랩
@@ -554,11 +461,6 @@ define([
                         $scope.scrap.TARGET_NO = item.NO;
                         $scope.scrap.TARGET_GB = item.BOARD_GB;
 
-                        // [테스트] 등록자아이디, 등록자명, 닉네임 은 세션처리 되면 삭제할예정
-                       /* $scope.scrap.REG_UID = 'hong';
-                        $scope.scrap.NICK_NM = '므에에롱';
-                        $scope.scrap.REG_NM = '홍길동';*/
-
                         $scope.insertItem('com/scrap', 'item', $scope.scrap, false)
                             .then(function(){
 
@@ -581,20 +483,6 @@ define([
                 $scope.openLogin(null, 'md');
                 return;
             }
-
-//            if ($stateParams.menu == 'experiencereview') {
-//                $location.url('/moms/experiencereview/edit/0');
-//            } else if ($stateParams.menu == 'productreview') {
-//                $location.url('/moms/productreview/edit/0');
-//            } else if ($stateParams.menu == 'angereview') {
-//                $location.url('/moms/angereview/edit/0');
-//            } else if ($stateParams.menu == 'samplereview') {
-//                $location.url('/moms/samplereview/edit/0');
-//            } else if ($stateParams.menu == 'samplepackreview') {
-//                $location.url('/moms/samplepackreview/edit/0');
-//            }else if ($stateParams.menu == 'eventreview') {
-//                $location.url('/moms/eventreview/edit/0');
-//            }
 
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/0');
 
@@ -629,12 +517,6 @@ define([
         }
 
         /********** 화면 초기화 **********/
-        /*        $scope.getSession()
-         .then($scope.sessionCheck)
-         .then($scope.init)
-         .then($scope.getCmsBoard)
-         ['catch']($scope.reportProblems);*/
-
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
@@ -644,14 +526,5 @@ define([
             .then($scope.getPreBoard)
             .then($scope.getNextBoard)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.likeFl();
-//        $scope.addHitCnt();
-//        $scope.getPeopleBoard();
-//        $scope.getPreBoard();
-//        $scope.getNextBoard();
-        //$scope.getPeopleReplyList();
-
     }]);
 });

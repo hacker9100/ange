@@ -97,18 +97,6 @@ define([
             // 수정 버튼 클릭
         $scope.click_showPeopleBoardEdit = function (item) {
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/'+item.NO);
-
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/edit/'+item.NO);
-//            } else if($stateParams.menu == 'momstalk') {
-//                $location.url('/people/momstalk/edit/'+item.NO);
-//            } else if($stateParams.menu == 'babycare') {
-//                $location.url('/people/babycare/edit/'+item.NO);
-//            } else if($stateParams.menu == 'firstbirthtalk') {
-//                $location.url('/people/firstbirthtalk/edit/'+item.NO);
-//            } else if($stateParams.menu == 'booktalk') {
-//                $location.url('/people/booktalk/edit/'+item.NO);
-//            }
         };
 
         // 목록 버튼 클릭
@@ -132,18 +120,6 @@ define([
             }
 
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
-
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/list');
-//            } else if($stateParams.menu == 'momstalk') {
-//                $location.url('/people/momstalk/list');
-//            } else if($stateParams.menu == 'babycare') {
-//                $location.url('/people/babycare/list');
-//            } else if($stateParams.menu == 'firstbirthtalk') {
-//                $location.url('/people/firstbirthtalk/list');
-//            } else if($stateParams.menu == 'booktalk') {
-//                $location.url('/people/booktalk/list');
-//            }
         };
 
         $scope.addHitCnt = function () {
@@ -174,36 +150,10 @@ define([
         // 조회 화면 이동
         $scope.click_showViewPeopleBoard = function (key) {
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
-
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/view/'+key);
-//            } else if($stateParams.menu == 'momstalk') {
-//                $location.url('/people/momstalk/view/'+key);
-//            } else if($stateParams.menu == 'babycare') {
-//                $location.url('/people/babycare/view/'+key);
-//            } else if($stateParams.menu == 'firstbirthtalk') {
-//                $location.url('/people/firstbirthtalk/view/'+key);
-//            } else if($stateParams.menu == 'booktalk') {
-//                $location.url('/people/booktalk/view/'+key);
-//            }
-
         };
 
         // 이전글
         $scope.getPreBoard = function (){
-
-//            if ($stateParams.menu == 'angeroom') {
-//                $scope.search['COMM_NO'] = '1';
-//            } else if($stateParams.menu == 'momstalk') {
-//                $scope.search['COMM_NO'] = '2';
-//            } else if($stateParams.menu == 'babycare') {
-//                $scope.search['COMM_NO'] = '3';
-//            } else if($stateParams.menu == 'firstbirthtalk') {
-//                $scope.search['COMM_NO'] = '4';
-//            } else if($stateParams.menu == 'booktalk') {
-//                $scope.search['COMM_NO'] = '5';
-//            }
-
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.KEY = $stateParams.id;
 
@@ -218,19 +168,6 @@ define([
 
         // 다음글
         $scope.getNextBoard = function (){
-
-//            if ($stateParams.menu == 'angeroom') {
-//                $scope.search['COMM_NO'] = '1';
-//            } else if($stateParams.menu == 'momstalk') {
-//                $scope.search['COMM_NO'] = '2';
-//            } else if($stateParams.menu == 'babycare') {
-//                $scope.search['COMM_NO'] = '3';
-//            } else if($stateParams.menu == 'firstbirthtalk') {
-//                $scope.search['COMM_NO'] = '4';
-//            } else if($stateParams.menu == 'booktalk') {
-//                $scope.search['COMM_NO'] = '5';
-//            }
-
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.KEY = $stateParams.id;
 
@@ -250,18 +187,6 @@ define([
                 $scope.deleteItem('com/webboard', 'item', item.NO, true)
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
-
-//                        if ($stateParams.menu == 'angeroom') {
-//                            $location.url('/people/angeroom/list');
-//                        } else if($stateParams.menu == 'momstalk') {
-//                            $location.url('/people/momstalk/list');
-//                        } else if($stateParams.menu == 'babycare') {
-//                            $location.url('/people/babycare/list');
-//                        } else if($stateParams.menu == 'firstbirthtalk') {
-//                            $location.url('/people/firstbirthtalk/list');
-//                        } else if($stateParams.menu == 'booktalk') {
-//                            $location.url('/people/booktalk/list');
-//                        }
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
@@ -396,13 +321,5 @@ define([
             .then($scope.getPreBoard)
             .then($scope.getNextBoard)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.likeFl();
-//        $scope.addHitCnt();
-//        $scope.getPeopleBoard();
-//        $scope.getPreBoard();
-//        $scope.getNextBoard();
-
     }]);
 });

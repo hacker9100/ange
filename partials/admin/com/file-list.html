@@ -1,7 +1,11 @@
 <!--<div class="container">-->
 <div class="col-md-12">
-    <form id="fileupload" method="POST" enctype="multipart/form-data" ng-controller="file" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
-        <input type="hidden" id="version" name="version" value="6">
+    <form id="fileupload" action="/app/serverscript/upload/" method="POST" enctype="multipart/form-data" ng-controller="file" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
+        <!-- Redirect browsers with JavaScript disabled to the origin page -->
+        <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
+        <input type="hidden" name="newDir" value="{{newDir}}">
+        <input type="hidden" id="version" name="version" value="7">
+        <!--<input type="hidden" id="version" name="version" value="2">-->
         <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
         <div class="col-xs-12 row fileupload-buttonbar" style="margin:0px auto;">
             <div class="col-sm-9">
@@ -44,7 +48,7 @@
                 <td data-ng-switch data-on="!!file.thumbnailUrl">
                     <div class="preview" data-ng-switch-when="true">
                         <!--<a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery><img data-ng-src="{{file.thumbnailUrl}}" alt=""></a>-->
-                        <img src="{{file.thumbnailUrl}}" alt="">
+                        <img src="{{file.thumbnailUrl}}" alt="" style="width:100px; height:100px;">
                         <img src="/imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" ng-show="file.kind == 'MAIN'"/>
                     </div>
                     <div class="preview" data-ng-switch-default data-file-upload-preview="file"></div>
@@ -72,7 +76,7 @@
                         <i class="glyphicon glyphicon-ban-circle"></i>
                         <span>취소</span>
                     </button>
-                    <button data-ng-controller="file_destroy" type="button" class="btn btn-danger btn-xs destroy" data-ng-click="click_deleteFile(file)" data-ng-hide="!file.isUpdate">
+                    <button data-ng-controller="file_destroy" type="button" class="btn btn-danger btn-xs destroy" data-ng-click="click_deleteFile($index, file)" data-ng-hide="!file.isUpdate">
                         <i class="glyphicon glyphicon-trash"></i>
                         <span>바로 삭제</span>
                     </button>
@@ -93,15 +97,4 @@
         </table>
     </form>
     <br>
-</div>
-
-<!-- The blueimp Gallery widget -->
-<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
-    <div class="slides"></div>
-    <h3 class="title"></h3>
-    <a class="prev">‹</a>
-    <a class="next">›</a>
-    <a class="close">×</a>
-    <a class="play-pause"></a>
-    <ol class="indicator"></ol>
 </div>

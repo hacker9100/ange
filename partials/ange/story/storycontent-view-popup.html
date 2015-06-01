@@ -17,16 +17,16 @@
     <!--<div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=23&catimage=&callm','_blank','width=1100,height=750');" data-ng-show="task.NO=='414'" class="ebook_view_button" style="">eBook 보기</div>-->
 
     <div class="people_share">
-        <div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=19&catimage=&callmode=admin','_blank','width=1100,height=750');" data-ng-show="task.NO=='481'" class="ebook_view_button">
+        <div ng-if="task.NO=='481'" onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=19&catimage=&callmode=admin','_blank','width=1100,height=750');" class="ebook_view_button">
             <span class="glyphicon glyphicon-book" aria-hidden="true"></span> eBook
         </div>
-        <div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=23&catimage=&callmode=admin','_blank','width=1100,height=750');" data-ng-show="task.NO=='414'" class="ebook_view_button">
+        <div ng-if="task.NO=='414'" onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=23&catimage=&callmode=admin','_blank','width=1100,height=750');" class="ebook_view_button">
             <span class="glyphicon glyphicon-book" aria-hidden="true"></span> eBook
         </div>
-        <div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=24&catimage=&callmode=admin','_blank','width=1100,height=750');" data-ng-show="task.NO=='1466'" class="ebook_view_button">
+        <div ng-if="task.NO=='1466'" onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=24&catimage=&callmode=admin','_blank','width=1100,height=750');" class="ebook_view_button">
             <span class="glyphicon glyphicon-book" aria-hidden="true"></span> eBook
         </div>
-        <div ng-click="click_eBookOpen(task)" data-ng-show="task.EBOOK_URL!='' && task.EBOOK_URL!=null" class="ebook_view_button">
+        <div ng-if="task.EBOOK_URL!='' && task.EBOOK_URL!=null" ng-click="click_eBookOpen(task)" class="ebook_view_button">
             <span class="glyphicon glyphicon-book" aria-hidden="true"></span> eBook
         </div>
 

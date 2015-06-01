@@ -137,7 +137,7 @@ define([
 
                     $scope.cummercelist = data;
                 })
-                ['catch'](function(error){alert(0); $scope.cummercelist = ""; $scope.CUMMERCE_TOTAL_COUNT = 0});
+                ['catch'](function(error){$scope.cummercelist = ""; $scope.CUMMERCE_TOTAL_COUNT = 0});
         };
 
         // 게시판 목록 조회
@@ -413,6 +413,11 @@ define([
 
         // 주문취소
         $scope.click_cancel = function (item){
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
 
             var dialog = dialogs.confirm('알림', '주문취소를 하시겠습니까.', {size: 'md'});
 
@@ -425,7 +430,7 @@ define([
                     $scope.cancelOrder();
                 } else if ($scope.item.ORDER_GB == 'CUMMERCE') {
                     $scope.frameName = 'pay';
-                    $scope.frameUrl = '/easypay70_plugin_php_window/web/normal/mgr.php?mgr_txtype=40&org_cno='+$scope.item.ORDER_NO+'&req_id=hong';
+                    $scope.frameUrl = '/easypay70_plugin_php_window/web/normal/mgr.php?mgr_txtype=40&org_cno='+$scope.item.ORDER_NO+'&req_id='+$rootScope.uid;
                 }
 
             }, function(btn) {
@@ -437,7 +442,9 @@ define([
         $scope.cancelOrder = function(item) {
             $scope.updateItem('ange/order', 'item', $scope.item.NO, $scope.item, false)
                 .then(function(data){
+                    $rootScope.mileage = data.mileage;
                     dialogs.notify('알림', '주문취소 되었습니다.', {size: 'md'});
+
                     //$scope.getPeopleBoardList();
 
                     $scope.getMileageList();
@@ -471,12 +478,5 @@ define([
             .then($scope.getCummerceList)
             .then($scope.getNamingList)
             ['catch']($scope.reportProblems);
-
-
-//        $scope.init();
-//        $scope.getMileageList();
-//        $scope.getCummerceList();
-//        $scope.getNamingList();
-
     }]);
 });

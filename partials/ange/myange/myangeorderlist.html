@@ -132,7 +132,7 @@
                                         </div>
                                     </td>
                                     <td class="table_title" style="font-size: 0.92em;">
-                                        <a style="cursor:pointer;" ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.PRODUCT_NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)"><strong>[{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '경매소'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}</strong></a>
+                                        <a style="cursor:pointer;" ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.PRODUCT_NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)"><strong>[{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : item.PRODUCT_GB == 'CUMMERCE' ? '커머스' : 경매소'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}</strong></a>
                                         <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
                                         <div class="webzine_list_item"><strong>금액</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_GB == 'MILEAGE' ? item.SUM_PRICE : item.DIRECT_PRICE}}</span></div>
                                         <div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</span></div>
@@ -217,12 +217,13 @@
                                         </div>
                                     </td>
                                     <td class="table_title" style="font-size: 0.92em;">
-                                        <a style="cursor:pointer;" ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.PRODUCT_NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)"><strong>[{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '경매소'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}</strong></a>
+                                        <a style="cursor:pointer;" ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.PRODUCT_NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)"><strong>[{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : item.PRODUCT_GB == 'CUMMERCE' ? '커머스' : 경매소'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}</strong></a>
                                         <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
                                         <div class="webzine_list_item"><strong>금액</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_PRICE}}</span></div>
-                                        <div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}{{item.ORDER_GB_NM}}</span></div>
+                                        <div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</span></div>
+                                        <div ng-show="role == 'ANGE_ADMIN'" class="webzine_list_item"><strong>주문번호</strong><span class="table_gray" style="margin-left:8px;">{{item.ORDER_NO}}</span></div>
                                     </td>
-                                    <td class="table_date" align="right" style="padding-top:14px;">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}{{item.ORDER_NO}}</td>
+                                    <td class="table_date" align="right" style="padding-top:14px;">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
                                     <td class="table_date" align="center"><!--<input type="text" class="form-control input-sm" value="99" placeholder="" />-->{{item.PRODUCT_CNT}}</td>
                                     <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.SUM_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
                                     <td class="table_date" align="center">
@@ -247,7 +248,7 @@
                             </nav><!-- /.Paging-->
                             <!-- /peoplepoll_list -->
 
-                            <iframe width="100%" name="{{frameName}}" ng-src="{{frameUrl}}"></iframe>
+                            <iframe ng-show="role == 'ANGE_ADMIN'" width="100%" name="{{frameName}}" ng-src="{{frameUrl}}"></iframe>
 
                             <br/>
 

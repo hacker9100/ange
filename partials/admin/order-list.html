@@ -93,6 +93,9 @@
         </div>
 
         <div class="col-md-12" style="padding-bottom:10px;">
+            <div class= "col-md-2" style="float: left;" >
+                <a href="https://office.easypay.co.kr" target="_blank">이지페이 상점관리자</a> * IE 환경에서 새창 접속
+            </div>
             <div class= "col-md-2" style="float: right;" >
                 <select ng-model="search.ORDER" ng-options="order.name for order in order" class= "form-control" ng-change="click_refreshList()"></select>
             </div>
@@ -106,8 +109,8 @@
                 <td style="width:20px; font-size:0.94em; line-height:38px;" class="text-center" data-title="''">
                     <input ng-model="item.CHECKED" type= "checkbox" checklist-model="check_order" checklist-value="item.NO"/>
                 </td>
-                <td style="width:150px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'주문자 ID(받는사람)'">
-                    {{ item.USER_ID }}({{ item.RECEIPTOR_NM }})
+                <td style="width:150px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'닉네임(받는사람)'">
+                    {{ item.NICK_NM }}({{ item.RECEIPTOR_NM }})
                 </td>
                 <td style="width:200px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'상품명'">
                     {{ item.PRODUCT_NM }}
@@ -125,13 +128,13 @@
                     {{ item.ORDER_GB == 'MILEAGE' ? '마일리지몰' : item.ORDER_GB == 'CUMMERCE' ? '커머스' : '네이밍' }}<br>({{ item.ORDER_YMD }})
                 </td>
                 <td style="width:120px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'결재구분(결재일)'">
-                    {{ item.PAY_GB == 'CREDIT' ? '카드' : '마일리지' }}<br>({{ item.PAY_YMD }})
+                    {{ item.PAY_GB == 'CREDIT' ? '카드' : item.PAY_GB == 'NOBANKBOOK' ? '무통장입금' : '마일리지' }}<br>({{ item.PAY_YMD }})
                 </td>
                 <td style="width:130px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'상태'">
                     <div ng-show="item.NO == selectOrder && isStatus">
                         <select ng-model="item.ORDER_ST" class= "form-control" ng-change="change_orderStatus(item)">
-                            <option value="0">결제완료</option>
-                            <option value="1">주문접수</option>
+                            <option value="0">입금대기</option>
+                            <option value="1">결제완료</option>
                             <option value="2">상품준비중</option>
                             <option value="3">배송중</option>
                             <option value="4">배송완료</option>
@@ -140,7 +143,7 @@
                         </select>
                     </div>
                     <div ng-show="item.NO != selectOrder">
-                        {{ item.ORDER_ST == '0' ? '결제완료' : item.ORDER_ST == '1' ? '주문접수' : item.ORDER_ST == '2' ? '상품준비중' : item.ORDER_ST == '3' ? '배송중' : item.ORDER_ST == '4' ? '배송완료' : item.ORDER_ST == '5' ? '주문취소' : '환불/교환' }}
+                        {{ item.ORDER_ST == '0' ? '입금대기' : item.ORDER_ST == '1' ? '결제완료' : item.ORDER_ST == '2' ? '상품준비중' : item.ORDER_ST == '3' ? '배송중' : item.ORDER_ST == '4' ? '배송완료' : item.ORDER_ST == '5' ? '주문취소' : '환불/교환' }}
                     </div>
                 </td>
                 <td style="width:80px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'기능'">

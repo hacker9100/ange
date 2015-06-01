@@ -117,7 +117,5 @@ define([
         /********** 화면 초기화 **********/
         $scope.init();
         $scope.getMenuList();
-//        $scope.getStoryList();
-
     }]);
 });

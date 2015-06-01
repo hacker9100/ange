@@ -209,10 +209,10 @@
             <!--<div ng-show="busy && !end"><center><span> - 리스트가 로딩 중입니다. - </span></center></div>-->
             <!--<div ng-show="end"><center><span> - 더 이상 읽을 리스트가 없습니다. - </span></center></div>-->
 
-            <div ng-show="busy && !end"><center><img src="/imgs/ange/story_loading_gif.gif" style="margin-top:20px;"/></center></div>
-            <div ng-show="end"><center><img src="/imgs/ange/story_endmessage.gif" style="margin-top:20px;"/></center></div>
+            <div ng-if="busy && !end"><center><img src="/imgs/ange/story_loading_gif.gif" style="margin-top:20px;"/></center></div>
+            <div ng-if="end"><center><img src="/imgs/ange/story_endmessage.gif" style="margin-top:20px;"/></center></div>
 
-            <button ng-show="!end" type="button" class="btn btn-default start mobiletype" style="width:100%; " ng-click="addStory();">
+            <button ng-if="!end" type="button" class="btn btn-default start mobiletype" style="width:100%; " ng-click="addStory();">
                 <i class="glyphicon glyphicon-align-justify"></i>
                 <span>더보기</span>
             </button>

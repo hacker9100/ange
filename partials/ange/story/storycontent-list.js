@@ -93,14 +93,6 @@ define([
             $anchorScroll();
         }
 
-//        $scope.fetchNext = function() {
-//            if(!$scope.busy) {
-//                $scope.busy = true;
-//
-//                $scope.getContentList();
-//            }
-//        };
-
         var isFirst = true;
 
         // 이미지 조회
@@ -112,13 +104,6 @@ define([
                 $scope.PAGE_NO = 0;
             }
 
-//            if ($scope.category != '') {
-//                console.log($scope.category)
-//                for (var i in $scope.category) {
-//                    if ($scope.category[i] == null) $scope.category.splice(i, 1)
-//                }
-//                $scope.search.CATEGORY = $scope.category;
-//            }
             $scope.search.CATEGORY = [];
 
             if ($scope.category != '') {
@@ -240,20 +225,8 @@ define([
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
-//        $scope.openModal = function (content, size) {
-//            var dlg = dialogs.create('partials/ange/story/storycontent-view-popup.html', 'storycontent-view-popup',
-//                content, {size:size, keyboard: true, backdrop: true});
-//            dlg.result.then(function(){
-//
-//            },function(){
-//                if(angular.equals($scope.name,''))
-//                    $scope.name = 'You did not enter in your name!';
-//            });
-//        };
-
         $scope.init();
         $scope.getContentList();
-//        $scope.getAdvertList();
     }]);
 });
 

@@ -46,15 +46,19 @@ define([
         };
 
         // EPUB 버튼 이동
-        $scope.click_publishProject = function (idx) {
-            var project = $scope.tableParams.data[idx];
-            $location.path('/publish/edit/'+project.NO);
+        $scope.click_publishProject = function (item) {
+//            $window.open('//ange.co.kr/epub/export_epub.php?project_no='+item.NO);
+//            var project = $scope.tableParams.data[idx];
+            $location.path('/publish/edit/'+item.NO);
         };
 
         // 검색 버튼 클릭
         $scope.click_searchProject = function () {
             $scope.tableParams.reload();
         }
+
+        // 페이지 사이즈
+        $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
 
         // 프로젝트 목록 조회
         $scope.getProjectList = function () {

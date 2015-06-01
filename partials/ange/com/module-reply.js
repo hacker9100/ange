@@ -384,7 +384,7 @@ define([
                                 dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
                                 $modalInstance.close();
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                     $scope.click_cancel = function () {
@@ -408,17 +408,16 @@ define([
                 return;
             }
 
+            if ($rootScope.uid == item.REG_UID) {
+                dialogs.notify('알림', '본인에게는 메세지를 보낼수 없습니다.', {size: 'md'});
+                return;
+            }
+
             $scope.openViewMessageRegModal(item, 'lg');
         };
 
         /********** 화면 초기화 **********/
         $scope.init();
         $scope.getReplyList();
-
-//        $scope.getSession()
-//            .then($scope.sessionCheck)
-//            ['catch']($scope.reportProblems);
-
-
     }]);
 });

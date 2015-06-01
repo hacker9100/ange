@@ -36,7 +36,7 @@
                                                 <div class="store_list_item maininfo"><strong>배송비</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.DELIVERY_PRICE | number}} 원({{item.DELIVERY_ST == 2 ? '선불' : '착불'}})</span></div>
                                                 <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.COMPANY_NM}}</span></div>
                                                 <div ng-show="role == 'ANGE_ADMIN'" class="store_list_item maininfo"><strong>수량</strong>
-                                                    <span ng-class="item.SUM_CNT > 0 ? 'table_gray' : 'table_red'" style="position:absolute; left:120px;">{{item.SUM_CNT >  0 ? item.SUM_CNT : '품절'}}</span>
+                                                    <span ng-class="item.SUM_CNT > 0 ? 'table_gray' : 'table_red'" style="position:absolute; left:120px;">{{item.SUM_CNT >  0 ? item.SUM_IN_CNT : '품절'}}</span>
                                                 </div>
                                                 <!--<div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" href="{{item.URL}}">{{item.URL}}</a></span></div>-->
                                                 <!--<div class="store_list_item maininfo"><strong>외부링크</strong>-->
@@ -86,9 +86,10 @@
                                             </div>  <!-- /.store_col_info -->
 
                                             <!--<div ng-if="uid != '' && uid != null" ng-show="productsList != ''">-->
-                                            <div ng-if="uid != '' && uid != null" style="float:left; width:100%; text-align:right; padding:12px 0;">
-                                                <button ng-if="productsList != ''" type="button" ng-click="click_addcart(item.SUM_CNT)" class="btn btn-sm btn-info" title="구매 수량을 변경할 수 있습니다">장바구니</button>
-                                                <button ng-if="productsList == ''" type="button" ng-click="click_addcart(item.SUM_CNT)" class="btn btn-sm btn-info" title="구매 수량을 변경할 수 있습니다" disabled>장바구니</button>
+                                            <div style="float:left; width:100%; text-align:right; padding:12px 0;">
+                                                <button ng-if="productsList != '' && uid != '' && uid != null" type="button" ng-click="click_addcart(item.SUM_CNT)" class="btn btn-sm btn-info" title="구매 수량을 변경할 수 있습니다">장바구니</button>
+                                                <button ng-if="productsList == '' && uid != '' && uid != null" type="button" ng-click="click_addcart(item.SUM_CNT)" class="btn btn-sm btn-info" title="구매 수량을 변경할 수 있습니다" disabled>장바구니</button>
+                                                <button type="button" ng-click="click_showList()" class="btn btn-sm btn-info" title="다른 물품을 둘러봅니다.">쇼핑하기</button>
                                             </div>
 
                                             <div class="store_col_info" style="border-bottom:none">
@@ -104,7 +105,7 @@
                                                     <span class="store_totalprice">
                                                         {{total() | number}} {{menu == 'mileage' ? 'P' : '원'}}
                                                         <br />
-                                                        {{item.DELIVERY_ST == 2 ? '선불' : '착불'}}
+                                                        {{item.DELIVERY_PRICE | number}} 원({{item.DELIVERY_ST == 2 ? '선불' : '착불'}})
                                                     </span>
                                                 </div>
 

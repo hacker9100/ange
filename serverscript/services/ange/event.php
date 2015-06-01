@@ -284,7 +284,7 @@
                                     AND a.ada_idx = b.ada_idx
                                     AND a.adu_id = '".$_SESSION['uid']."'
                                     AND a.adhj_date_join IS NOT NULL
-                                    AND a.adhj_date_complete IS NOT NULL
+                                    AND a.adhj_date_complete IS NULL
                                     ".$search_where."
                             ) AS DATA,
                             (SELECT @RNUM := 0) R,
@@ -295,7 +295,7 @@
                                     AND a.ada_idx = b.ada_idx
                                     AND a.adu_id = '".$_SESSION['uid']."'
                                     AND a.adhj_date_join IS NOT NULL
-                                    AND a.adhj_date_complete IS NOT NULL
+                                    AND a.adhj_date_complete IS NULL
                                     ".$search_where."
                             ) CNT
                             ";

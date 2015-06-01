@@ -421,6 +421,22 @@
                 $msg = $_d->mysql_error;
             }
 
+            $sql = "UPDATE adm_history_join
+                    SET
+                        adhj_date_complete = SYSDATE()
+                    WHERE
+                        adu_id = '".$_SESSION['uid']."'
+                        AND ada_idx = '".$_model['TARGET_NO']."'
+                        AND adhj_date_complete IS NULL
+                    ";
+
+            $_d->sql_query($sql);
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
             if (count($_model['FILES']) > 0) {
                 $files = $_model['FILES'];
 

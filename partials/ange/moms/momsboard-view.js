@@ -40,13 +40,6 @@ define([
         $scope.init = function(session) {
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'BOARD';
-//            if ($stateParams.menu == 'experiencewinner') {
-//                $scope.item.EVENT_GB = "EVENT";
-//            } else if ($stateParams.menu == 'eventwinner') {
-//                $scope.item.EVENT_GB = "EVENT";
-//            } else if ($stateParams.menu == 'supporterboard') {
-//                $scope.item.EVENT_GB = "SUPPORTER";
-//            }
 
         };
 
@@ -107,15 +100,6 @@ define([
 
         // 이전글
         $scope.getPreBoard = function (){
-/*
-            if ($stateParams.menu == 'experiencewinner') {
-                $scope.search.EVENT_GB = "EVENT";
-            } else if ($stateParams.menu == 'eventwinner') {
-                $scope.search.EVENT_GB = "EVENT";
-            } else if ($stateParams.menu == 'supporterboard') {
-                $scope.search.EVENT_GB = "SUPPORTER";
-            }
-*/
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.KEY = $stateParams.id;
@@ -131,15 +115,6 @@ define([
 
         // 다음글
         $scope.getNextBoard = function (){
-/*
-            if ($stateParams.menu == 'experiencewinner') {
-                $scope.search.EVENT_GB = "EVENT";
-            } else if ($stateParams.menu == 'eventwinner') {
-                $scope.search.EVENT_GB = "EVENT";
-            } else if ($stateParams.menu == 'supporterboard') {
-                $scope.search.EVENT_GB = "SUPPORTER";
-            }
-*/
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.KEY = $stateParams.id;
@@ -270,12 +245,6 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        /*        $scope.getSession()
-         .then($scope.sessionCheck)
-         .then($scope.init)
-         .then($scope.getCmsBoard)
-         ['catch']($scope.reportProblems);*/
-
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
@@ -285,6 +254,5 @@ define([
             .then($scope.getPreBoard)
             .then($scope.getNextBoard)
             ['catch']($scope.reportProblems);
-
     }]);
 });

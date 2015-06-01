@@ -243,10 +243,6 @@ define([
             ['catch']($scope.reportProblems);
 //        $scope.init();
 //        $scope.getPeopleClinic();
-
-        console.log($scope.uid);
-
-
     }]);
 
     controllers.controller('infodeskboard-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD','CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD,CONSTANT) {

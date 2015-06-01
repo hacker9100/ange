@@ -185,21 +185,6 @@ define([
             console.log($rootScope.CONDITION);
 
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
-
-//            if ($stateParams.menu == 'experiencereview') {
-//                $location.url('/moms/experiencereview/view/'+key);
-//            } else if ($stateParams.menu == 'productreview') {
-//                $location.url('/moms/productreview/view/'+key);
-//            } else if ($stateParams.menu == 'angereview') {
-//                $location.url('/moms/angereview/view/'+key);
-//            } else if ($stateParams.menu == 'samplereview') {
-//                $location.url('/moms/samplereview/view/'+key);
-//            } else if ($stateParams.menu == 'samplepackreview') {
-//                $location.url('/moms/samplepackreview/view/'+key);
-//            }else if ($stateParams.menu == 'eventreview') {
-//                $location.url('/moms/eventreview/view/'+key);
-//            }
-
         };
 
         // 등록 버튼 클릭
@@ -212,21 +197,6 @@ define([
             }
 
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/0');
-
-//            if ($stateParams.menu == 'experiencereview') {
-//                $location.url('/moms/experiencereview/edit/0');
-//            } else if ($stateParams.menu == 'productreview') {
-//                $location.url('/moms/productreview/edit/0');
-//            } else if ($stateParams.menu == 'angereview') {
-//                $location.url('/moms/angereview/edit/0');
-//            } else if ($stateParams.menu == 'samplereview') {
-//                $location.url('/moms/samplereview/edit/0');
-//            } else if ($stateParams.menu == 'samplepackreview') {
-//                $location.url('/moms/samplepackreview/edit/0');
-//            }else if ($stateParams.menu == 'eventreview') {
-//                $location.url('/moms/eventreview/edit/0');
-//            }
-
         };
 
         $scope.click_searchPeopleBoard = function(){
@@ -239,7 +209,5 @@ define([
             .then($scope.init)
             .then($scope.getMomsReviewList)
             ['catch']($scope.reportProblems);
-
-
     }]);
 });

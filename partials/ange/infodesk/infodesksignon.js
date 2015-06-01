@@ -651,16 +651,6 @@ define([
             });
         };
 
-//        $scope.click_test = function () {
-//            $scope.updateItem('com/user', 'mail', null, $scope.user, false)
-//                .then(function(){alert(1)})
-//                ['catch'](function(error){alert(2)});
-//
-////            $scope.insertItem('mail', 'item', $scope.user, false)
-////                .then(function(){alert(1)})
-////                ['catch'](function(error){alert(2)});
-//        };
-
         $scope.init();
 	}]);
 });

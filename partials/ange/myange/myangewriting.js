@@ -391,13 +391,6 @@ define([
             .then($scope.getPeopleBoardList)
             .then($scope.getPeoplePhotoList)
             .then($scope.getPeopleClinicList)
-            .catch($scope.reportProblems);
-
-//        $scope.init();
-//
-//        $scope.getPeopleBoardList();
-//        $scope.getPeoplePhotoList();
-//        $scope.getPeopleClinicList();
-
+            ['catch']($scope.reportProblems);
     }]);
 });

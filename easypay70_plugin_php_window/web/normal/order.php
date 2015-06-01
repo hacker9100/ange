@@ -61,6 +61,7 @@ include("../inc/easypay_config.php");  // 환경설정 파일 includ
 
 
             // �߰�
+            frm_pay.EP_tr_cd.value = getParam("EP_tr_cd");
             frm_pay.EP_pay_type.value = getParam("EP_pay_type");
             frm_pay.EP_user_id.value = getParam("EP_user_id");
             frm_pay.EP_order_no.value = getParam("EP_order_no");

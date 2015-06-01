@@ -50,6 +50,10 @@
         case "GET":
             if ($_type == 'item') {
 
+                if (!isset($_search['TARGET_NO']) || $_search['TARGET_NO'] == '') {
+                    $_d->failEnd("조회실패입니다:"."TARGET_NO 누락되었습니다.");
+                }
+
                 $search_common = "";
                 $limit = "";
                 $sort_order = "ORDER BY REG_DT DESC";

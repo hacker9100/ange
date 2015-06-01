@@ -165,16 +165,10 @@ define([
 
         }
         /********** 화면 초기화 **********/
-/*        $scope.getSession()
-            .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.getCmsBoard)
-            ['catch']($scope.reportProblems);*/
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getScarpList)
             ['catch']($scope.reportProblems);
-        $scope.init();
-        $scope.getScarpList();
-
     }]);
 });

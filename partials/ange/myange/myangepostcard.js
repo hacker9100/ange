@@ -53,10 +53,5 @@ define([
             .then($scope.init)
             .then($scope.getCompList)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.getCompList();
-        /*$scope.viewCheckFl();*/
-
     }]);
 });

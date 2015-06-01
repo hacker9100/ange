@@ -120,8 +120,6 @@ define([
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
-
-
         $scope.init();
     }]);
 

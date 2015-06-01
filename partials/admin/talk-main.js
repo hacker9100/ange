@@ -96,7 +96,6 @@ define([
             }
 
             $scope.item.FILE = $scope.file;
-
             if ($scope.item.NO == undefined) {
                 $scope.insertItem('ange/talk', 'item', $scope.item, false)
                     .then(function(data){dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'}); $scope.item.NO = data})
@@ -125,10 +124,11 @@ define([
                 .then(function(data) {
                     $scope.item = data;
 
-                    console.log(JSON.stringify(data.FILE))
                     var file = data.FILE;
                     if (file) {
                         $scope.file = {"name":file.FILE_NM,"size":file.FILE_SIZE,"url":UPLOAD.BASE_URL+file.PATH+file.FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file.FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file.FILE_GB)};
+                    } else {
+                        $scope.file = '';
                     }
 
 //                    $scope.click_focus('item', 'item_name');
@@ -136,6 +136,8 @@ define([
                 ['catch'](function(error){
                     $scope.item = {};
                     $scope.item = $scope.search;
+                    $scope.item.SUBJECT = '';
+                    $scope.item.BODY = '';
                     $scope.file = '';
                 });
         };

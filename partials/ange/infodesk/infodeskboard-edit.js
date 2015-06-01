@@ -243,9 +243,5 @@ define([
          ['catch']($scope.reportProblems);
 //        $scope.init();
 //        $scope.getPeopleClinic();
-
-        console.log($scope.uid);
-
-
     }]);
 });

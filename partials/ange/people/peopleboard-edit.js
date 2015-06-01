@@ -168,26 +168,6 @@ define([
         // 초기화
         $scope.init = function() {
 
-//            if ($stateParams.menu == 'angeroom') {
-//                //$scope.community = "앙쥬맘 수다방";
-//                $scope.item.COMM_NO = 1;
-//            } else if($stateParams.menu == 'momstalk') {
-//                //$scope.community = "예비맘 출산맘";
-//                $scope.item.COMM_NO = 2;
-//            } else if($stateParams.menu == 'babycare') {
-//                //$scope.community = "육아방";
-//                $scope.item.COMM_NO = 3;
-//            } else if($stateParams.menu == 'firstbirthtalk') {
-//                //$scope.community = "돌잔치 톡톡톡";
-//                $scope.item.COMM_NO = 4;
-//            } else if($stateParams.menu == 'booktalk') {
-//                //$scope.community = "책수다";
-//                $scope.item.COMM_NO = 5;
-//            }else if($stateParams.menu == 'supporter') {
-//                //$scope.community = "서포터즈";
-//                $scope.item.COMM_NO = 21;
-//            }
-
             if($scope.menu.COMM_NO == '31' && ( $rootScope.role == 'SUPPORTERS' || $rootScope.role == 'ANGE_MANAGER' || $scope.role == 'ANGE_ADMIN' )){
                 $scope.item.CATEGORY_NO = $rootScope.support_no;
             }
@@ -213,12 +193,6 @@ define([
             $scope.isReady = true;
         });
         $scope.ckeditor = '<p>Hello</p>';
-
-//        $scope.ckeditor = '<div><p>\n<p>aaa</div>'+
-//        '<div class= "form-group" id="dropzone" name="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">' +
-//        '이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />' +
-//        '(gif, jpg, png만 등록 가능)' +
-//        '</div>';
 
         /********** 이벤트 **********/
             // 게시판 목록 이동
@@ -359,21 +333,10 @@ define([
 
 
         /********** 화면 초기화 **********/
-/*        $scope.getSession()
-            .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.getCmsBoard)
-            ['catch']($scope.reportProblems);*/
-
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getPeopleBoard)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//        $scope.getPeopleBoard();
-
-
     }]);
 });

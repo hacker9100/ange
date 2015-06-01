@@ -53,31 +53,6 @@ define([
         $scope.item = {};
 
         /********** 이벤트 **********/
-        // 게시판 목록 이동
-//        $scope.click_sampleSeason1List = function () {
-//
-//            $scope.search.EVENT_GB = 'SAMPLE1';
-//            $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
-//                .then(function(data){
-//                    $scope.item.SEASON1 = 'season1';
-//
-//                })
-//                ['catch'](function(error){});
-//        };
-
-        // 게시판 목록 이동
-//        $scope.click_sampleSeason2List = function () {
-//
-//            $scope.search.EVENT_GB = 'SAMPLE2';
-//            $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
-//                .then(function(data){
-//                    var event_gb = data[0].EVENT_GB;
-//                    $scope.item.SEASON2 = 'season2';
-//
-//                })
-//                ['catch'](function(error){});
-//        };
-
         $scope.click_samplepackedit = function(season){
 
             if($rootScope.uid == '' || $rootScope.uid == null){
@@ -110,14 +85,6 @@ define([
         }
 
         /********** 화면 초기화 **********/
-/*        $scope.getSession()
-            .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.getCmsBoard)
-            ['catch']($scope.reportProblems);*/
         $scope.init();
-        //$scope.click_sampleSeason1List();
-        //$scope.click_sampleSeason2List();
-
     }]);
 });

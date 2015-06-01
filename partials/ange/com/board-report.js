@@ -31,7 +31,6 @@ define([
 
         }
 
-
         $scope.click_saveReport = function (){
 
             $scope.insertItem('ange/notify', 'item', $scope.item, false)
@@ -40,13 +39,12 @@ define([
                     dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
                     $modalInstance.close();
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         $scope.click_cancel = function () {
             $modalInstance.close();
         };
-
 
         $scope.init();
     }]);

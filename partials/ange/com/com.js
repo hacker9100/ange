@@ -953,10 +953,26 @@ define([
                             $scope.addMileage('BANNER', null);
                         }
 
-                        if (item.ada_url.indexOf('://')>0) {
-                            $window.open(data, 'width=1200,height=800');
+                        if (item.ada_type == 'exp' || item.ada_type == 'event') {
+                            var model = {};
+                            model.ada_idx = item;
+                            model.MENU = $scope.path[1];
+                            model.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
+                            $scope.insertItem('ad/banner', 'click', model, false)
+                                .then(function(data){
+                                    if (item.ada_type == 'exp') {
+                                        $location.url('/moms/experienceprocess/view/' + item.ada_idx);
+                                    } else {
+                                        $location.url('/moms/eventprocess/view/' + item.ada_idx);
+                                    }
+                                })
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         } else {
-                            $window.open(data, '_self');
+                            if (item.ada_url.indexOf('://')>0) {
+                                $window.open(data, 'width=1200,height=800');
+                            } else {
+                                $window.open(data, '_self');
+                            }
                         }
                     });
             }
@@ -1184,15 +1200,63 @@ define([
                     dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
                     $modalInstance.close();
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         $scope.click_cancel = function () {
             $modalInstance.close();
         };
 
-
         $scope.init();
+    }]);
+
+    controllers.controller('file', ['$scope', 'UPLOAD', function ($scope, UPLOAD) {
+        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+    }]);
+
+    controllers.controller('file_destroy', ['$scope', '$http', function ($scope, $http) {
+        var file = $scope.file,
+            state;
+        if (file.url) {
+            file.$state = function () {
+                return state;
+            };
+            file.$destroy = function () {
+                state = 'pending';
+                return $http({
+                    url: file.deleteUrl,
+                    method: file.deleteType
+                }).then(
+                    function () {
+                        state = 'resolved';
+                        $scope.clear(file);
+                    },
+                    function () {
+                        state = 'rejected';
+                    }
+                );
+            };
+        } else if (!file.$cancel && !file._index) {
+            file.$cancel = function () {
+                $scope.clear(file);
+            };
+        }
+    }]);
+
+    controllers.controller('file_editor', ['$scope', '$http', function ($scope, $http) {
+        var file = $scope.file,
+            state;
+        if (file.url) {
+            file.$state = function () {
+                return state;
+            };
+            file.$editor = function () {
+                if (!angular.isUndefined(CKEDITOR)) {
+                    var element = CKEDITOR.dom.element.createFromHtml( '<img alt="" src="'+file.mediumUrl+'" />' );
+                    CKEDITOR.instances.editor1.insertElement( element );
+                }
+            };
+        }
     }]);
 
     controllers.controller('module-reply', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT) {
@@ -1250,13 +1314,11 @@ define([
 
         // 댓글 리스트
         $scope.getReplyList = function () {
-
             $scope.replySearch.TARGET_NO = $scope.TARGET_NO;
             $scope.replySearch.TARGET_GB = $scope.TARGET_GB;
 
             $scope.getItem('com/reply', 'item', {}, $scope.replySearch, true)
                 .then(function(data){
-
                     if(data.COMMENT == null){
                         $scope.replySearch.TOTAL_COUNT = 0;
                         $scope.replyList = [];
@@ -1570,7 +1632,7 @@ define([
                                 dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
                                 $modalInstance.close();
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                     $scope.click_cancel = function () {
@@ -1594,18 +1656,17 @@ define([
                 return;
             }
 
-            $scope.openViewMessageRegModal(null, item, 'lg');
+            if ($rootScope.uid == item.REG_UID) {
+                dialogs.notify('알림', '본인에게는 메세지를 보낼수 없습니다.', {size: 'md'});
+                return;
+            }
+
+            $scope.openViewMessageRegModal(item, 'lg');
         };
 
         /********** 화면 초기화 **********/
         $scope.init();
         $scope.getReplyList();
-
-//        $scope.getSession()
-//            .then($scope.sessionCheck)
-//            ['catch']($scope.reportProblems);
-
-
     }]);
 
     controllers.controller('subside-ad', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $controller, $location, dialogs, CONSTANT) {
@@ -1642,22 +1703,22 @@ define([
         }
 
         /********** 이벤트 **********/
-
         $scope.init();
-
     }]);
 
-    controllers.controller('ui-ads', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $controller, $location, dialogs, CONSTANT) {
+    controllers.controller('ui-ads', ['$scope', '$controller', '$location', 'dialogs', 'CONSTANT', function ($scope, $controller, $location, dialogs, CONSTANT) {
+//        angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
-        angular.extend(this, $controller('ange-common', {$scope: $scope}));
+        // 초기화
+        $scope.init = function() {
+            $scope.option_r1 = {title: '롤링', api:'ad/banner', size: 2, id: 'ads1', type: 'ange', gb: 1, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
-        $scope.option_r1 = {title: '롤링', api:'ad/banner', size: 2, id: 'ads1', type: 'ange', gb: 1, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+            $scope.option_r2 = {title: '롤링', api:'ad/banner', size: 5, id: 'ads2', type: 'ange', gb: 2, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
-        $scope.option_r2 = {title: '롤링', api:'ad/banner', size: 5, id: 'ads2', type: 'ange', gb: 2, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+            $scope.option_r3 = {title: '롤링', api:'ad/banner', size: 2, id: 'ads3', type: 'ange', gb: 3, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
-        $scope.option_r3 = {title: '롤링', api:'ad/banner', size: 2, id: 'ads3', type: 'ange', gb: 3, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
-
-        $scope.option_r4 = {title: '롤링', api:'ad/banner', size: 2, id: 'ads4', type: 'banner', gb: CONSTANT.AD_CODE_BN02, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+            $scope.option_r4 = {title: '롤링', api:'ad/banner', size: 2, id: 'ads4', type: 'banner', gb: CONSTANT.AD_CODE_BN02, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+        }
 
         /********** 이벤트 **********/
         $scope.click_mainLogo = function() {
@@ -1672,6 +1733,8 @@ define([
             $location.url("/company/affiliates")
         };
 
+        /********** 화면 초기화 **********/
+        $scope.init();
     }]);
 
     controllers.controller('ui-gnb', ['$scope', '$rootScope', '$location', 'dialogs', '$stateParams', function ($scope, $rootScope, $location, dialogs, $stateParams) {
@@ -1702,15 +1765,6 @@ define([
             $scope.search.SEARCH_KEYWORD = getParam("search_key");
         };
 
-//        <a href="/story/content/list" ng-class="channeltitle == 'story' ? 'gnb_chnnel chnnel1 nowmenu' : 'gnb_chnnel chnnel1'">ANGE Story</a>
-//        <a href="/people/home" ng-class="channeltitle == 'people' ? 'gnb_chnnel chnnel2 nowmenu' : 'gnb_chnnel chnnel2'">ANGE People</a>
-//            <a href="/moms/home" ng-class="channeltitle == 'moms' ? 'gnb_chnnel chnnel3 nowmenu' : 'gnb_chnnel chnnel3'">ANGE Mom's</a>
-//        <a ng-click="click_myange();" ng-class="channeltitle == 'myange' ? 'gnb_chnnel chnnel4 nowmenu' : 'gnb_chnnel chnnel4'">My ANGE</a>
-//
-//        <div class="gnb_right">
-//            <a href="/store/mileagemall/list" ng-class="channeltitle == 'store' ? 'gnb_store ch_store nowmenu' : 'gnb_store ch_store'">ANGE Store</a>
-//            <!--<a href="/store/home" class="gnb_store ch_store">ANGE Store</a>--
-
         $scope.click_channel = function(menu) {
 
             switch(menu){
@@ -1737,34 +1791,6 @@ define([
                     $location.url('/');
                     break;
             }
-//            if(menu != $scope.channeltitle) {
-//                switch(menu){
-//                    case 'story':
-//                        $location.url('/story/content/list');
-//                        break;
-//                    case 'people':
-//                        $location.url('/people/home');
-//                        break;
-//                    case 'moms':
-//                        $location.url('/moms/home');
-//                        break;
-//                    case 'myange':
-//                        $scope.click_myange();
-//                        break;
-//                    case 'store':
-//                        $location.url('/store/mileagemall/list');
-//                        break;
-//                    case 'infodesk':
-//                        $location.url('/infodesk/qna/list');
-//                        break;
-//                    default:
-//                        dialogs.notify('알림', '잘못된 접근입니다.', {size: 'md'});
-//                        $location.url('/');
-//                        break;
-//                }
-//            } else {
-//                console.log ("[" + $scope.channeltitle + "] 현재 메뉴입니다.")
-//            }
         };
 
         $scope.click_login = function () {
@@ -1857,18 +1883,6 @@ define([
 
     controllers.controller('ui-lnb', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', '$filter', 'dialogs', function ($scope, $rootScope, $stateParams, $controller, $location, $filter, dialogs) {
 
-        /********** 페이지 타이틀 **********/
-//        angular.forEach($rootScope.ange_menu, function(menu) {
-//
-//            if (menu.MENU_URL.indexOf(spMenu[1]+"/") > -1) {
-//                $scope.$parent.$parent.pageTitle = menu.MENU_NM;
-//                $scope.$parent.$parent.pageDescription = menu.MENU_DESC;
-//                $scope.$parent.$parent.tailDescription = menu.TAIL_DESC;
-//
-//                return;
-//            }
-//        });
-
         /********** 초기화 **********/
             // 카테고리 데이터
         $scope.category = [];
@@ -1899,10 +1913,6 @@ define([
         };
 
         /********** 좌측 메뉴 **********/
-//        var menu = $filter('filter')($rootScope.ange_menu, function (data) {
-//            return (data.MENU_URL.indexOf(menu[1]) > -1)
-//        })[0];
-
         var channelNo = "2";
 
         var channel = $filter('filter')($rootScope.ange_channel, function (data) {
@@ -1913,16 +1923,6 @@ define([
 
         /********** 화면 초기화 **********/
         $scope.init();
-
-//        $scope.selectMenu = function(menu) {
-//            if ($scope.permissionCheck(menu.MENU_URL, false)) {
-//                $location.url(menu.MENU_URL);
-//            }
-//        };
-//
-//        $scope.nowMenu = spMenu[1];
-        //alert(spMenu[1]);
-
     }]);
 
     controllers.controller('ui-utility', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', '$window', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $controller, $location, $window, dialogs, CONSTANT) {
@@ -1963,11 +1963,9 @@ define([
 //                return;
 //            }
 
-            if($rootScope.user_gb == 'CLUB'){
+            if($rootScope.user_info.USER_GB == 'CLUB' || $rootScope.user_info.USER_GB == 'CLINIC'){
                 $location.url('/club/home');
             }else if($rootScope.role == 'ANGE_ADMIN'){
-                $location.url('/club/home');
-            }else if($rootScope.user_gb == 'CLINIC'){
                 $location.url('/club/home');
             }else{
                 dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
@@ -2272,37 +2270,6 @@ define([
 
         $scope.getTopBanner();
 
-        /*        // 세션 체크
-         $scope.sessionCheck = function(session) {
-         if (session.USER_ID == undefined) {
-         //                $location.path("/signin");
-         //                throw( new String('세션이 만료되었습니다.') );
-         //            throw( new Error("세션이 만료되었습니다.") );
-         } else if (session.USER_ID == '') {
-         //                $location.path("/signin");
-         //                throw( new String('로그인 후 사용가능합니다.') );
-         } else {
-         $rootScope.session = session;
-
-
-
-         $rootScope.authenticated = true;
-         $rootScope.uid = session.USER_ID;
-
-         //console.log($rootScope.uid);
-
-         $rootScope.name = session.USER_NM;
-         $rootScope.role = session.ROLE_ID;
-         $rootScope.menu_role = session.MENU_ROLE;
-         $rootScope.email = session.EMAIL;
-         }
-
-         //console.log($rootScope.uid);
-
-         return;
-
-         };*/
-
         $scope.click_mainLogo = function() {
 
         };
@@ -2328,11 +2295,5 @@ define([
         }
 
         setInterval($scope.refresh,3000) ;
-
-//        $scope.getSession()
-//            .then($scope.sessionCheck)
-//            ['catch']($scope.reportProblems);
-
-
     }]);
 });

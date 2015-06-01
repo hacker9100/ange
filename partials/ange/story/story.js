@@ -93,14 +93,6 @@ define([
             $anchorScroll();
         }
 
-//        $scope.fetchNext = function() {
-//            if(!$scope.busy) {
-//                $scope.busy = true;
-//
-//                $scope.getContentList();
-//            }
-//        };
-
         var isFirst = true;
 
         // 이미지 조회
@@ -112,13 +104,6 @@ define([
                 $scope.PAGE_NO = 0;
             }
 
-//            if ($scope.category != '') {
-//                console.log($scope.category)
-//                for (var i in $scope.category) {
-//                    if ($scope.category[i] == null) $scope.category.splice(i, 1)
-//                }
-//                $scope.search.CATEGORY = $scope.category;
-//            }
             $scope.search.CATEGORY = [];
 
             if ($scope.category != '') {
@@ -240,20 +225,8 @@ define([
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
-//        $scope.openModal = function (content, size) {
-//            var dlg = dialogs.create('partials/ange/story/storycontent-view-popup.html', 'storycontent-view-popup',
-//                content, {size:size, keyboard: true, backdrop: true});
-//            dlg.result.then(function(){
-//
-//            },function(){
-//                if(angular.equals($scope.name,''))
-//                    $scope.name = 'You did not enter in your name!';
-//            });
-//        };
-
         $scope.init();
         $scope.getContentList();
-//        $scope.getAdvertList();
     }]);
 
     // 사용할 서비스를 주입
@@ -366,24 +339,12 @@ define([
                 '<link rel="stylesheet" type="text/css" href="/css/ange/ange_style.css" />' +
                 '<link rel="stylesheet" type="text/css" href="/lib/jquery/css/base/jquery-ui-1.10.2.min.css" />' +
                 '<link rel="stylesheet" type="text/css" href="/css/article.css" />' +
-//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_main.css" />' +
-//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_storylist.css" />' +
-//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_people_main.css" />' +
-//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_peoplepoll.css" />' +
-//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_peopleboard.css" />' +
-//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_moms_main.css" />' +
-//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_myange_main.css" />' +
-//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_store_main.css" />' +
-//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_infodesk_main.css" />' +
-//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_join.css" />' +
-//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_moms.css" />' +
                 '</head><body onload="window.print()"><div class="modal-body"><div class="story-row previewwrap"><div class="story-col-xs-12 article_previewwrap">' + printContents + '</div></div></div></html>');
             popupWin.document.close();
         };
 
         // 사용할 앱의 Javascript 키를 설정해 주세요.
         $scope.click_loginWithKakao = function () {
-//            Kakao.Auth.logout();
             if(Kakao.Auth.getAccessToken()) {
                 $scope.share_open();
             } else {
@@ -396,17 +357,6 @@ define([
                     }
                 });
             }
-
-//            Kakao.Auth.createLoginButton({
-//                container: '#kakao-login-btn',
-//                success: function() {
-//                    alert(0)
-//                    share_open();
-//                },
-//                fail: function(err) {
-//                    alert(JSON.stringify(err))
-//                }
-//            });
         }
 
         $scope.click_eBookOpen = function (item) {

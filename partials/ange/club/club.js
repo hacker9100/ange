@@ -29,6 +29,33 @@ define([
                 $("input[name='noti_check']").prop("checked",false);
                 $scope.item.NOTICE_FL = "false";
             }
+
+//            $("#checkall").click(function(){
+//                //클릭되었으면
+//                if($("#checkall").is(":checked")){
+//                    $("input[name='check']").prop("checked",true);
+//                    $scope.item.SCRAP_FL = "true";
+//                    $scope.item.REPLY_FL = "true";
+//                }else{ //클릭이 안되있으면
+//                    $("input[name='check']").prop("checked",false);
+//                    $scope.checked = false;
+//                }
+//            })
+//            $("#check_scrap").click(function(){
+//                if(!$("#check_scrap").is(":checked")){
+//                    $scope.item.SCRAP_FL = "true";
+//                }else{
+//                    $scope.item.SCRAP_FL = "false";
+//                }
+//            });
+//
+//            $("#check_reply").click(function(){
+//                if(!$("#check_reply").is(":checked")){
+//                    $scope.item.REPLY_FL = "true";
+//                }else{
+//                    $scope.item.REPLY_FL = "false";
+//                }
+//            });
         });
 
         $(function(){
@@ -337,11 +364,21 @@ define([
 
 
         /********** 화면 초기화 **********/
+        /*        $scope.getSession()
+         .then($scope.sessionCheck)
+         .then($scope.init)
+         .then($scope.getCmsBoard)
+         ['catch']($scope.reportProblems);*/
+
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getPeopleBoard)
             ['catch']($scope.reportProblems);
+
+//        $scope.init();
+//        $scope.getPeopleBoard();
+
 
     }]);
 

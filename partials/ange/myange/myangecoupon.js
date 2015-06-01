@@ -69,10 +69,7 @@ define([
                     }
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-
-
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         $scope.PAGE_NO = 1;
@@ -184,13 +181,9 @@ define([
                 $scope.item.COUPON_CD = '';
                 return;
             }
-
-
-
         }
 
         $scope.click_saveMomsBecomeCoupon = function (){
-
 
             if($scope.BABY_BIRTH_YEAR == '' && $scope.BABY_BIRTH_MONTH == '' && $scope.BABY_BIRTH_DAY == ''){
                 dialogs.notify('알림', '회원정보에서 아이 생일을 추가해주세요.', {size: 'md'});
@@ -356,15 +349,10 @@ define([
 
         }
 
-//        $scope.init();
-//        $scope.getCouponList();
-
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getCouponList)
             ['catch']($scope.reportProblems);
-
-
     }]);
 });

@@ -40,8 +40,8 @@
                     <p style="font-size:0.86em; margin:4px 0 0 0; ">
                         <a ng-click="showDetails = ! showDetails">댓글<span style="color: #df5348">({{replyItem.RE_COUNT}})</span></a>
                         &nbsp; | &nbsp;<a ng-click="click_boardReport(replyItem)">신고</a>
-                        <span ng-show="uid == replyItem.REG_UID  && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="showCommentDetails = ! showCommentDetails">수정</a></span> <!-- && replyItem.BLIND_FL == 'N'  -->
-                        <span ng-show="uid == replyItem.REG_UID && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="click_deleteReply(replyItem);">삭제</a></span>
+                        <span ng-show="(uid == replyItem.REG_UID || role == 'ANGE_ADMIN') && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="showCommentDetails = ! showCommentDetails">수정</a></span> <!-- && replyItem.BLIND_FL == 'N'  -->
+                        <span ng-show="(uid == replyItem.REG_UID || role == 'ANGE_ADMIN') && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="click_deleteReply(replyItem);">삭제</a></span>
                         &nbsp; | &nbsp;<a ng-click="click_blind(replyItem.NO);" ng-if="replyItem.BLIND_FL == 'N' && role == 'ANGE_ADMIN'" class="table_red">블라인드</a> <!--replyItem.BLIND_FL == 'N' &&-->
                         <a ng-click="click_blind_clear(replyItem.NO);" ng-if="replyItem.BLIND_FL == 'Y' && role == 'ANGE_ADMIN'" class="table_red">블라인드해제</a> <!-- replyItem.BLIND_FL == 'Y' -->
 
@@ -65,8 +65,8 @@
                             <div class="smalldate">
                                 {{reItem.REG_DT}}
                                 <a ng-click="click_re_boardReport(replyItem, reItem)">신고</a>
-                                <a ng-show="reItem.BLIND_FL == 'N' && uid == reItem.REG_UID" ng-click="showReCommentDetails = ! showReCommentDetails">수정</a>
-                                <a ng-show="reItem.BLIND_FL == 'N' && uid == reItem.REG_UID" ng-click="click_deleteReply(reItem);">삭제</a>
+                                <a ng-show="reItem.BLIND_FL == 'N' && (uid == reItem.REG_UID || role == 'ANGE_ADMIN')" ng-click="showReCommentDetails = ! showReCommentDetails">수정</a>
+                                <a ng-show="reItem.BLIND_FL == 'N' && (uid == reItem.REG_UID || role == 'ANGE_ADMIN')" ng-click="click_deleteReply(reItem);">삭제</a>
                                 <a ng-click="click_blind(reItem.NO);" ng-show="reItem.BLIND_FL == 'N' && role == 'ANGE_ADMIN'" class="table_red">블라인드</a>
                                 <a ng-click="click_blind_clear(reItem.NO);" ng-show="reItem.BLIND_FL == 'Y' && role == 'ANGE_ADMIN'" class="table_red">블라인드해제</a> <!-- role : ANGE_ADMIN-->
                             </div>

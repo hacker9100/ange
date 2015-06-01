@@ -26,25 +26,12 @@ define([
         };
 
         /********** 이벤트 **********/
-        // 게시판 목록 이동
-//        $scope.click_showPeopleBoardList = function () {
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/list');
-//            }
-//        };
-
-        /********** 화면 초기화 **********/
-/*        $scope.getSession()
-            .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.getCmsBoard)
-            ['catch']($scope.reportProblems);*/
-        $scope.init();
-
         $scope.clickyet = function() {
             //dialogs.notify('알림', '점검중입니다.', {size: 'md'});
             $location.url('/moms/eventwinner/list');
         }
 
+        /********** 화면 초기화 **********/
+        $scope.init();
     }]);
 });

@@ -134,13 +134,12 @@
                                 <dt class="ange_blue t_title cell_hit">조회</dt>
                             </dl>
 
-
-                            <dl data-ng-show="list == '' || list == null" class="board_normal_tablelist_load">
-                                <dd ng-show="!isLoding" class="t_body cell_status">
+                            <dl ng-if="list == '' || list == null" class="board_normal_tablelist_load">
+                                <dd ng-if="!isLoding" class="t_body cell_status">
                                     <div class="t_txt">조회 데이터가 없습니다.</div>
                                 </dd>
 
-                                <dd ng-show="isLoding" class="t_body cell_status">
+                                <dd ng-if="isLoding" class="t_body cell_status">
                                     <!--<div class="t_txt">로딩 중 입니다.</td>-->
                                     <img src="/imgs/ange/loading_01.gif" />
                                 </dd>
@@ -323,7 +322,7 @@
                                 </div><!-- /.row -->
                             </div><!-- /.container -->
 
-                            <nav ng-if="TOTAL_COUNT > PAGE_SIZE" class="text-center normaltype">
+                            <nav ng-show="TOTAL_COUNT > PAGE_SIZE" class="text-center normaltype">
                                 <pagination boundary-links="true" total-items="TOTAL_COUNT" items-per-page="25" ng-model="PAGE_NO" class="pagination-sm"  ng-change="pageChanged()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                                 <!--<ul class="pagination pagination-sm table_paging">-->
                                     <!--<li class="disabled">-->
@@ -346,7 +345,7 @@
                                 <!--</ul>-->
                             </nav><!-- /.Paging-->
 
-                            <nav ng-if="TOTAL_COUNT > PAGE_SIZE" class="text-center mobiletype" style="position:relative;">
+                            <nav ng-show="TOTAL_COUNT > PAGE_SIZE" class="text-center mobiletype" style="position:relative;">
                                 <pager total-items="TOTAL_COUNT" ng-change="pageChanged()" items-per-page="25" ng-model="PAGE_NO"></pager>
                                 <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
                                     <span class="table_blue">{{PAGE_NO}}</span> / {{TOTAL_PAGES}}

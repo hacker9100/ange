@@ -270,7 +270,7 @@ define([
                 .then(function(){
 
                     if (confirm("장바구니에 등록되었습니다. 장바구니로 이동하시겠습니까?") == true){    //확인
-                        $location.url('store/cart/list');
+                        $location.url('store/cart/list/'+$stateParams.menu);
                     }else{   //취소
                         return;
                     }
@@ -333,7 +333,7 @@ define([
         }
 
         // 목록 버튼 클릭
-        $scope.click_showPeoplePhotoList = function () {
+        $scope.click_showList = function () {
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
         }
 
@@ -391,13 +391,6 @@ define([
             .then($scope.init)
             .then($scope.getPeopleBoard)
             .then($scope.getReviewList)
-//            .then($scope.getProductList)
             ['catch']($scope.reportProblems);
-//        $scope.init();
-//        $scope.getPeopleBoard();
-//        $scope.getReviewList();
-//        $scope.getProductList();
-        //s$scope.addSumPrice($scope.item.PRICE, 1 , 0);
-
     }]);
 });

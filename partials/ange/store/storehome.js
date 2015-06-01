@@ -22,21 +22,7 @@ define([
             $scope.option_r2_c1 = {title: '마일리지몰', api:'ange/product', size: 9, id: 'mileage', type: 'mileage', url: '/store/mileagemall', dots: false, autoplay: true, centerMode: true, showNo: 3, fade: 'false'};
         };
 
-        /********** 이벤트 **********/
-        // 게시판 목록 이동
-//        $scope.click_showPeopleBoardList = function () {
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/list');
-//            }
-//        };
-
         /********** 화면 초기화 **********/
-/*        $scope.getSession()
-            .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.getCmsBoard)
-            ['catch']($scope.reportProblems);*/
         $scope.init();
-
     }]);
 });

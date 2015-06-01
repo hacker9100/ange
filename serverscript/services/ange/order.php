@@ -120,8 +120,8 @@ switch ($_method) {
                 $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
             }
 
-            $sql = "SELECT   NO, PRODUCT_CNT, SUM_PRICE, PRODUCT_NO, USER_ID, ORDER_DT,DATE_FORMAT(ORDER_DT, '%Y-%m-%d') AS ORDER_DT,
-                            CASE ORDER_ST when 0 then '결제완료' when 1 then '주문접수' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE 6 end AS ORDER_GB_NM, PRODUCT_NM, PRODUCT_GB, TOTAL_COUNT, PRICE, ORDER_GB, ORDER_ST, ORDER_NO,
+            $sql = "SELECT NO, PRODUCT_CNT, SUM_PRICE, PRODUCT_NO, USER_ID, ORDER_DT,DATE_FORMAT(ORDER_DT, '%Y-%m-%d') AS ORDER_DT,
+                            CASE ORDER_ST when 0 then '입금대기' when 1 then '결제완료' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE 6 end AS ORDER_GB_NM, PRODUCT_NM, PRODUCT_GB, TOTAL_COUNT, PRICE, ORDER_GB, ORDER_ST, ORDER_NO,
                             CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE '' END AS PROGRESS_ST_NM, PARENT_NO, (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = PARENT_NO) AS PARENT_PRODUCT_NM, PRODUCT_CODE, DIRECT_PRICE
                     FROM (
                                 SELECT AC.NO, AC.PRODUCT_CNT, AC.SUM_PRICE, AC.PRODUCT_NO, AC.USER_ID, AC.ORDER_DT, AC.ORDER_ST, AC.ORDER_NO,
@@ -267,7 +267,8 @@ switch ($_method) {
             $sql = "SELECT
                         TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                         NO, PRODUCT_CNT, SUM_PRICE, RECEIPTOR_NM, PRODUCT_NO, USER_ID, DATE_FORMAT(ORDER_DT, '%Y-%m-%d') AS ORDER_YMD, PAY_GB, DATE_FORMAT(PAY_DT, '%Y-%m-%d') AS PAY_YMD,
-                        CASE ORDER_ST when 0 then '결제완료' when 1 then '주문접수' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE 6 end AS ORDER_ST_NM,
+                        (SELECT MAX(NICK_NM) FROM COM_USER WHERE DATA.USER_ID = USER_ID) AS NICK_NM,
+                        CASE ORDER_ST when 0 then '주문접수' when 1 then '결제완료' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE 6 end AS ORDER_ST_NM,
                         PRODUCT_NM, PRODUCT_GB, PRICE, ORDER_GB, ORDER_ST, ORDER_NO, REQUEST_NOTE,
                         CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE '' END AS PROGRESS_ST_NM, PARENT_NO, PARENT_PRODUCT_NM, PRODUCT_CODE
                     FROM
@@ -365,6 +366,7 @@ switch ($_method) {
                 $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
             }
 
+            $_total_price = 0;
             $_total_mileage = 0;
 
             // 주문코드 생성
@@ -379,6 +381,14 @@ switch ($_method) {
 
             if (isset($_model['ORDER']) && $_model['ORDER'] != "") {
                 foreach ($_model['ORDER'] as $e) {
+                    $_total_price += $e['TOTAL_PRICE'];
+
+                    $order_st = 1;
+
+                    if(isset($e['PRODUCT_GB']) && $e['PRODUCT_GB'] == 'CUMMERCE' && $_model['PAY_GB'] == 'NOBANKBOOK'){
+                        $order_st = 0;
+                    }
+
                     $sql = "INSERT INTO ANGE_ORDER
                         (
                             PRODUCT_NO,
@@ -396,6 +406,8 @@ switch ($_method) {
                             ORDER_GB,
                             PAY_GB,
                             PAY_DT,
+                            BANK_CD,
+                            ACCOUNT_NO,
                             PRODUCT_CODE
                         ) VALUES (
                             ".$e['PRODUCT_NO'].",
@@ -407,12 +419,14 @@ switch ($_method) {
                             '".$_model['RECEIPT_ADDR_DETAIL']."',
                             '".$_model['RECEIPT_PHONE']."',
                             '".$_model['REQUEST_NOTE']."',
-                            0,
+                            '".$order_st."',
                             '".$_SESSION['uid']."',
                             '".$_model['ORDER_NO']."',
                             '".$e['PRODUCT_GB']."',
                             '".$_model['PAY_GB']."',
                             SYSDATE(),
+                            '".$_model['BANK_CD']."',
+                            '".$_model['ACCOUNT_NO']."',
                             '".$_model['PRODUCT_CODE']."'
                         )";
 
@@ -495,6 +509,44 @@ switch ($_method) {
                                 WHERE
                                     NO = {$e['PRODUCT_NO']}
                                 ";
+                        $_d->sql_query($sql);
+                    }
+
+                    // 상품구분이 존재하면서 구분값이 커머스일때
+                    if(isset($e['PRODUCT_GB']) && $e['PRODUCT_GB'] == 'CUMMERCE' && $_model['PAY_GB'] == 'NOBANKBOOK'){
+                        $bank = $_model['BANK_CD'] == '003' ? '기업은행' :
+                                $_model['BANK_CD'] == '004' ? '국민은행' :
+                                $_model['BANK_CD'] == '011' ? '농협중앙회' :
+                                $_model['BANK_CD'] == '020' ? '우리은행' :
+                                $_model['BANK_CD'] == '023' ? 'SC제일은행' :
+                                $_model['BANK_CD'] == '026' ? '신한은행' :
+                                $_model['BANK_CD'] == '032' ? '부산은행' :
+                                $_model['BANK_CD'] == '071' ? '우체국' :
+                                '하나은행';
+
+                        $sql = "insert into em_smt_tran
+                                (
+                                    date_client_req,
+                                    content,
+                                    callback,
+                                    service_type,
+                                    broadcast_yn,
+                                    msg_status,
+                                    recipient_num,
+                                    sys_type
+                                )
+                                values
+                                (
+                                    sysdate(),
+                                    '[앙쥬] ".$bank." 가상계좌[".$_model['ACCOUNT_NO']."]로 ".$_total_price."원 입금해주세요',
+                                    '023334650',
+                                    '0',
+                                    'N',
+                                    '1',
+                                    '".$_SESSION['phone2']."',
+                                    'ange_".$_SESSION['uid']."'
+                                )";
+
                         $_d->sql_query($sql);
                     }
 
@@ -867,8 +919,8 @@ switch ($_method) {
                 $_d->failEnd("수정실패입니다:".$msg);
             }else{
                 $_d->sql_commit();
-                $_d->succEnd($no);
-                //$_d->dataEnd2(array("mileage" => $_SESSION['mileage']));
+//                $_d->succEnd($no);
+                $_d->dataEnd2(array("mileage" => $_SESSION['mileage']));
 
             }
         } else if ($_type == "status") {

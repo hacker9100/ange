@@ -185,6 +185,7 @@
                                 ANGE_USER_BABY
                             WHERE
                                 USER_ID = '".$_key."'
+                                AND BABY_BIRTH <> ''
                             ";
 
                     $baby_data = $_d->getData($sql);

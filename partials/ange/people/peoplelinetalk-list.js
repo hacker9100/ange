@@ -53,12 +53,7 @@ define([
             dd = '0'+dd;
         }
 
-
-
         var today = thisyear+'-'+mm+'-'+dd;
-
-        //$scope.search.TODAY_DATE = today;
-
         var year = [];
         var month = [];
         var day = [];
@@ -126,20 +121,6 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-
-//            $scope.search.REPLY_GB = 'linetalk';
-//            $scope.search.TARGET_GB = 'TALK';
-
-//            $scope.getItem('com/reply', 'item', {}, $scope.search, true)
-//                .then(function(data){
-//                    if(data.COMMENT == null){
-//                        $scope.TODAY_TOTAL_COUNT = 0;
-//                    }else{
-//                        $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
-//                    }
-//                })
-//                ['catch'](function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
-
             var idx = 0;
             for(var i=0; i < $scope.month.length; i ++){
                 if(JSON.stringify($scope.today_month) == JSON.stringify($scope.month[i])){
@@ -219,13 +200,6 @@ define([
 
             $scope.insertItem('com/reply', 'item', $scope.item, false)
                 .then(function(){
-
-//                    $scope.item.REMAIN_POINT = 10;
-//                    $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
-//                        .then(function(){
-//                        })
-//                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
                     $scope.addMileage('REPLY', 'TALK');
 
                     $scope.getItem('com/reply', 'item', {}, $scope.search, true)
@@ -280,13 +254,6 @@ define([
                 $scope.deleteItem('com/reply', 'item', item, true)
 
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
-
-//                        $scope.item.REMAIN_POINT = 10;
-//                        $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
-//                            .then(function(){
-//                            })
-//                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
                         $scope.replyList = [];
                         $scope.getPeopleReplyList();
 
@@ -363,21 +330,7 @@ define([
 
             $scope.getItem('com/reply', 'subjectitem', {}, $scope.search, true)
                 .then(function(data){
-                    //console.log(data);
-
-//                    var files = data[0].TALK_FILE;
-//                    //console.log(JSON.stringify(data));
-//                    for(var i in files) {
-//                        var img = UPLOAD.BASE_URL + files[i].PATH + 'thumbnail/' + files[i].FILE_ID;
-//                        data[0].MAIN_FILE = img;
-//                    }
-//
-//                    $scope.talkitem = data[0];
                     $scope.talkitem = data;
-
-                    console.log($scope.talkitem);
-
-                    console.log(JSON.stringify(data.FILE))
                     var file = data.FILE;
                     if (file) {
                         $scope.file = {"name":file.FILE_NM,"size":file.FILE_SIZE,"url":UPLOAD.BASE_URL+file.PATH+file.FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file.FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file.FILE_GB)};
@@ -423,22 +376,11 @@ define([
             startingDay: 1
         };
 
-//        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-//        $scope.format = $scope.formats[0];
-
-
         /********** 화면 초기화 **********/
-
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getTalkSubject)
             ['catch']($scope.reportProblems);
-
-        console.log($rootScope.uid);
-//        $scope.init();
-//        $scope.getTalkSubject()
-//        $scope.getPeopleReplyList();
-
     }]);
 });

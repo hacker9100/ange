@@ -20,21 +20,34 @@ define([
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
-//        $scope.newDir = 'test1/';
-/*
-        $scope.loadingFiles = true;
-//        $http.get(url+'?newDir='+$scope.newDir)
-        $http.get(url)
-            .then(
-            function (response) {
-                $scope.loadingFiles = false;
-                $scope.queue = response.data.files || [];
-            },
-            function () {
-                $scope.loadingFiles = false;
+        $scope.click_selectMainImage = function (file) {
+
+            angular.forEach($scope.queue, function(file) {
+                file.kind = '';
+            });
+
+            if (file.kind == 'MAIN') {
+                file.kind = '';
+            } else {
+                file.kind = 'MAIN';
             }
-        );
-*/
+        };
+
+//        $scope.newDir = 'test1/';
+        /*
+         $scope.loadingFiles = true;
+         //        $http.get(url+'?newDir='+$scope.newDir)
+         $http.get(url)
+         .then(
+         function (response) {
+         $scope.loadingFiles = false;
+         $scope.queue = response.data.files || [];
+         },
+         function () {
+         $scope.loadingFiles = false;
+         }
+         );
+         */
     }]);
 
     controllers.controller('file_destroy', ['$scope', '$http', function ($scope, $http) {

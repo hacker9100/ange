@@ -225,10 +225,5 @@ define([
             .then($scope.cartList)
             .then($scope.cartCummerceList)
             ['catch']($scope.reportProblems);
-
-//        $scope.init();
-//
-//        $scope.cartList();
-//        $scope.cartCummerceList();
     }]);
 });
